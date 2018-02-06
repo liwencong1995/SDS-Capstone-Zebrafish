@@ -1,0 +1,37 @@
+---
+title: "Plan-020618"
+output: html_document
+---
+
+# Plan-020618
+
+## Week One Feb. 4th
+Thuesday:
+Getting ourselves familliar with both python and R packages.
+
+Shuli and Dejia: Python
+Ji Young and Priscilla: R
+
+Thursday:
+Find a time to meet with Morgan:
+1. ask for more data
+2. ask her to explain her model to us
+3. ask her how she did her package
+
+Find a time to talk to Ben:
+1. ask questions about his package
+
+## Week Two Feb. 11th
+Tuesday:
+Trying out new models:
+One per two person
+
+Thursday:
+1. Discuss and present the models we find and together choose one to work with.
+
+2. Meet with Jake/ Morgan to talk about our ideas and the model we choose.
+
+## Week Three Feb. 18th
+
+
+
