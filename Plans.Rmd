@@ -23,12 +23,12 @@ Find a time to talk to Ben:
 
 ## Week Two Feb. 11th
 Tuesday:
-Trying out new models:
-One per two person
+1. reproduce visulizations in the draft 
+2. find out what parameters were used in Morgan's poster, build distributions od the parameters, and run t test
+3. send a pull request to one of the issues in Morgan's python package
 
 Thursday:
 1. Discuss and present the models we find and together choose one to work with.
-
 2. Meet with Jake/ Morgan to talk about our ideas and the model we choose.
 
 ## Week Three Feb. 18th
