@@ -21,17 +21,29 @@ Find a time to meet with Morgan:
 Find a time to talk to Ben:
 1. ask questions about his package
 
+
+
 ## Week Two Feb. 11th
 Tuesday:
-Trying out new models:
-One per two person
+
+1. Created interactive visualizations of the cylindrical-coordinate data.
+
+2. Create distributions of each sylindrical parameters to describe the distibution of data points. Divided the 3-D space into layers and create distubutions of each parameter of each layer.
+
+3. Learn how to use Morgan's package to calculate landmarks and get some insights on whether to proceed with our current plan or not.
 
 Thursday:
-1. Discuss and present the models we find and together choose one to work with.
-
-2. Meet with Jake/ Morgan to talk about our ideas and the model we choose.
+1. Class discussion
+2. presentation
 
 ## Week Three Feb. 18th
 
+Thursday:
+1. reproduce visulizations in the draft 
+3. send a pull request to one of the issues in Morgan's python package
+
+Thursday:
+1. Discuss and present the models we find and together choose one to work with.
+2. Meet with Jake/ Morgan to talk about our ideas and the model we choose.
 
 
