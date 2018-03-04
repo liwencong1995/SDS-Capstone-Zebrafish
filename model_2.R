@@ -17,7 +17,7 @@ range(cyc_wild101at$r)
 library(Hmisc)
 #split(cyc_wild101at, cut2(cyc_wild101at$a, g=2))
 cyc_wild101at$group <- as.numeric(cut(cyc_wild101at$a, 50))
-
+data("ZRF_landmarks_1-24-18")
 
 library(ggplot2)
 library(dplyr)
