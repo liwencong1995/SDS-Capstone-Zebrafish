@@ -1,0 +1,63 @@
+---
+title: Classification of Wildtype and Mutant Zebrafish Brains via Computational Method
+author:
+  - name: Shuli Hu
+    affiliation: Smith College
+    email: \email{vhu@smith.edu}
+  - name: Wencong Li
+    affiliation: Smith College
+    email: \email{liwencong1995@gmail.com}
+  - name: Dejia Tang
+    affiliation: Smith College
+    email: \email{dtang@smith.edu}
+  - name: Ji Young Yun
+    affiliation: Smith College
+    email: \email{jyun38@smith.edu}
+address:
+  - code: Smith College
+    address: Statistical and Data Sciences, Northampton, MA
+abstract: |
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
+  
+author_summary: |
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
+
+bibliography: mybibfile.bib
+output: rticles::plos_article
+csl: plos.csl
+---
+
+_Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbiol/s/latex](http://journals.plos.org/ploscompbiol/s/latex)_
+
+# Introduction
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
+
+A list
+
+- Item 1
+- Item 2
+
+Here are two sample references: @Feynman1963118 [@Dirac1953888].
+
+## Literature Review
+## Contribution
+
+
+# Supporting Vector Machine
+## Tidy Data
+## Model
+## Cross Validation
+## Error Rate
+
+# Conclusion
+## Discussion
+## Future Study
+
+# References {#references .unnumbered}
+
+# Appendix
+# Figures
+# Python code
+
+
