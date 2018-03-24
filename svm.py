@@ -40,11 +40,11 @@ def svm_classification(landmarks, index):
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.7, random_state=2)
     
     # present the data
-    plt.figure(figsize=(8, 5))
+    '''plt.figure(figsize=(8, 5))
     plt.scatter(X.values[:,0], X.values[:,1], s=70, c=y, cmap=mpl.cm.Paired)
     plt.xlabel('X1')
     plt.ylabel('X2')
-    plt.show()
+    plt.show()'''
     
     # find the best C value by cross-validation
     tuned_parameters = [{'C': [0.01, 0.1, 1, 10, 100, 1000]}]
@@ -55,7 +55,7 @@ def svm_classification(landmarks, index):
     svc = SVC(C=best_c, kernel='linear')
     svc.fit(X, y)
     
-    plot_svc(svc, X.values, y)
+    #plot_svc(svc, X.values, y)
     
     prediction = svc.predict(X)
     # print confusion matrix
@@ -67,9 +67,21 @@ def svm_classification(landmarks, index):
     print(classification_report(y, 
                             prediction,
                             digits = 3))
-    return svc
+    # print accuracy score
+    print('Classification Accuracy: ')
+    accuracy = accuracy_score(y, prediction)
+    print(accuracy)
+    
+    return svc, accuracy
 
+sample_1 = landmarks[landmarks.sample_index==1]
+sample_1 = sample_1[np.isfinite(sample_1['r'])]
+landmarks_1 = sample_1['landmark_index']
 
-for i in range(1):
-    print("index: " + str(i))
-    svm_classification(landmarks, i+1)
+results = []
+for l in landmarks_1.values:
+    print ("landmark: ", str(l))
+    svc, accuracy = svm_classification(landmarks[landmarks.sample_index!=1], l)
+    prediction = svc.predict(sample_1[sample_1.landmark_index==1][['pts', 'r']])
+    results.append((l, prediction[0], accuracy))
+    print(results)
