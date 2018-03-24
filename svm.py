@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 
@@ -37,7 +36,6 @@ def svm_classification(landmarks, index):
     y = chosenLandmark['stype']
     y = y.replace(['mt-zrf'], 1)
     y = y.replace(['wt-zrf'], 0)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.7, random_state=2)
     
     # present the data
     '''plt.figure(figsize=(8, 5))
