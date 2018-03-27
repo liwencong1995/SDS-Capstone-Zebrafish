@@ -17,10 +17,10 @@ address:
   - code: Smith College
     address: Statistical and Data Sciences, Northampton, MA
 abstract: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
+ 
   
 author_summary: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
+
 
 bibliography: mybibfile.bib
 output: rticles::plos_article
@@ -30,19 +30,47 @@ csl: plos.csl
 _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbiol/s/latex](http://journals.plos.org/ploscompbiol/s/latex)_
 
 # Introduction
-## Literature Review
-## Contribution
+(PL)
 
+# Literature Review
+(Shuli)
+
+# Data
+(PL)
+48 Wildtypes
+14 mutants
+## Variables
+Number of points
+Median r
+## Missing Value
+Samples with missing values are eliminated by Supporting vector machine. For wedges that do not have any point in it, `median r` cannot be calculated, which means that these sample will be eliminated when running SVM. Wedges without points have biologically meanings, and we should not ignore these wedges in our model. In order to keep the wedges in our model, we need to artificially pick a `median r` value to replace the missing ones. Supporting vector machine is sensitive to outliers, so we cannot pick an `r` value that could become outliers. We decided to calculate the mean of `median r` for the nth landmark of all 52 samples, and then we replace the missing `median r` values with the mean.
+## Tidy Data
+(JY)
 
 # Supporting Vector Machine
-## Tidy Data
-## Model
-## Cross Validation
-## Error Rate
+## What is SVM?
+(SH)
+## Implementation
+### Cross-Validation
+(DT)
+## Result
+()
+## Visulization
+()
 
 # Conclusion
+()
 ## Discussion
+()
+Strength
+Limitation
+
 ## Future Study
+()
+Improvement
+Other models
+
+
 
 # References {#references .unnumbered}
 
