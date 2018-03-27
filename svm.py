@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
 
 # a function to draw a plot of an SVM
 def plot_svc(svc, X, y, h=0.02, pad=0.25):
@@ -25,7 +25,7 @@ def plot_svc(svc, X, y, h=0.02, pad=0.25):
     plt.ylabel('X2')
     plt.show()
 
-landmarks = pd.read_csv('./data/tidyLandmarks.csv')
+landmarks = pd.read_csv('./data/tidyLandmarks_no_na.csv')
 
 def svm_classification(landmarks, index):
     # filter out the landmarks needed
@@ -37,7 +37,15 @@ def svm_classification(landmarks, index):
     y = chosenLandmark['stype']
     y = y.replace(['mt-zrf'], 1)
     y = y.replace(['wt-zrf'], 0)
-    
+
+    # check whether both classes exist
+    count_1 = chosenLandmark['stype'].str.contains('mt-zrf').sum()
+    count_0 = chosenLandmark['stype'].str.contains('wt-zrf').sum()
+
+    print(count_1, count_0)
+    if (count_1 < 2 or count_0 < 2):
+        return None, None
+
     # present the data
     '''plt.figure(figsize=(8, 5))
     plt.scatter(X.values[:,0], X.values[:,1], s=70, c=y, cmap=mpl.cm.Paired)
@@ -67,13 +75,11 @@ def svm_classification(landmarks, index):
                             prediction,
                             digits = 3))
     # print accuracy score
-    print('Classification Accuracy: ')
-    accuracy = accuracy_score(y, prediction)
-    print(accuracy)
+    accuracy = f1_score(y, prediction)
     
     return svc, accuracy
 
-sample_1 = landmarks[landmarks.sample_index==1]
+sample_1 = landmarks[landmarks.sample_index==101]
 sample_1 = sample_1[np.isfinite(sample_1['r'])]
 landmarks_1 = sample_1['landmark_index']
 
@@ -82,6 +88,30 @@ for l in landmarks_1.values:
     print ("=======================================")
     print ("landmark: ", str(l))
     svc, accuracy = svm_classification(landmarks[landmarks.sample_index!=1], l)
+    if (svc is None or accuracy is None):
+        print("One of the classes have too few samples for this landmark, so skipping it.")
+        continue
     prediction = svc.predict(sample_1[sample_1.landmark_index==1][['pts', 'r']])
     results.append((l, prediction[0], accuracy))
     print(results)
+
+print ("=======================================")
+print("SAMPLE REPORT")
+r_sig = []
+for svm in results:
+    if svm[2]>0.5:
+        r_sig.append(svm)
+
+print("The sample has", str(len(results)), " landmarks.")
+print(str(len(r_sig)), " landmarks have f1 score larger than 0.5.")
+
+one = []
+zero = []
+for svm in r_sig:
+    if svm[1]==1:
+        one.append(svm)
+    else:
+        zero.append(svm)
+
+print("One was voted ", str(len(one)), " times.")
+print("Zero was voted ", str(len(zero)), " times.")
