@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
 
 # a function to draw a plot of an SVM
 def plot_svc(svc, X, y, h=0.02, pad=0.25):
@@ -78,6 +79,7 @@ landmarks_1 = sample_1['landmark_index']
 
 results = []
 for l in landmarks_1.values:
+    print ("=======================================")
     print ("landmark: ", str(l))
     svc, accuracy = svm_classification(landmarks[landmarks.sample_index!=1], l)
     prediction = svc.predict(sample_1[sample_1.landmark_index==1][['pts', 'r']])
