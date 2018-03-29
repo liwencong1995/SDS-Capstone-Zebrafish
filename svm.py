@@ -93,10 +93,11 @@ def svm_classification(landmarks, index):
 landmarks = pd.read_csv('./data/tidyLandmarks_no_na.csv')
 
 sample_index = int(input("Please enter sample index: "))
-result_file = input("Please enter result file name: ")
+result_file_name = str(input("Please enter result file name: "))
 
-result_file = open(result_file, 'w') 
+result_file = open(result_file_name, 'w') 
 result_file.write('landmark_index, pred, ww, wm, mm, mw\n')
+result_file.close() 
 
 sample_1 = landmarks[landmarks.sample_index==sample_index]
 sample_1 = sample_1[np.isfinite(sample_1['r'])]
@@ -114,9 +115,10 @@ for l in landmarks_1.values:
     result = ', '.join(str(x) for x in [l, prediction[0], ww, wm, mm, mw]) + '\n'
     results.append((l, prediction[0], ww, wm, mm, mw))
     print(results)
+    result_file = open(result_file_name, 'a') 
     result_file.write(result)
+    result_file.close() 
 
-result_file.close() 
 
 '''print ("=======================================")
 print("SAMPLE REPORT")
