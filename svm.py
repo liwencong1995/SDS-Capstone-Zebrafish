@@ -90,7 +90,7 @@ def svm_classification(landmarks, index):
     return svc, ww, wm, mm, mw
 
 # Read data
-landmarks = pd.read_csv('./data/tidyLandmarks_no_na.csv')
+landmarks = pd.read_csv('./data/tidyLandmarks_AT_no_na.csv')
 
 sample_index = int(input("Please enter sample index: "))
 result_file_name = str(input("Please enter result file name: "))
