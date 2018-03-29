@@ -40,9 +40,8 @@ def svm_classification(landmarks, index):
     count_1 = chosenLandmark['stype'].str.contains('mt-zrf').sum()
     count_0 = chosenLandmark['stype'].str.contains('wt-zrf').sum()
 
-    print(count_1, count_0)
     if (count_1 < 2 or count_0 < 2):
-        return None, None
+        return None, None, None, None, None
 
     # present the data
     '''plt.figure(figsize=(8, 5))
@@ -68,10 +67,6 @@ def svm_classification(landmarks, index):
     cm = confusion_matrix(y, prediction)
     cm_df = pd.DataFrame(cm.T, index=svc.classes_, columns=svc.classes_)
     print(cm_df)
-    print('Classification Report: ')
-    print(classification_report(y, 
-                            prediction,
-                            digits = 3))
     # print prediction results
     print('Classification Accuracy Results: ')
     ww =0
@@ -97,7 +92,13 @@ def svm_classification(landmarks, index):
 # Read data
 landmarks = pd.read_csv('./data/tidyLandmarks_no_na.csv')
 
-sample_1 = landmarks[landmarks.sample_index==101]
+sample_index = int(input("Please enter sample index: "))
+result_file = input("Please enter result file name: ")
+
+result_file = open(result_file, 'w') 
+result_file.write('landmark_index, pred, ww, wm, mm, mw\n')
+
+sample_1 = landmarks[landmarks.sample_index==sample_index]
 sample_1 = sample_1[np.isfinite(sample_1['r'])]
 landmarks_1 = sample_1['landmark_index']
 
@@ -106,12 +107,16 @@ for l in landmarks_1.values:
     print ("=======================================")
     print ("landmark: ", str(l))
     svc, ww, wm, mm, mw = svm_classification(landmarks[landmarks.sample_index!=1], l)
-    if (svc is None or accuracy is None):
+    if (svc is None):
         print("One of the classes have too few samples for this landmark, so skipping it.")
         continue
     prediction = svc.predict(sample_1[sample_1.landmark_index==1][['pts', 'r']])
+    result = ', '.join(str(x) for x in [l, prediction[0], ww, wm, mm, mw]) + '\n'
     results.append((l, prediction[0], ww, wm, mm, mw))
     print(results)
+    result_file.write(result)
+
+result_file.close() 
 
 '''print ("=======================================")
 print("SAMPLE REPORT")
