@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, precision_score, recall_score
 
 # a function to draw a plot of an SVM
 def plot_svc(svc, X, y, h=0.02, pad=0.25):
@@ -24,8 +24,6 @@ def plot_svc(svc, X, y, h=0.02, pad=0.25):
     plt.xlabel('X1')
     plt.ylabel('X2')
     plt.show()
-
-landmarks = pd.read_csv('./data/tidyLandmarks_no_na.csv')
 
 def svm_classification(landmarks, index):
     # filter out the landmarks needed
@@ -54,7 +52,7 @@ def svm_classification(landmarks, index):
     plt.show()'''
     
     # find the best C value by cross-validation
-    tuned_parameters = [{'C': [0.01, 0.1, 1, 10, 100, 1000]}]
+    tuned_parameters = [{'C': [0.1, 1, 10]}]
     clf = GridSearchCV(SVC(kernel='linear'), tuned_parameters, cv=10, scoring='accuracy')
     clf.fit(X.values, y.values)
     best_c = clf.best_params_['C']
@@ -74,10 +72,30 @@ def svm_classification(landmarks, index):
     print(classification_report(y, 
                             prediction,
                             digits = 3))
-    # print accuracy score
-    accuracy = f1_score(y, prediction)
+    # print prediction results
+    print('Classification Accuracy Results: ')
+    ww =0
+    wm = 0
+    mm = 0
+    mw = 0
     
-    return svc, accuracy
+    for i in range (len(y)):
+        _y = y.values[i]
+        _p = prediction[i]
+
+        if _y==1 and _p==1:
+            mm = mm + 1
+        elif _y==1 and _p==0:
+            mw = mw + 1
+        elif _y==0 and _p==0:
+            ww = ww + 1
+        elif _y==0 and _p==1:
+            wm = wm + 1
+    
+    return svc, ww, wm, mm, mw
+
+# Read data
+landmarks = pd.read_csv('./data/tidyLandmarks_no_na.csv')
 
 sample_1 = landmarks[landmarks.sample_index==101]
 sample_1 = sample_1[np.isfinite(sample_1['r'])]
@@ -87,15 +105,15 @@ results = []
 for l in landmarks_1.values:
     print ("=======================================")
     print ("landmark: ", str(l))
-    svc, accuracy = svm_classification(landmarks[landmarks.sample_index!=1], l)
+    svc, ww, wm, mm, mw = svm_classification(landmarks[landmarks.sample_index!=1], l)
     if (svc is None or accuracy is None):
         print("One of the classes have too few samples for this landmark, so skipping it.")
         continue
     prediction = svc.predict(sample_1[sample_1.landmark_index==1][['pts', 'r']])
-    results.append((l, prediction[0], accuracy))
+    results.append((l, prediction[0], ww, wm, mm, mw))
     print(results)
 
-print ("=======================================")
+'''print ("=======================================")
 print("SAMPLE REPORT")
 r_sig = []
 for svm in results:
@@ -114,4 +132,4 @@ for svm in r_sig:
         zero.append(svm)
 
 print("One was voted ", str(len(one)), " times.")
-print("Zero was voted ", str(len(zero)), " times.")
+print("Zero was voted ", str(len(zero)), " times.")'''
