@@ -123,6 +123,7 @@ for l in landmarks_1.values:
     result_file.write(result)
 
 result_file.close() 
+=======
     result_file = open(result_file_name, 'a') 
     result_file.write(result)
     result_file.close() 
