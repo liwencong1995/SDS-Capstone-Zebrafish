@@ -33,12 +33,14 @@ def svm_classification(landmarks, index):
     # create training and testing data
     X = chosenLandmark[['pts', 'r']]
     y = chosenLandmark['stype']
-    y = y.replace(['mt-zrf'], 1)
-    y = y.replace(['wt-zrf'], 0)
+    #y = y.replace(['mt-zrf'], 1)
+    y = y.replace(['mt-at'], 1)
+    #y = y.replace(['wt-zrf'], 0)
+    y = y.replace(['wt-at'], 0)
 
     # check whether both classes exist
-    count_1 = chosenLandmark['stype'].str.contains('mt-zrf').sum()
-    count_0 = chosenLandmark['stype'].str.contains('wt-zrf').sum()
+    count_1 = chosenLandmark['stype'].str.contains('mt-at').sum()
+    count_0 = chosenLandmark['stype'].str.contains('wt-at').sum()
 
     if (count_1 < 2 or count_0 < 2):
         return None, None, None, None, None
@@ -90,8 +92,8 @@ def svm_classification(landmarks, index):
     return svc, ww, wm, mm, mw
 
 # Read data
-#landmarks = pd.read_csv('./data/tidyLandmarks_AT_no_na.csv')
-landmarks = pd.read_csv('./data/tidyLandmarks_ZRF_no_na.csv')
+landmarks = pd.read_csv('./data/tidyLandmarks_AT_no_na.csv')
+#landmarks = pd.read_csv('./data/tidyLandmarks_ZRF_no_na.csv')
 
 sample_index = int(input("Please enter sample index: "))
 #result_file = input("Please enter result file name: ")
