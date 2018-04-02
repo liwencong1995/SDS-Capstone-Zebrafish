@@ -1,10 +1,29 @@
 library(data.table)
 library(dplyr)
 #read in data needed to create vis
+
+
 r1_AT <- fread("results/r1_AT.csv")
 r1_ZRF <- fread("results/r1_ZRF.csv")
 landmark_AT <- fread("data/tidyLandmarks_AT_no_na.csv")
 landmark_label_ZRF <- fread("data/tidyLandmarks_ZRF.csv")
+
+landmark_AT <- landmark_AT%>%
+  arrange(sample_index) %>%
+  select(-landmark_index, -V1) %>%
+  unique() 
+
+landmark_AT_test <- landmark_AT %>%
+  group_by(sample_index, min_alpha, min_theta)%>%
+  summarise(N=n())
+  
+
+test_num_sample <- landmark_AT%>%
+  group_by(landmark_index, sample_index) %>%
+  summarise(N=n()) %>%
+  filter(N > 1)
+landmark_AT_cleaned <- unique(landmark_AT[ , 3:10 ] )
+
 
 #--------------------------------AT---------------------------------
 #label each landmark with (x,y) format
