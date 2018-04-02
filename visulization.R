@@ -1,8 +1,53 @@
 library(data.table)
 library(dplyr)
+
+#--------------------------------AT---------------------------------
+#read in data to add indicies
+landmark_AT_raw <- fread("data/tidyLandmarks_AT_updated.csv")
+landmark_AT_raw <- landmark_AT_raw %>%
+  select(-V1) 
+str(landmark_AT_raw)
+landmark_AT_raw_index <- landmark_AT_raw %>%
+  mutate(unique_key = paste0(min_alpha, "/", min_theta)) %>%
+  mutate(min_alpha = as.numeric(min_alpha),
+         max_alpha = as.numeric(max_alpha),
+         min_theta = as.numeric(min_theta),
+         max_theta = as.numeric(max_theta)) %>%
+  arrange(min_alpha, min_theta) %>%
+  group_by(min_alpha, min_theta)
+
+#assign indices  
+str(landmark_AT_raw_index)
+landmark_AT_w_index <- transform(landmark_AT_raw_index, id = match(unique_key, unique(unique_key)))
+landmark_AT_w_index <- landmark_AT_w_index %>%
+  rename(sample_index = Index,
+         landmark_index = id)
+fwrite(landmark_AT_w_index, "data/landmark_AT_w_index.csv")
+
+#--------------------------------ZRF---------------------------------
+#read in data to add indicies
+landmark_ZRF_raw <- fread("data/tidyLandmarks_ZRF_updated.csv")
+landmark_ZRF_raw <- landmark_ZRF_raw %>%
+  select(-V1) 
+#str(landmark_ZRF_raw)
+landmark_ZRF_raw_index <- landmark_ZRF_raw %>%
+  mutate(unique_key = paste0(min_alpha, "/", min_theta)) %>%
+  mutate(min_alpha = as.numeric(min_alpha),
+         max_alpha = as.numeric(max_alpha),
+         min_theta = as.numeric(min_theta),
+         max_theta = as.numeric(max_theta)) %>%
+  arrange(min_alpha, min_theta) %>%
+  group_by(min_alpha, min_theta)
+
+#assign indices  
+#str(landmark_ZRF_raw_index)
+landmark_ZRF_w_index <- transform(landmark_ZRF_raw_index, id = match(unique_key, unique(unique_key)))
+landmark_ZRF_w_index <- landmark_ZRF_w_index %>%
+  rename(sample_index = Index,
+         landmark_index = id)
+fwrite(landmark_ZRF_w_index, "data/landmark_ZRF_w_index.csv")
+#--------------------------------------------------------------------
 #read in data needed to create vis
-
-
 r1_AT <- fread("results/r1_AT.csv")
 r1_ZRF <- fread("results/r1_ZRF.csv")
 landmark_AT <- fread("data/tidyLandmarks_AT_no_na.csv")
@@ -23,6 +68,8 @@ test_num_sample <- landmark_AT%>%
   summarise(N=n()) %>%
   filter(N > 1)
 landmark_AT_cleaned <- unique(landmark_AT[ , 3:10 ] )
+
+
 
 
 #--------------------------------AT---------------------------------
