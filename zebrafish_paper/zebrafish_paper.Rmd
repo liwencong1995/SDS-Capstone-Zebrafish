@@ -50,6 +50,8 @@ Samples with missing values are eliminated by Supporting vector machine. For wed
 # Supporting Vector Machine
 ## What is SVM?
 (SH)
+SVM’s have been proven to be a powerful algorithm for supervised clustering. A good separation is achieved by the hyperplane that has the largest distance to the nearest training-data point of any class. 
+
 ## Implementation
 ### Cross-Validation
 (DT)
