@@ -92,14 +92,15 @@ def svm_classification(landmarks, index):
     return svc, ww, wm, mm, mw
 
 # Read data
+<<<<<<< HEAD
 landmarks = pd.read_csv('./data/tidyLandmarks_AT_no_na.csv')
 #landmarks = pd.read_csv('../data/tidyLandmarks_ZRF_no_na.csv')
+=======
+landmarks = pd.read_csv('./data/landmark_AT_w_index_no_na.csv')
+#landmarks = pd.read_csv('./data/landmark_ZRF_w_index_no_na.csv')
+>>>>>>> 3dc917864ad11977ff05a20189eb5c2552970320
 
-sample_index = int(input("Please enter sample index: "))
-#result_file = input("Please enter result file name: ")
-
-#result_file = open(result_file, 'w') 
-#result_file.write('landmark_index, pred, ww, wm, mm, mw\n')
+sample_id = str(input("Please enter sample index: "))
 
 result_file_name = str(input("Please enter result file name: "))
 
@@ -107,25 +108,23 @@ result_file = open(result_file_name, 'w')
 result_file.write('landmark_index, pred, ww, wm, mm, mw\n')
 result_file.close() 
 
-sample_1 = landmarks[landmarks.sample_index==sample_index]
-sample_1 = sample_1[np.isfinite(sample_1['r'])]
-landmarks_1 = sample_1['landmark_index']
+sample = landmarks[landmarks.sample_index==sample_id]
+landmark_ids = sample['landmark_index']
 
 results = []
-for l in landmarks_1.values:
+leave_one_out = landmarks[landmarks.sample_index!=sample_id]
+for l in landmark_ids.values:
     print ("=======================================")
     print ("landmark: ", str(l))
-    svc, ww, wm, mm, mw = svm_classification(landmarks[landmarks.sample_index!=1], l)
+    svc, ww, wm, mm, mw = svm_classification(leave_one_out, l)
     if (svc is None):
         print("One of the classes have too few samples for this landmark, so skipping it.")
         continue
-    prediction = svc.predict(sample_1[sample_1.landmark_index==1][['pts', 'r']])
+    prediction = svc.predict(sample[sample.landmark_index==l][['pts', 'r']])
     result = ', '.join(str(x) for x in [l, prediction[0], ww, wm, mm, mw]) + '\n'
     results.append((l, prediction[0], ww, wm, mm, mw))
     print(results)
-    #result_file.write(result)
 
-    #result_file.close() 
     result_file = open(result_file_name, 'a') 
     result_file.write(result)
     result_file.close() 
