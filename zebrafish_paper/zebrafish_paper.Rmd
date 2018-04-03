@@ -32,6 +32,13 @@ _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbio
 # Introduction
 (PL)
 
+## Programming languages used
+### Python 
+
+### R
+
+### Git
+
 # Literature Review
 (Shuli)
 
@@ -39,13 +46,18 @@ _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbio
 (PL)
 48 Wildtypes
 14 mutants
+
 ## Variables
 Number of points
 Median r
+Alpha
+Theta
+
 ## Missing Value
 Samples with missing values are eliminated by Supporting vector machine. For wedges that do not have any point in it, `median r` cannot be calculated, which means that these sample will be eliminated when running SVM. Wedges without points have biologically meanings, and we should not ignore these wedges in our model. In order to keep the wedges in our model, we need to artificially pick a `median r` value to replace the missing ones. Supporting vector machine is sensitive to outliers, so we cannot pick an `r` value that could become outliers. We decided to calculate the mean of `median r` for the nth landmark of all 52 samples, and then we replace the missing `median r` values with the mean.
+
 ## Tidy Data
-(JY)
+The original landmarks data is a wide table containing the sample index and all the columns holding information regarding the minimum and maximum values of Alpha and Theta, number of points, median r value, and the type of sample for a particular sample in each landmark. However, because all of such variables were joined by underscores in the variable names, such as `-14.29_-4.76_-0.79_0.0_50_pts` or `-14.29_-4.76_-0.79_0.0_50_r` and the value in each cell refers to the median r value, it was very difficult to see what each column actually represented. The ideal format of the data set was to have the sample index, minimum and maximum Alpha, minimum and maximum Theta, number of points, median r, and type of sample each be its own column. Hence, three key functions were used from the tidyr package: gather, separate, and spread. The gather function separated the dataset into key and value pairs for each index. The key was the column name containing all essential information connected by underscores and the value included the number of points or median r value.  
 
 # Supporting Vector Machine
 ## What is SVM?
