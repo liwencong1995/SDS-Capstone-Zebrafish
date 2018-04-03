@@ -34,8 +34,8 @@ def svm_classification(landmarks, index):
     X = chosenLandmark[['pts', 'r']]
     y = chosenLandmark['stype']
     #y = y.replace(['mt-zrf'], 1)
-    y = y.replace(['mt-at'], 1)
     #y = y.replace(['wt-zrf'], 0)
+    y = y.replace(['mt-at'], 1)
     y = y.replace(['wt-at'], 0)
 
     # check whether both classes exist
@@ -93,7 +93,7 @@ def svm_classification(landmarks, index):
 
 # Read data
 landmarks = pd.read_csv('./data/tidyLandmarks_AT_no_na.csv')
-#landmarks = pd.read_csv('./data/tidyLandmarks_ZRF_no_na.csv')
+#landmarks = pd.read_csv('../data/tidyLandmarks_ZRF_no_na.csv')
 
 sample_index = int(input("Please enter sample index: "))
 #result_file = input("Please enter result file name: ")
