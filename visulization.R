@@ -47,9 +47,7 @@ landmark_ZRF_w_index <- landmark_ZRF_w_index %>%
          landmark_index = id)
 fwrite(landmark_ZRF_w_index, "data/landmark_ZRF_w_index.csv")
 
-
-
-#--------------------------------------------------------------------
+#----------------------------------landmark relative position----------------------------------
 #read in data needed to create vis
 r1_AT <- fread("results/r1_AT.csv")
 r1_ZRF <- fread("results/r1_ZRF.csv")
@@ -86,20 +84,40 @@ landmark_label_AT <- landmark_label_AT %>%
   group_by(min_alpha) %>% mutate(x = row_number())
 landmark_label_AT <- landmark_label_AT %>% 
   group_by(min_theta) %>% mutate(y = row_number())
-# double check that there are 8 landmarks in each alpha slice
-test_AT_x <- landmark_label_AT %>%
-  group_by(y) %>%
-  summarise(N = n())
-max(test_AT_x$N)
-min(test_AT_x$N)
-# double check that there are 30 landmarks in each theta range
-test_AT_y <- landmark_label_AT %>%
-  group_by(x) %>%
-  summarise(N = n())
-max(test_AT_y$N)
-min(test_AT_y$N)
-# there are only 19 landmarks in each theta range
+
+# # double check that there are 8 landmarks in each alpha slice
+# test_AT_x <- landmark_label_AT %>%
+#   group_by(y) %>%
+#   summarise(N = n())
+# max(test_AT_x$N)
+# min(test_AT_x$N)
+# # double check that there are 30 landmarks in each theta range
+# test_AT_y <- landmark_label_AT %>%
+#   group_by(x) %>%
+#   summarise(N = n())
+# max(test_AT_y$N)
+# min(test_AT_y$N)
+# # there are only 19 landmarks in each theta range
 
 # Output landmark label
 landmark_label_AT_output <- landmark_label_AT[, c(1,7:8)]
-fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv")  
+fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv") 
+
+#----------------------------------add visualization----------------------------------
+#read in data to ccreate vis
+landmark_xy <- fread("analysis/landmark_xy.csv")
+AT_101 <- fread("analysis/AT_101_result.csv")
+AT_101_vis <- AT_101 %>%
+  select(-V1) %>%
+  left_join(landmark_xy, by="landmark_index")
+heatmap(AT_101_vis$w_precision, Rowv=AT_101_vis$x, Colv=AT_101_vis$y)
+library(ggplot2)
+ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+  geom_tile(aes(fill = w_precision))
+
+
+
+
+
+
+
