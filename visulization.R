@@ -112,9 +112,26 @@ AT_101_vis <- AT_101 %>%
   left_join(landmark_xy, by="landmark_index")
 heatmap(AT_101_vis$w_precision, Rowv=AT_101_vis$x, Colv=AT_101_vis$y)
 library(ggplot2)
+
+#----------------Wildtype-----------------
 ggplot(data = AT_101_vis, aes(x = x, y = y)) +
   geom_tile(aes(fill = w_precision))
 
+ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+  geom_tile(aes(fill = w_recall))
+
+ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+  geom_tile(aes(fill = w_f1))
+
+#----------------Mutant-----------------
+ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+  geom_tile(aes(fill = m_precision))
+
+ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+  geom_tile(aes(fill = m_recall))
+
+ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+  geom_tile(aes(fill = m_f1))
 
 
 
