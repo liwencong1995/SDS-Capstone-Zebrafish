@@ -135,28 +135,10 @@ Ji Young Yun\textsuperscript{\getAff{Smith College}}\\
 \bigskip
 \end{flushleft}
 % Please keep the abstract below 300 words
-\section*{Abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget
-porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut
-dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id
-velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus
-finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium
-diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut
-ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit
-pulvinar, volutpat risus.
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLOS ONE authors please skip this step. 
 % Author Summary not valid for PLOS ONE submissions.   
-\section*{Author summary}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget
-porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut
-dui eu ante cursus gravida non sed sem. Nullam sapien tellus, commodo id
-velit id, eleifend volutpat quam. Phasellus mauris velit, dapibus
-finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium
-diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut
-ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit
-pulvinar, volutpat risus.
 
 \linenumbers
 
@@ -166,61 +148,101 @@ pulvinar, volutpat risus.
 
 \section{Introduction}\label{introduction}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget
-porta erat. Morbi consectetur est vel gravida pretium. Suspendisse ut
-dui eu ante cursus gravida non sed sem. Phasellus mauris velit, dapibus
-finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium
-diam, quis maximus dolor faucibus id. Nunc convallis sodales ante, ut
-ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit
-pulvinar, volutpat risus.
+(PL)
 
-A list
+\subsection{Programming languages
+used}\label{programming-languages-used}
 
-\begin{itemize}
-\tightlist
-\item
-  Item 1
-\item
-  Item 2
-\end{itemize}
+\subsubsection{Python}\label{python}
 
-Here are two sample references: {[}1{]}.
+\subsubsection{R}\label{r}
 
-\subsection{Literature Review}\label{literature-review}
+\subsubsection{Git}\label{git}
 
-\subsection{Contribution}\label{contribution}
+\section{Literature Review}\label{literature-review}
 
-\section{Supporting Vector Machine}\label{supporting-vector-machine}
+(Shuli)
+
+\section{Data}\label{data}
+
+(PL) 48 Wildtypes 14 mutants
+
+\subsection{Variables}\label{variables}
+
+Number of points Median r Alpha Theta
 
 \subsection{Tidy Data}\label{tidy-data}
 
-\subsection{Model}\label{model}
+The original landmarks data is a wide table containing the sample index
+and all the columns holding information regarding the minimum and
+maximum values of Alpha and Theta, number of points, median r value, and
+the type of sample for a particular sample in each landmark. However,
+because all of such variables were joined by underscores in the variable
+names, such as \texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_pts} or
+\texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_r} and the value in each cell
+refers to the median r value or number of points, it was very difficult
+to see what each column actually represented. The ideal format of the
+data set was to have the sample index, minimum and maximum Alpha,
+minimum and maximum Theta, number of points, median r, and type of
+sample each be its own column. Hence, three key functions were used from
+the tidyr package: gather, separate, and spread. The gather function
+separated the dataset into key and value pairs for each index. The key
+was the column name containing all essential information connected by
+underscores and the value included the number of points or median r
+value. Then, the separate function separated the result from the gather
+function divided the column connected by underscore into 5 different
+columns, named as \texttt{min\_alpha}, \texttt{max\_alpha},
+\texttt{min\_theta}, \texttt{max\_theta}, and \texttt{ptsOrR}. This was
+added to the result of the gather function that contained the index and
+value of each cell, either median R or number of points. Finally, the
+spread function widened the already wide table by expanding the
+\texttt{ptsOrR} column by creating two columns, each column representing
+median R and the number of points.
 
-\subsection{Cross Validation}\label{cross-validation}
+\subsection{Missing Value}\label{missing-value}
 
-\subsection{Error Rate}\label{error-rate}
+Samples with missing values are eliminated by Supporting vector machine.
+For wedges that do not have any point in it, \texttt{median\ r} cannot
+be calculated, which means that these sample will be eliminated when
+running SVM. Wedges without points have biologically meanings, and we
+should not ignore these wedges in our model. In order to keep the wedges
+in our model, we need to artificially pick a \texttt{median\ r} value to
+replace the missing ones. Supporting vector machine is sensitive to
+outliers, so we cannot pick an \texttt{r} value that could become
+outliers. We decided to calculate the mean of \texttt{median\ r} for the
+nth landmark of all 52 samples, and then we replace the missing
+\texttt{median\ r} values with the mean.
+
+\section{Supporting Vector Machine}\label{supporting-vector-machine}
+
+\subsection{What is SVM?}\label{what-is-svm}
+
+(SH) SVM's have been proven to be a powerful algorithm for supervised
+clustering. A good separation is achieved by the hyperplane that has the
+largest distance to the nearest training-data point of any class.
+
+\subsection{Implementation}\label{implementation}
+
+\subsubsection{Cross-Validation}\label{cross-validation}
+
+(DT) \#\# Result () \#\# Visulization ()
 
 \section{Conclusion}\label{conclusion}
 
-\subsection{Discussion}\label{discussion}
+() \#\# Discussion () Strength Limitation
 
 \subsection{Future Study}\label{future-study}
+
+() Improvement Other models
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
 \section{Appendix}\label{appendix}
 
-\section{Figures}\label{figures}
+\subsection{Figures}\label{figures}
 
-\section*{Python code}\label{python-code}
-\addcontentsline{toc}{section}{Python code}
-
-\hypertarget{refs}{}
-\hypertarget{ref-Dirac1953888}{}
-1. Dirac P. The lorentz transformation and absolute time. Physica.
-1953;19: 888--896.
-doi:\href{https://doi.org/10.1016/S0031-8914(53)80099-6}{10.1016/S0031-8914(53)80099-6}
+\subsection{Python code}\label{python-code}
 
 \nolinenumbers
 
