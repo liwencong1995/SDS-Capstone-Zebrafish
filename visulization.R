@@ -49,7 +49,7 @@ fwrite(landmark_ZRF_w_index, "data/landmark_ZRF_w_index.csv")
 
 #----------------------------------landmark relative position----------------------------------
 #read in data needed to create vis
-r1_AT <- fread("results/r1_AT.csv")
+r1_AT <- fread("output/r1_AT.csv")
 r1_ZRF <- fread("results/r1_ZRF.csv")
 landmark_label_raw <- fread("data/landmark_AT_w_index_no_na.csv")
 
