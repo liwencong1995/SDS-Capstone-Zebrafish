@@ -48,27 +48,23 @@ landmark_ZRF_w_index <- landmark_ZRF_w_index %>%
 fwrite(landmark_ZRF_w_index, "data/landmark_ZRF_w_index.csv")
 
 #----------------------------------landmark relative position----------------------------------
-#read in data needed to create vis
-r1_AT <- fread("output/r1_AT.csv")
-r1_ZRF <- fread("results/r1_ZRF.csv")
-landmark_label_raw <- fread("data/landmark_AT_w_index_no_na.csv")
-
-landmark_AT <- landmark_label_raw%>%
+#--------------------------------AT---------------------------------
+#read in data needed to create landmark labels
+landmark_label_raw_AT <- fread("data/landmark_AT_w_index_no_na.csv")
+landmark_AT <- landmark_label_raw_AT%>%
   arrange(sample_index) %>%
   select(-unique_key, -V1)
 
-landmark_AT_test <- landmark_AT %>%
-  group_by(sample_index, min_alpha, min_theta)%>%
-  summarise(N=n())
-#passed the test
-
-test_num_sample <- landmark_AT%>%
-  group_by(landmark_index, sample_index) %>%
-  summarise(N=n()) %>%
-  filter(N > 1)
+# landmark_AT_test <- landmark_AT %>%
+#   group_by(sample_index, min_alpha, min_theta)%>%
+#   summarise(N=n())
+# #passed the test
+# 
+# test_num_sample <- landmark_AT%>%
+#   group_by(landmark_index, sample_index) %>%
+#   summarise(N=n()) %>%
+#   filter(N > 1)
 landmark_AT_cleaned <- unique(landmark_AT[ , 3:10 ] )
-
-#--------------------------------AT---------------------------------
 #label each landmark with (x,y) format
 # x = row number
 #y = column number
@@ -84,7 +80,11 @@ landmark_label_AT <- landmark_label_AT %>%
   group_by(min_alpha) %>% mutate(x = row_number())
 landmark_label_AT <- landmark_label_AT %>% 
   group_by(min_theta) %>% mutate(y = row_number())
+# Output landmark label
+landmark_label_AT_output <- landmark_label_AT[, c(1,7:8)]
+fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv") 
 
+#--------------------------------ZRF---------------------------------
 # # double check that there are 8 landmarks in each alpha slice
 # test_AT_x <- landmark_label_AT %>%
 #   group_by(y) %>%
@@ -99,11 +99,9 @@ landmark_label_AT <- landmark_label_AT %>%
 # min(test_AT_y$N)
 # # there are only 19 landmarks in each theta range
 
-# Output landmark label
-landmark_label_AT_output <- landmark_label_AT[, c(1,7:8)]
-fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv") 
 
-#----------------------------------add visualization----------------------------------
+
+#----------------------------------add visualizations----------------------------------
 #read in data to ccreate vis
 landmark_xy <- fread("analysis/landmark_xy.csv")
 AT_101 <- fread("analysis/AT_101_result.csv")
@@ -114,23 +112,23 @@ heatmap(AT_101_vis$w_precision, Rowv=AT_101_vis$x, Colv=AT_101_vis$y)
 library(ggplot2)
 
 #----------------Wildtype-----------------
-ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_precision))
 
-ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_recall))
 
-ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_f1))
 
 #----------------Mutant-----------------
-ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = m_precision))
 
-ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = m_recall))
 
-ggplot(data = AT_101_vis, aes(x = x, y = y)) +
+ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = m_f1))
 
 
