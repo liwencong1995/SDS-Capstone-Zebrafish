@@ -94,7 +94,8 @@ def svm_classification(landmarks, index):
     return svc, ww, wm, mm, mw
 
 # Read data
-landmarks = pd.read_csv('./data/landmark_AT_filled_w_median.csv')
+data = int(input("Enter 0 for filling with median and 1 for filling with 2*median: "))
+landmarks = pd.read_csv('./data/landmark_AT_filled_w_median.csv') if data==0 else pd.read_csv('./data/landmark_AT_filled_w_2median.csv')
 
 sample_id = str(input("Please enter sample index: "))
 sample_id2 = str(input("Please enter the second sample index: "))
