@@ -50,7 +50,22 @@ fwrite(landmark_ZRF_w_index, "data/landmark_ZRF_w_index.csv")
 #----------------------------------landmark relative position----------------------------------
 #--------------------------------AT---------------------------------
 #read in data needed to create landmark labels
-landmark_label_raw_AT <- fread("data/landmark_AT_w_index_no_na.csv")
+AT_2M <- fread("data/landmark_AT_filled_w_2median.csv")
+AT_M <- fread("data/landmark_AT_filled_w_median.csv")
+ZRF_2M <- fread("data/landmark_ZRF_filled_w_2median.csv")
+ZRF_M <- fread("data/landmark_ZRF_filled_w_median.csv")
+
+AT_2M <- unique(AT_2M[, 2:12])
+AT_M <- fread("data/landmark_AT_filled_w_median.csv")
+ZRF_2M <- fread("data/landmark_ZRF_filled_w_2median.csv")
+ZRF_M <- fread("data/landmark_ZRF_filled_w_median.csv")
+
+landmark_label_raw_AT <- fread("data/landmark_AT_filled_w_median.csv")
+
+test <- landmark_label_raw_AT %>%
+  group_by(sample_index, landmark_index) %>%
+  summarise(N = n())
+
 landmark_AT <- landmark_label_raw_AT%>%
   arrange(sample_index) %>%
   select(-unique_key, -V1)
@@ -64,7 +79,7 @@ landmark_AT <- landmark_label_raw_AT%>%
 #   group_by(landmark_index, sample_index) %>%
 #   summarise(N=n()) %>%
 #   filter(N > 1)
-landmark_AT_cleaned <- unique(landmark_AT[ , 3:10 ] )
+landmark_AT_cleaned <- unique(landmark_AT[ , c(1,10)] )
 #label each landmark with (x,y) format
 # x = row number
 #y = column number
