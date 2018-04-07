@@ -99,18 +99,20 @@ landmarks = pd.read_csv('./data/landmark_AT_filled_w_median.csv') if data==0 els
 
 sample_id = str(input("Please enter sample index: "))
 sample_id2 = str(input("Please enter the second sample index: "))
-sample_id3 = str(input("Please enter the third sample index: "))
-sample_id4 = str(input("Please enter the fourth sample index: "))
+#sample_id3 = str(input("Please enter the third sample index: "))
+#sample_id4= str(input("Please enter the fourth sample index: "))
 
 result_file_name = str(input("Please enter result file name: "))
 result_file_name2 = str(input("Please enter the second result file name: "))
-result_file_name3 = str(input("Please enter the third result file name: "))
-result_file_name4 = str(input("Please enter the fourth result file name: "))
+#result_file_name3 = str(input("Please enter the third result file name: "))
+#result_file_name4 = str(input("Please enter the fourth result file name: "))
 
-sample_ids = [sample_id, sample_id2, sample_id3, sample_id4]
-result_file_names = [result_file_name, result_file_name2, result_file_name3, result_file_name4]
+#sample_ids = [sample_id, sample_id2, sample_id3, sample_id4]
+sample_ids = [sample_id, sample_id2]
+#result_file_names = [result_file_name, result_file_name2, result_file_name3, result_file_name4]
+result_file_names = [result_file_name, result_file_name2]
 
-for i in range(4):
+for i in range(2):
 	result_file_name = result_file_names[i]
 	sample_id = sample_ids[i]
 
