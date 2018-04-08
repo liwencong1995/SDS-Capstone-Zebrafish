@@ -10,8 +10,8 @@ landmark_AT_1 <- landmark_AT %>%
   mutate(Index = ifelse(Index == 112 & stype == "mt-at", "112_2", Index))
 
 landmark_ZRF_1 <- landmark_ZRF %>%
-  mutate(Index = ifelse(Index == 112 & stype == "wt-at", "112_1", Index)) %>%
-  mutate(Index = ifelse(Index == 112 & stype == "mt-at", "112_2", Index))
+  mutate(Index = ifelse(Index == 112 & stype == "wt-zrf", "112_1", Index)) %>%
+  mutate(Index = ifelse(Index == 112 & stype == "mt-zrf", "112_2", Index))
 
 fwrite(landmark_AT_1, "data/AT_landmarks.csv")
 fwrite(landmark_ZRF_1, "data/ZRF_landmarks.csv")
