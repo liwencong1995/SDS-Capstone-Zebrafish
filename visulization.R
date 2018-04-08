@@ -1,6 +1,21 @@
 library(data.table)
 library(dplyr)
 
+#--------------------------------Adding new labels-------------------
+landmark_AT <- fread("data/AT_landmarks_3-28-18.csv")
+landmark_ZRF <- fread("data/ZRF_landmarks_3-29-18.csv")
+
+landmark_AT_1 <- landmark_AT %>%
+  mutate(Index = ifelse(Index == 112 & stype == "wt-at", "112_1", Index)) %>%
+  mutate(Index = ifelse(Index == 112 & stype == "mt-at", "112_2", Index))
+
+landmark_ZRF_1 <- landmark_ZRF %>%
+  mutate(Index = ifelse(Index == 112 & stype == "wt-at", "112_1", Index)) %>%
+  mutate(Index = ifelse(Index == 112 & stype == "mt-at", "112_2", Index))
+
+fwrite(landmark_AT_1, "data/AT_landmarks.csv")
+fwrite(landmark_ZRF_1, "data/ZRF_landmarks.csv")
+
 #--------------------------------AT---------------------------------
 #read in data to add indicies
 landmark_AT_raw <- fread("~/Desktop/SDS-Capstone-Zebrafish/data/tidyLandmarks_AT_new.csv")
