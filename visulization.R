@@ -15,10 +15,10 @@ landmark_ZRF_1 <- landmark_ZRF %>%
 
 fwrite(landmark_AT_1, "data/AT_landmarks.csv")
 fwrite(landmark_ZRF_1, "data/ZRF_landmarks.csv")
-
+#--------------------------------add indicies---------------------------
 #--------------------------------AT---------------------------------
-#read in data to add indicies
-landmark_AT_raw <- fread("~/Desktop/SDS-Capstone-Zebrafish/data/tidyLandmarks_AT_new.csv")
+#read in data 
+landmark_AT_raw <- fread("data/tidyLandmarks_AT_new.csv")
 landmark_AT_raw <- landmark_AT_raw %>%
   select(-V1) 
 str(landmark_AT_raw)
@@ -37,11 +37,11 @@ landmark_AT_w_index <- transform(landmark_AT_raw_index, id = match(unique_key, u
 landmark_AT_w_index <- landmark_AT_w_index %>%
   rename(sample_index = Index,
          landmark_index = id)
-fwrite(landmark_AT_w_index, "~/Desktop/SDS-Capstone-Zebrafish/data/landmark_AT_w_index.csv")
+fwrite(landmark_AT_w_index, "data/landmark_AT_w_index.csv")
 
 #--------------------------------ZRF---------------------------------
 #read in data to add indicies
-landmark_ZRF_raw <- fread("data/tidyLandmarks_ZRF_updated.csv")
+landmark_ZRF_raw <- fread("data/tidyLandmarks_ZRF_new.csv")
 landmark_ZRF_raw <- landmark_ZRF_raw %>%
   select(-V1) 
 #str(landmark_ZRF_raw)
