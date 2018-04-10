@@ -28,11 +28,10 @@ landmark_AT_raw_index <- landmark_AT_raw %>%
          max_alpha = as.numeric(max_alpha),
          min_theta = as.numeric(min_theta),
          max_theta = as.numeric(max_theta)) %>%
-  arrange(min_alpha, min_theta) %>%
-  group_by(min_alpha, min_theta)
+  arrange(min_alpha, min_theta)
 
 #assign indices  
-str(landmark_AT_raw_index)
+#str(landmark_AT_raw_index)
 landmark_AT_w_index <- transform(landmark_AT_raw_index, id = match(unique_key, unique(unique_key)))
 landmark_AT_w_index <- landmark_AT_w_index %>%
   rename(sample_index = Index,
