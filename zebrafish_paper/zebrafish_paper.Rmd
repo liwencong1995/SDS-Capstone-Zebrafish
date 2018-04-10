@@ -64,6 +64,17 @@ Samples with missing values are eliminated by Supporting vector machine. For wed
 (SH)
 SVM’s have been proven to be a powerful algorithm for supervised clustering. A good separation is achieved by the hyperplane that has the largest distance to the nearest training-data point of any class. 
 
+###The optimization problem
+
+- The function of the hyperplane:
+
+$f(x) = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 $
+
+if $f(x) = 0$: the observation is on the hyperplane. 
+
+$ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$ is the perpendicular distance from the ith observation to the hyperplane. If it's >0, the observation falls at the right side of the hyperplane and vice versa.
+
+
 ## Implementation
 ### Cross-Validation
 (DT)
