@@ -32,6 +32,9 @@ landmark_ZRF_median <- landmark_ZRF %>%
   mutate(r_new = ifelse(is.na(r)==TRUE, median, r),
          r2_new = ifelse(is.na(r)==TRUE, median_2, r))
 fwrite(landmark_ZRF_median, "data/landmark_ZRF_median.csv")
+
+#----------------------------------------------------------
+landmark_AT_filled_w_median <- fread("data/landmark_ZRF_w_index.csv")
 landmark_AT_filled_w_median <- landmark_AT_filled_w_median %>%
   arrange(landmark_index, sample_index)
 
@@ -39,5 +42,4 @@ one <- landmark_AT_filled_w_median[, c(2, 12,10, 9,8)]
 one$r_new <- landmark_AT_median$r_new
 one <- one %>%
   mutate(equal = ifelse(r == r_new, 1, 0))
-
 test <- as.data.frame(test)
