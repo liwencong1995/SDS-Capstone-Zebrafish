@@ -47,6 +47,11 @@ Thursday:
 2. Meet with Jake/ Morgan to talk about our ideas and the model we choose.
 
 
-
+## April 9th
+1. calculating median and 2median by group: wildtype and mutant
+2. we need talk to Jordan about C value
+3. we run svm on AT and decide which median to choose
+4. we run the rest of the samples with the median we choose
+5. generate heatmaps
 
 
