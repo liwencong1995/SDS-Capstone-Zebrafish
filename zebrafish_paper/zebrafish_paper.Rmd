@@ -41,6 +41,15 @@ _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbio
 # Literature Review
 (Shuli)
 
+citation: 
+Stafford Noble, William. (2018). Support vector machine applications in computational biology. 
+
+The SVM algorithm is a classification algorithm that provides state-of-the-art performance in a wide variety of application domains, image classification.  During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems, including protein remote homology detection, microarray gene expressions analysis, prediction of protein-protein interactions, etc. 
+
+In 1999, Jaakkola et al. ushered in stage 4 of the development of homology detection algorithms with a paper that garnered the “Best paper” award at the annual Intelligent Systems for Molecular Biology conference. Their primary insight was that additional accuracy can be obtained by modeling the difference between positive and negative examples. Because the homology task required discriminating between related and unrelated sequences, explicitly modeling the difference between these two sets of sequences yields an extremely powerful method. The algorithm described in that paper is called SVM-Fisher. 
+
+The SVM-Fisher method (Jaakkola et al., 1999, 2000) couples an iterative HMM training scheme with the SVM. For any given family of related proteins, the HMM provides a kernel function. First, the HMM is trained on positive members of the... (to be continued)
+
 # Data
 xx Wildtypes
 xx mutants
@@ -90,7 +99,13 @@ Limitation
 
 ## Future Study
 ()
-Improvement
+Improvement: 
+
+Itenerating machine learning
+
+Instead of cross-validation, better results (what kind of better results) could be achieved by using itenerating machine learning method. In iterative machine learning we repeat the process of training and testing several times. At the first round the user gives examples of objects belonging to some classes and the machine learning algorithm is trained with this data. In the second round, the algorithm shows examples of objects it thinks that belong to these classes. Now, the user merely adds objects to the improved training set which the machine learning algorithm has put into a wrong class. That is, the user only corrects the “misunderstandings” of the algorithm. In this way we can concentrate on difficult examples of objects that are hard to classify or are for some reason easily missed by humans. Such objects may lie close to the decision boundaries or in the periphery in the multidimensional feature space. This iterative process is continued until the machine learning algorithm does not make any mistakes or the classification results do not improve anymore.
+
+
 Other models
 
 
