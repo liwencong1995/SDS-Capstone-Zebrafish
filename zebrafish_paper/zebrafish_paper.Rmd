@@ -30,22 +30,20 @@ csl: plos.csl
 _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbiol/s/latex](http://journals.plos.org/ploscompbiol/s/latex)_
 
 # Introduction
-(PL)
+
+## Landmark Analysis
 
 ## Programming languages used
 ### Python 
-
 ### R
-
 ### Git
 
 # Literature Review
 (Shuli)
 
 # Data
-(PL)
-48 Wildtypes
-14 mutants
+xx Wildtypes
+xx mutants
 
 ## Variables
 Number of points
