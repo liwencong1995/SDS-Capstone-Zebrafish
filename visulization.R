@@ -74,7 +74,7 @@ AT_M <- fread("data/landmark_AT_filled_w_median.csv")
 ZRF_2M <- fread("data/landmark_ZRF_filled_w_2median.csv")
 ZRF_M <- fread("data/landmark_ZRF_filled_w_median.csv")
 
-landmark_label_raw_AT <- fread("data/landmark_AT_filled_w_median.csv")
+landmark_label_raw_AT <- fread("data/final/landmark_AT_filled_w_median.csv")
 
 test <- landmark_label_raw_AT %>%
   group_by(sample_index, landmark_index) %>%
@@ -110,7 +110,7 @@ landmark_label_AT <- landmark_label_AT %>%
 landmark_label_AT <- landmark_label_AT %>% 
   group_by(min_theta) %>% mutate(y = row_number())
 # Output landmark label
-landmark_label_AT_output <- landmark_label_AT[, c(1,7:8)]
+landmark_label_AT_output <- landmark_label_AT[, c(1,2,4,7:8)]
 fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv") 
 
 #--------------------------------ZRF---------------------------------
@@ -133,7 +133,7 @@ fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv")
 #----------------------------------add visualizations----------------------------------
 #read in data to ccreate vis
 landmark_xy <- fread("analysis/landmark_xy.csv")
-AT_101 <- fread("analysis/r1_med_AT_result.csv")
+AT_101 <- fread("analysis/r101_med_AT_result.csv")
 AT_101_vis <- AT_101 %>%
   select(-V1) %>%
   left_join(landmark_xy, by="landmark_index")
@@ -141,9 +141,13 @@ AT_101_vis <- AT_101 %>%
 library(ggplot2)
 
 #----------------Wildtype-----------------
-p1 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
-  geom_tile(aes(fill = w_precision))
-p1 + scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25))
+p1 <- ggplot(data = AT_101_vis, aes(x = min_alpha, y = min_theta)) +
+  geom_tile(aes(fill = w_precision)) +
+  xlab("Alpha") +
+  ylab("Theta") +
+  scale_x_continuous(limits = c(-90.51, 90.51), breaks=c(-90.51, 90.51)) +
+  scale_y_continuous(limits = c(-3.14, 3.14), breaks=c(-90.51, 90.51))
+p1 + scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25)) 
 
 p2 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_recall))
