@@ -28,11 +28,10 @@ landmark_AT_raw_index <- landmark_AT_raw %>%
          max_alpha = as.numeric(max_alpha),
          min_theta = as.numeric(min_theta),
          max_theta = as.numeric(max_theta)) %>%
-  arrange(min_alpha, min_theta) %>%
-  group_by(min_alpha, min_theta)
+  arrange(min_alpha, min_theta)
 
 #assign indices  
-str(landmark_AT_raw_index)
+#str(landmark_AT_raw_index)
 landmark_AT_w_index <- transform(landmark_AT_raw_index, id = match(unique_key, unique(unique_key)))
 landmark_AT_w_index <- landmark_AT_w_index %>%
   rename(sample_index = Index,
@@ -134,23 +133,25 @@ fwrite(landmark_label_AT_output, "analysis/landmark_xy.csv")
 #----------------------------------add visualizations----------------------------------
 #read in data to ccreate vis
 landmark_xy <- fread("analysis/landmark_xy.csv")
-AT_101 <- fread("analysis/AT_101_result.csv")
+AT_101 <- fread("analysis/r1_med_AT_result.csv")
 AT_101_vis <- AT_101 %>%
   select(-V1) %>%
   left_join(landmark_xy, by="landmark_index")
-heatmap(AT_101_vis$w_precision, Rowv=AT_101_vis$x, Colv=AT_101_vis$y)
+#heatmap(AT_101_vis$w_precision, Rowv=AT_101_vis$x, Colv=AT_101_vis$y)
 library(ggplot2)
 
 #----------------Wildtype-----------------
-ggplot(data = AT_101_vis, aes(x = y, y = x)) +
+p1 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_precision))
+p1 + scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25))
 
-ggplot(data = AT_101_vis, aes(x = y, y = x)) +
+p2 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_recall))
+p2 + scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25))
 
-ggplot(data = AT_101_vis, aes(x = y, y = x)) +
+p3 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_f1))
-
+p3 + scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25))
 #----------------Mutant-----------------
 ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = m_precision))
