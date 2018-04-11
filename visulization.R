@@ -146,8 +146,10 @@ p1 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   xlab("Alpha") +
   ylab("Theta") +
   scale_x_continuous(limits = c(1, 19), breaks=c(1, 10, 19), labels=c("-90.51", "0", "90.51")) +
-  scale_y_continuous(limits = c(1, 8), breaks=c(1, 4.5, 8), labels=c("-3.14","0","3.14"))
-p1 + scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25)) 
+  scale_y_continuous(limits = c(1, 8), breaks=c(1, 4.5, 8), labels=c("-3.14","0","3.14")) +
+  scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25)) 
+p1
+
 
 p2 <- ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = w_recall)) 
