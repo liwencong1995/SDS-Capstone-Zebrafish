@@ -103,6 +103,11 @@ Instead of cross-validation, better results (what kind of better results) could 
 
 Other models
 
+# User Interface
+## Input file 
+Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
+In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
+
 
 
 # References {#references .unnumbered}
