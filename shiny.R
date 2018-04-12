@@ -22,7 +22,7 @@ ui <- fluidPage(
   selectInput("sampleindex", "Sample Index:", list_of_indices),
   selectInput("score", "Accuracy Measurement:", list_of_scores),
   mainPanel(fluidRow(
-              splitLayout(cellWidths = c("70%", "70%"), plotOutput("plot1"), plotOutput("plot2"))
+              splitLayout(cellWidths = c("90%", "60%"), plotOutput("plot1"), plotOutput("plot2"))
             ))
 )
 
