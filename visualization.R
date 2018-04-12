@@ -2,8 +2,8 @@ library(data.table)
 library(dplyr)
 
 #--------------------------------Adding new labels-------------------
-landmark_AT <- fread("data/AT_landmarks_3-28-18.csv")
-landmark_ZRF <- fread("data/ZRF_landmarks_3-29-18.csv")
+landmark_AT <- fread("data/raw/AT_landmarks_3-28-18.csv")
+landmark_ZRF <- fread("data/raw/ZRF_landmarks_3-29-18.csv")
 
 landmark_AT_1 <- landmark_AT %>%
   mutate(Index = ifelse(Index == 112 & stype == "wt-at", "112_1", Index)) %>%
