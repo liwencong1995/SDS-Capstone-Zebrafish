@@ -43,6 +43,7 @@ server <- function(input,output) {
     p1 <- ggplot(dat(), 
                  aes(x = y, y = x)) +
       geom_tile(aes(fill = precision)) +
+      facet_wrap() +
       xlab("Alpha") +
       ylab("Theta") +
       scale_x_continuous(limits = c(1, 19), breaks=c(1, 10, 19), labels=c("-90.51", "0", "90.51")) +
