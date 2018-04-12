@@ -6,6 +6,7 @@ library(data.table)
 library(ggplot2)
 
 # input: Sample Index
+AT_landmarks <- read_csv("data/raw/AT_landmarks.csv")
 index <- AT_landmarks[,c(1,306)]
 index <- index %>%
   arrange(Index)
@@ -20,7 +21,11 @@ ui <- fluidPage(
   selectInput("channel", "Channel:", list_of_channel),
   selectInput("sampleindex", "Sample Index:", list_of_indices),
   selectInput("score", "Accuracy Measurement:", list_of_scores),
-  mainPanel(plotOutput("plot2")) )
+  mainPanel(fluidRow(
+              splitLayout(cellWidths = c("70%", "70%"), plotOutput("plot1"), plotOutput("plot2"))
+            ))
+)
+
 
 server <- function(input,output) {
   dat <- reactive({
@@ -34,7 +39,7 @@ server <- function(input,output) {
     test
   })
   
-  output$plot2 <- renderPlot({
+  output$plot1 <- renderPlot({
     p1 <- ggplot(dat(), 
                  aes(x = y, y = x)) +
       geom_tile(aes(fill = precision)) +
@@ -45,6 +50,14 @@ server <- function(input,output) {
       scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25)) 
     p1
   })
+  
+  output$plot2 <- renderPlot({
+    p2 <- qplot(dat()$precision, geom = "histogram") +
+      xlab("Precision") +
+      ylab("Count")  
+    p2
+  })
+  
 }
 
 shinyApp(ui, server)
