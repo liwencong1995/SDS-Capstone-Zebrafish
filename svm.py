@@ -98,7 +98,11 @@ if __name__ == "__main__":
     data_type = '-1'
     while (data_type != '0' and data_type != '1'):
         data_type = input("Enter 0 for filling NaN values with median and 1 for filling with 2*median: ")
-    landmarks = pd.read_csv('./data/final/landmark_AT_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_AT_filled_w_2median.csv')
+    landmarks = pd.DataFrame()
+    if (channel == 'AT'):
+        landmarks = pd.read_csv('./data/final/landmark_AT_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_AT_filled_w_2median.csv')
+    else:
+        landmarks = pd.read_csv('./data/final/landmark_ZRF_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_ZRF_filled_w_2median.csv')
 
     # Get sample id
     sample = pd.DataFrame()
