@@ -1,4 +1,4 @@
-record of which samples are run. 
+record of which samples are run for AT. 
 Index	
 1	0
 2	0
@@ -77,4 +77,4 @@ Index
 339	0
 340	0
 112_1	0
-112_2	3
+112_2	0
