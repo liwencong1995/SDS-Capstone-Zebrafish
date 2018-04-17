@@ -31,6 +31,8 @@ _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbio
 
 # Introduction
 
+This project gives statistical analysis to the landmark data provided by the Barresi Lab at Smith College for the research on morphological structure and spatial relationships during nerves system development. Zebrafish is chosen to be the study sample, because it can be bred in a small laboratory space and is the fastest developing vertebrate model system. 
+
 ## Landmark Analysis
 
 ## Programming languages used
@@ -40,19 +42,21 @@ _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbio
 
 # Literature Review
 
-####SVM
+Research in developmental biology has relied on the analysis of morphological phenotypes through
+qualitative examination of maximum intensity projections that surrender the power of three dimensional
+data. Statistical methods to analyze visual data are needed, particularly to detect subtle
+phenotypes. 
 
-The SVM algorithm is a classification algorithm that provides state-of-the-art performance in a wide variety of application domains, image classification.  During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems, including protein remote homology detection, microarray gene expressions analysis, prediction of protein-protein interactions, etc. 
+Morgan et al. (2018) have utilized the open source program, Ilastik, which employs a training based machine learning, to eliminate the image noise. Then they preformed principal component analysis to align commissures between samples, reducing misalignment artifacts, and implemented a cylindrical coordinate system which preserves image dimensionality normally lost in maximum intensity projection (MIP), which facilitates presentation of the data, but sacrifices much of the complexity and relational data contained in the image. Then they reduced the points identified by the program as belonging to the structure to a set of landmark points that describe the shape and distribution of signal corresponding to the structure. Finally, using the landmark system, we are able to identify and quantify structural differences and changes in signal distribution between wild type and mutant commissures.
+
+Shape could be described by locating a finite number of points on each specimen which are called landmarks. There are three basic types of landmarks: scientific, mathematic and pseudo-landmarks. A scientific landmark is a point assigned by an expert that corresponds between objects in some scientifically meaningful way, for example the corner of an eye. Mathematical landmarks are points located on an object according to some mathematical or geometrical property of the figure. Since it does not assume a preference of one location to another, it is particularly useful in automated morphological recognition and analysis for under-studied structure. Pseudo-landmarks are constructed points on an object, located either around the outline or in between scientific or mathematic landmarks. It is often used to approximate continuous curves (Dryden and Mardia, 2016). This research has chosen to calculate an automatic set of landmarks distributed across the structure in order to avoid introducing bias due to expectations about where biological differences should emerge.
+
+The SVM algorithm is a classification algorithm that provides state-of-the-art performance in a wide variety of application domains, image classification. During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems, including protein remote homology detection, microarray gene expressions analysis, prediction of protein-protein interactions, etc. 
 
 In 1999, Jaakkola et al. ushered in stage 4 of the development of homology detection algorithms with a paper that garnered the “Best paper” award at the annual Intelligent Systems for Molecular Biology conference. Their primary insight was that additional accuracy can be obtained by modeling the difference between positive and negative examples. Because the homology task required discriminating between related and unrelated sequences, explicitly modeling the difference between these two sets of sequences yields an extremely powerful method. The algorithm described in that paper is called SVM-Fisher. 
 
 The SVM-Fisher method (Jaakkola et al., 1999, 2000) couples an iterative HMM training scheme with the SVM. For any given family of related proteins, the HMM provides a kernel function. First, the HMM is trained on positive members of the... (to be continued)
 
-####Landmark analysis
-
-Shape could be described by locating a finite number of points on each specimen which are called landmarks. There are three basic types of landmarks: scientific, mathematic and pseudo-landmarks. A scientific landmark is a point assigned by an expert that corresponds between objects in some scientifically meaningful way, for example the corner of an eye. Mathematical landmarks are points located on an object according to some mathematical or geometrical property of the figure. Since it does not assume a preference of one location to another, it is particularly useful in automated morphological recognition and analysis for under-studied structure. Pseudo-landmarks are constructed points on an object, located either around the outline or in between scientific or mathematic landmarks. It is often used to approximate continuous curves (Dryden and Mardia, 2016). This research has chosen to calculate an automatic set of landmarks distributed across the structure in order to avoid introducing bias due to expectations about where biological differences should emerge (Morgan, 2018).
-
-This project gives statistical analysis to the landmark data provided by the Barresi Lab at Smith College for the research on morphological structure and spatial relationships during nerves system development. 
 
 
 # Data
@@ -75,6 +79,12 @@ Samples with missing values are eliminated by Supporting vector machine. For wed
 ## What is SVM?
 (SH)
 SVM’s have been proven to be a powerful algorithm for supervised clustering. A good separation is achieved by the hyperplane that has the largest distance to the nearest training-data point of any class. 
+
+SVM’s have been proven to be a powerful algorithm for supervised clustering. During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems. The goal of SVM is to find a hyperplane Yi(β0 + β1Xi1 + β2Xi2) = 0 that separates the nearest data as clean as possible. The parameters βi are found by solving the optimization problem below. 
+
+C: tuning parameter, toleration of violation.
+M: margin, distance of the closest points to the hyperplane.
+εi : slack variable, correct/incorrect classification of a point.
 
 ###The optimization problem
 
