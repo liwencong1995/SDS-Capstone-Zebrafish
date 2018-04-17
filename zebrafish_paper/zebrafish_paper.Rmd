@@ -52,6 +52,7 @@ The SVM-Fisher method (Jaakkola et al., 1999, 2000) couples an iterative HMM tra
 
 Shape could be described by locating a finite number of points on each specimen which are called landmarks. There are three basic types of landmarks: scientific, mathematic and pseudo-landmarks. A scientific landmark is a point assigned by an expert that corresponds between objects in some scientifically meaningful way, for example the corner of an eye. Mathematical landmarks are points located on an object according to some mathematical or geometrical property of the figure. Since it does not assume a preference of one location to another, it is particularly useful in automated morphological recognition and analysis for under-studied structure. Pseudo-landmarks are constructed points on an object, located either around the outline or in between scientific or mathematic landmarks. It is often used to approximate continuous curves (Dryden and Mardia, 2016). This research has chosen to calculate an automatic set of landmarks distributed across the structure in order to avoid introducing bias due to expectations about where biological differences should emerge (Morgan, 2018).
 
+This project gives statistical analysis to the landmark data provided by the Barresi Lab at Smith College for the research on morphological structure and spatial relationships during nerves system development. 
 
 
 # Data
