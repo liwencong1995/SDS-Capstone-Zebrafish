@@ -29,9 +29,12 @@ csl: plos.csl
 
 _Text based on plos sample manuscript, see [http://journals.plos.org/ploscompbiol/s/latex](http://journals.plos.org/ploscompbiol/s/latex)_
 
-# Introduction
+# Acknowledgements
+This project was completed in partial fulfillment of the requirements of SDS410: SDS Capstone. This course is offered by the Statistical and Data Sciences Program at Smith College, and was taught by Benjamin Baumer in Spring 2018.
 
-This project gives statistical analysis to the landmark data provided by the Barresi Lab at Smith College for the research on morphological structure and spatial relationships during nerves system development. Zebrafish is chosen to be the study sample, because it can be bred in a small laboratory space and is the fastest developing vertebrate model system. 
+
+# Introduction
+This project derives from Professor Barresi’s biological image analysis research at Smith College and provides a tool to classify the structures within zebrafish brains via support vector machine. Our goal is to distinguish the wild and mutant types of zebrafish brain’s structures. Morgan, a student in Barresi Lab, used  landmarks analysis to divide the points in the 3D images into small wedges and computed the landmark, which is the most representative point, within each wedge. The image of signals in a Zebrafish brain is shown in Figure 1. The shape is divided into 30 slices, and each slice is further divided into 8 wedges. The landmark in each wedge is calculated by taking the median distance of all points in each wedge, R. We use number of points in each wedge and median R to run SVM models to do classifications.  
 
 ## Landmark Analysis
 
@@ -60,8 +63,14 @@ The SVM-Fisher method (Jaakkola et al., 1999, 2000) couples an iterative HMM tra
 
 
 # Data
-43 Wildtypes
-35 mutants
+We have 43 wildtypes samples and 35 mutant samples for training and testing. There are 152 landmarks for each sample, with each of them containing the following variables:
+number of points in that wedge
+median R (μm): the median of the distances to the center of the slice of all the points in that wedge. 
+alpha (μm): distance from the center of the landmark to the midline
+theta (radian): the degree that shows the location of the wedge of a slice
+
+We used the number of points and the median R to do classification via support vector machine. For missing ‘median R’ values due to absence of points in particular landmarks, we filled them with the median value of all the points in that landmark.
+
 
 ## Variables
 Number of points
@@ -76,6 +85,12 @@ The original landmarks data is a wide table containing the sample index and all 
 Samples with missing values are eliminated by Supporting vector machine. For wedges that do not have any point in it, `median r` cannot be calculated, which means that these sample will be eliminated when running SVM. Wedges without points have biologically meanings, and we should not ignore these wedges in our model. In order to keep the wedges in our model, we need to artificially pick a `median r` value to replace the missing ones. Supporting vector machine is sensitive to outliers, so we cannot pick an `r` value that could become outliers. We decided to calculate the mean of `median r` for the nth landmark of all 78 samples, and then we replace the missing `median r` values with the mean.
 
 # Supporting Vector Machine
+SVM’s have been proven to be a powerful algorithm for supervised clustering. During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems. The goal of SVM is to find a hyperplane Yi(β0 + β1Xi1 + β2Xi2) = 0 that separates the nearest data as clean as possible. The parameters βi are found by solving the optimization problem below. 
+
+C: tuning parameter, toleration of violation.
+M: margin, distance of the closest points to the hyperplane.
+εi : slack variable, correct/incorrect classification of a point.
+
 ## What is SVM?
 (SH)
 SVM’s have been proven to be a powerful algorithm for supervised clustering. A good separation is achieved by the hyperplane that has the largest distance to the nearest training-data point of any class. 
@@ -99,22 +114,34 @@ $ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$ is the perpendicular distance
 
 ## Implementation
 ### Cross-Validation
-(DT)
+Because we are working with a small dataset, we used the leave-one-out cross validation method to test our model.
+For each testing sample, we built 152 SVMs for each landmark.
+For each SVM, we used 10-fold cross validation to select a tuning parameter C value among 0.1, 1 and 10.
+After we get precision scores and predictions of each landmark, we will present the distribution of the landmarks’ precision scores (Figure 3).
+The user would then be allowed to set a threshold for certain precision scores to select out a subset of landmarks that are considered significant.
+A majority vote would then be performed among the selected landmarks to get an overall prediction for the sample.
+
 ## Result
-()
 ## Visulization
 ()
 
 # Conclusion
-()
+The SVM model application on landmark data gives insightful analysis of:
+which landmark (=which part of the brain) carries more information of the type.
+whether a new sample is of mutant or wild type
+
+
 ## Discussion
 ()
 Strength
 Limitation
 
 ## Future Study
-()
-Improvement: 
+We will continue to work on:
+making the program more user friendly
+running more tests to prove the accuracy of our model
+
+### Improvement: 
 
 Itenerating machine learning
 
@@ -127,12 +154,13 @@ Other models
 ## Input file 
 Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
-
+### Sample input file
 
 
 # References {#references .unnumbered}
 
 # Appendix
+
 ## Figures
 ## Python code
 
