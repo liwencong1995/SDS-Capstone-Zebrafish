@@ -287,7 +287,7 @@ examples. Because the homology task required discriminating between
 related and unrelated sequences, explicitly modeling the difference
 between these two sets of sequences yields an extremely powerful method.
 
-\section{Data}\label{data}
+\section{Data and Variables}\label{data-and-variables}
 
 We have 43 wildtypes samples and 35 mutant samples for training and
 testing. There are 152 landmarks for each sample, with each of them
@@ -301,10 +301,6 @@ We used the number of points and the median R to do classification via
 support vector machine. For missing `median R' values due to absence of
 points in particular landmarks, we filled them with the median value of
 all the points in that landmark.
-
-\subsection{Variables}\label{variables}
-
-Number of points Median r Alpha Theta
 
 \subsection{Tidy Data}\label{tidy-data}
 
@@ -334,7 +330,8 @@ spread function widened the already wide table by expanding the
 \texttt{ptsOrR} column by creating two columns, each column representing
 median R and the number of points.
 
-\subsection{Missing Value}\label{missing-value}
+\subsection{Dealing with Missing
+Value}\label{dealing-with-missing-value}
 
 Samples with missing values are eliminated by Supporting vector machine.
 For wedges that do not have any point in it, \texttt{median\ r} cannot
@@ -353,22 +350,12 @@ nth landmark of all 78 samples, and then we replace the missing
 SVM's have been proven to be a powerful algorithm for supervised
 clustering. During the past few years, SVM has been applied very broadly
 within the field of computational biology especially in pattern
-<<<<<<< HEAD
 recognition problems. The goal of SVM is to find a seperation line
 \(f(x) = (\beta_0 + \beta_1 * x_1 + \beta_2 * x_2)\) that separates the
-nearest data as clean as possible. The parameters \beta are found by
+nearest data as clean as possible. The parameters \(\beta\) are found by
 solving the optimization problem --to maximize M subject to some
 restrictions -- in 2 dimensions below.
 
-\(\sum_{i=0}^n \beta_{i}^2\)
-\(\beta_0 + \beta_1 * x_1 + \beta_2 * x_2 \geq M(1-\varepsilon_i)\)
-\$\varepsilon\_i \geq 0 \$ \(\sum_{i=0}^n \varepsilon_i \leq C\)
-=======
-recognition problems. The goal of SVM is to find a hyperplane
-\(Y_i(b_0 + b_1X_{i1} + b_2X_{i2}) = 0\) that separates the nearest data
-as clean as possible. The parameters bi are found by solving the
-optimization problem below.
-
 \begin{itemize}
 \tightlist
 \item
@@ -379,32 +366,7 @@ optimization problem below.
   \(e_i\) : slack variable, correct/incorrect classification of a point.
 \end{itemize}
 
-\subsection{What is SVM?}\label{what-is-svm}
-
-SVM's have been proven to be a powerful algorithm for supervised
-clustering. A good separation is achieved by the hyperplane that has the
-largest distance to the nearest training-data point of any class.
-
-SVM's have been proven to be a powerful algorithm for supervised
-clustering. During the past few years, SVM has been applied very broadly
-within the field of computational biology especially in pattern
-recognition problems. The goal of SVM is to find a hyperplane
-\(Y_i(b_0 + b_1X_{i1} + b_2X_{i2}) = 0\) that separates the nearest data
-as clean as possible. The parameters bi are found by solving the
-optimization problem below.
->>>>>>> 556f192b4b54e80ee1cfd1aa3c036c34700bb88a
-
-\begin{itemize}
-\tightlist
-\item
-  \(C\): tuning parameter, toleration of violation.
-\item
-  \(M\): margin, distance of the closest points to the hyperplane.
-\item
-  \(e_i\) : slack variable, correct/incorrect classification of a point.
-\end{itemize}
-
-function of the seperation line:
+The function of the seperation line:
 
 \[f(x) = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 \]
 
@@ -416,6 +378,8 @@ it's \textgreater{}0, the observation falls at the right side of the
 speration line and vice versa.
 
 \section{Workflow and User Interface}\label{workflow-and-user-interface}
+
+\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-1-1.pdf}
 
 \subsection{Step One: Data Processing and
 Modelling}\label{step-one-data-processing-and-modelling}
@@ -430,15 +394,19 @@ The script \texttt{svm.py} contains two components: a general-purpose
 classify points for a perticular landmark and a \texttt{main()} function
 that runs the \texttt{svm\_classification()} function for each landmark.
 
-\subsubsection{Input File}\label{input-file}
+\subsubsection{User Interaction}\label{user-interaction}
 
-\subsubsection{Input File}\label{input-file-1}
+\subsubsection{Input File}\label{input-file}
 
 Input file must contain landmark data. Variables that are needed for
 classification are required to be included in the input file. In our
 analysis, we used number of points in each sub-section corresponding to
 each landmark of the 3D shape and the \texttt{median\ R} of points in
-each wedge. \#\#\# Sample input file \#\#\# Output File
+each wedge.
+
+\subsubsection{Sample input file}\label{sample-input-file}
+
+\subsubsection{Output File}\label{output-file}
 
 \subsection{Step Two: Result Analyzation and
 Visualization}\label{step-two-result-analyzation-and-visualization}
@@ -460,39 +428,32 @@ landmarks that are considered significant. A majority vote would then be
 performed among the selected landmarks to get an overall prediction for
 the sample.
 
-\subsection{Result}\label{result}
+\section{Result}\label{result}
 
 \subsection{Visulization}\label{visulization}
 
-()
+\section{Discussion}\label{discussion}
 
-\section{Conclusion}\label{conclusion}
+\subsection{Strengths}\label{strengths}
 
 The SVM model application on landmark data gives insightful analysis of:
 which landmark (=which part of the brain) carries more information of
 the type. whether a new sample is of mutant or wild type
 
-\subsection{Discussion}\label{discussion}
-
-() In the previous method random forest, the number of predictors
-exceeds the number of samples. Morgan applied PCA do reduce the number
-of predictors. The problem with dimension reduction is that it gives a
+In the previous method random forest, the number of predictors p exceeds
+the number of samples. Morgan applied PCA do reduce the dimension of the
+predictors. The problem with dimension reduction is that it gives a
 linear combination of the dimensions that are projected on those are
 kept. While the largest projections still make sense, the minor
-projections appear to be random and thus difficult to relate the results
-back to the structure of zebrafish's brain.
+projections are very random and thus difficult to interpret.
+
+\subsection{Limitations}\label{limitations}
 
 The SVM model also has its limitation in that it only considers one
 single landmark at a time without considering the relationship across
-the landmarks of the whole sample. However, it's easier to relate the
-result directly to the locations of the brain.
+the landmarks of the whole sample.
 
-\subsection{Future Study}\label{future-study}
-
-We will continue to work on: making the program more user friendly
-running more tests to prove the accuracy of our model
-
-\subsubsection{Improvement:}\label{improvement}
+\subsection{Improvements}\label{improvements}
 
 Itenerating machine learning
 
@@ -514,7 +475,10 @@ any mistakes or the classification results do not improve anymore. It
 will improve our classification results and thus is likely to help make
 better predictions for unknown type.
 
-Other models?
+\subsection{Future Study}\label{future-study}
+
+We will continue to work on: making the program more user friendly
+running more tests to prove the accuracy of our model
 
 \section{Appendix Code}\label{appendix-code}
 
