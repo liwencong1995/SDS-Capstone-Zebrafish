@@ -10,10 +10,10 @@ AT_landmarks <- read_csv("data/raw/AT_landmarks.csv")
 index <- AT_landmarks[,c(1,306)]
 index <- index %>%
   arrange(Index)
-list_of_indices <- c(index$Index)
+list_of_indices <- c(index$Index, "AT", "ZRF")
 list_of_scores <- c("precision", "recall", "f1", "w_precision", "w_recall", "w_f1", "m_precision", "m_recall", "m_f1")
 landmark_xy <- fread("/Users/priscilla/Desktop/SDS Capstone/Zebrafish/analysis/landmark_xy.csv")
-list_of_channel <- c("AT", "ZRf")
+list_of_channel <- c("AT", "ZRF")
 
 ui <- fluidPage(
   titlePanel(title=h4("Classification of Wildtype and Mutant Zebrafish Brains via Computational Method", 
