@@ -52,7 +52,7 @@ The SVM algorithm is a classification algorithm that provides state-of-the-art p
 
 In 1999, Jaakkola et al. ushered in stage 4 of the development of homology detection algorithms with a paper that garnered the “Best paper” award at the annual Intelligent Systems for Molecular Biology conference. Their primary insight was that additional accuracy can be obtained by modeling the difference between positive and negative examples. Because the homology task required discriminating between related and unrelated sequences, explicitly modeling the difference between these two sets of sequences yields an extremely powerful method. The algorithm described in that paper is called SVM-Fisher. 
 
-# Data
+# Data and Variables
 We have 43 wildtypes samples and 35 mutant samples for training and testing. There are 152 landmarks for each sample, with each of them containing the following variables:
 number of points in that wedge
 median R (micro-meter): the median of the distances to the center of the slice of all the points in that wedge. 
@@ -60,13 +60,6 @@ alpha (micro-meter): distance from the center of the landmark to the midline
 theta (radian): the degree that shows the location of the wedge of a slice
 
 We used the number of points and the median R to do classification via support vector machine. For missing ‘median R’ values due to absence of points in particular landmarks, we filled them with the median value of all the points in that landmark.
-
-
-## Variables
-Number of points
-Median r
-Alpha
-Theta
 
 ## Tidy Data
 The original landmarks data is a wide table containing the sample index and all the columns holding information regarding the minimum and maximum values of Alpha and Theta, number of points, median r value, and the type of sample for a particular sample in each landmark. However, because all of such variables were joined by underscores in the variable names, such as `-14.29_-4.76_-0.79_0.0_50_pts` or `-14.29_-4.76_-0.79_0.0_50_r` and the value in each cell refers to the median r value or number of points, it was very difficult to see what each column actually represented. The ideal format of the data set was to have the sample index, minimum and maximum Alpha, minimum and maximum Theta, number of points, median r, and type of sample each be its own column. Hence, three key functions were used from the tidyr package: gather, separate, and spread. The gather function separated the dataset into key and value pairs for each index. The key was the column name containing all essential information connected by underscores and the value included the number of points or median r value. Then, the separate function separated the result from the gather function divided the column connected by underscore into 5 different columns, named as `min_alpha`, `max_alpha`, `min_theta`, `max_theta`, and `ptsOrR`. This was added to the result of the gather function that contained the index and value of each cell, either median R or number of points. Afterwards, the spread function widened the already wide table by expanding the `ptsOrR` column by creating two columns, each column representing median R and the number of points. 
@@ -108,7 +101,6 @@ This step is implemented using Python and packages including pandas, nump and sk
 The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a perticular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
 
 ### Input File 
-
 ### Input File 
 Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
@@ -149,7 +141,6 @@ Instead of cross-validation, better results (what kind of better results) could 
 
 Other models
 
- 
 
 ## Future Study
 We will continue to work on:
