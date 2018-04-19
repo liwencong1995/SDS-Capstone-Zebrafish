@@ -55,8 +55,6 @@ The SVM algorithm is a classification algorithm that provides state-of-the-art p
 
 In 1999, Jaakkola et al. ushered in stage 4 of the development of homology detection algorithms with a paper that garnered the “Best paper” award at the annual Intelligent Systems for Molecular Biology conference. Their primary insight was that additional accuracy can be obtained by modeling the difference between positive and negative examples. Because the homology task required discriminating between related and unrelated sequences, explicitly modeling the difference between these two sets of sequences yields an extremely powerful method. The algorithm described in that paper is called SVM-Fisher. 
 
-The SVM-Fisher method (Jaakkola et al., 1999, 2000) couples an iterative HMM training scheme with the SVM. For any given family of related proteins, the HMM provides a kernel function. First, the HMM is trained on positive members of the... (to be continued)
-
 
 
 # Data
@@ -109,6 +107,11 @@ $ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$ is the perpendicular distance
 ()
 ## Discussion
 ()
+
+In the previous method random forest, the number of predictors p exceeds the number of samples. Morgan applied PCA do reduce the dimension of the predictors. The problem with dimension reduction is that it gives a linear combination of the dimensions that are projected on those are kept. While the largest projections still make sense, the minor projections are very random and thus difficult to interpret. 
+
+The SVM model also has its limitation in that it only considers one single landmark at a time without considering the relationship across the landmarks of the whole sample. 
+\
 Strength
 Limitation
 
