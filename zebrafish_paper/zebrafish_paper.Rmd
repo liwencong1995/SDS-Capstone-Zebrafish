@@ -85,7 +85,7 @@ is the perpendicular distance from the ith observation to the hyperplane. If it'
 
 
 # Workflow and User Interface
-```{r fig.width=5, fig.height=5,echo=FALSE}
+```{r fig.width=5, fig.height=4,echo=FALSE}
 library(png)
 library(grid)
 img <- readPNG("./figures/Figure1.png")
@@ -93,17 +93,41 @@ grid.raster(img)
 ```
 
 ## Step One: Data Processing and Modelling
-This step is implemented using Python and packages including pandas, nump and sklearn are required. Users would need to run and interact with the Python script `svm.py` to build the model and pre-process the data if needed.   
+This step is implemented using Python (version 3) and packages including `pandas`, `nump` and `sklearn` are required. Users would need to run and interact with the Python script `svm.py` to pre-process the data and build the model.   
 
 The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a perticular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
 
 ### User Interaction
+
+```{r fig.width=5, fig.height=3,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("./figures/Figure2.png")
+grid.raster(img)
+```
+
+As shown in `Figure2`, several user inputs are tooken from users when they run the python script.
+
 ### Input File 
 Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
 
 ### Sample input file
+```{r fig.width=5, fig.height=3,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("./figures/Figure3.png")
+grid.raster(img)
+```
+
 ### Output File
+
+```{r fig.width=5, fig.height=3,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("./figures/Figure4.png")
+grid.raster(img)
+```
 
 ## Step Two: Result Analyzation and Visualization
 ## Testing
@@ -111,7 +135,9 @@ In our analysis, we used number of points in each sub-section corresponding to e
 For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we dicided to use a leave-one-out cross validation method to test our model.   
 For each testing sample, we built 152 SVMs for each landmark.
 For each SVM, we used 10-fold cross validation to select a tuning parameter C value among 0.1, 1 and 10.
-After we get precision scores and predictions of each landmark, we will present the distribution of the landmarks’ precision scores (Figure 3).
+
+### Processing Results and Make Predictions
+After we get precision scores and predictions of each landmark, we will present the distribution of the landmarks’ precision scores.
 The user would then be allowed to set a threshold for certain precision scores to select out a subset of landmarks that are considered significant.
 A majority vote would then be performed among the selected landmarks to get an overall prediction for the sample.
 
