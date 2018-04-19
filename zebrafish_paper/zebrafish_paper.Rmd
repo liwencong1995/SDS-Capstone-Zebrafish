@@ -126,40 +126,36 @@ After we get precision scores and predictions of each landmark, we will present 
 The user would then be allowed to set a threshold for certain precision scores to select out a subset of landmarks that are considered significant.
 A majority vote would then be performed among the selected landmarks to get an overall prediction for the sample.
 
+# Result
+## Work Flow Demonstration
+## Support Vector Machine
+## User Interface
 
-
-## Result
-## Visulization
-()
-
-# Conclusion
+# Discussion
+## Strengths
 The SVM model application on landmark data gives insightful analysis of:
 which landmark (=which part of the brain) carries more information of the type.
 whether a new sample is of mutant or wild type
 
-
-## Discussion
-()
-
 In the previous method random forest, the number of predictors p exceeds the number of samples. Morgan applied PCA do reduce the dimension of the predictors. The problem with dimension reduction is that it gives a linear combination of the dimensions that are projected on those are kept. While the largest projections still make sense, the minor projections are very random and thus difficult to interpret. 
 
-The SVM model also has its limitation in that it only considers one single landmark at a time without considering the relationship across the landmarks of the whole sample. 
-\
-Strength
-Limitation
+## Limitations
+The SVM model also has its limitation in that it only considers one single landmark at a time without considering the relationship across the landmarks of the whole sample.
+
+## Improvements 
+Itenerating machine learning
+
+Instead of cross-validation, better results (what kind of better results) could be achieved by using itenerating machine learning method. In iterative machine learning we repeat the process of training and testing several times. At the first round the user gives examples of objects belonging to some classes and the machine learning algorithm is trained with this data. In the second round, the algorithm shows examples of objects it thinks that belong to these classes. Now, the user merely adds objects to the improved training set which the machine learning algorithm has put into a wrong class. That is, the user only corrects the “misunderstandings” of the algorithm. In this way we can concentrate on difficult examples of objects that are hard to classify or are for some reason easily missed by humans. Such objects may lie close to the decision boundaries or in the periphery in the multidimensional feature space. This iterative process is continued until the machine learning algorithm does not make any mistakes or the classification results do not improve anymore.
+
+Other models
+
+ 
 
 ## Future Study
 We will continue to work on:
 making the program more user friendly
 running more tests to prove the accuracy of our model
 
-### Improvement: 
-
-Itenerating machine learning
-
-Instead of cross-validation, better results (what kind of better results) could be achieved by using itenerating machine learning method. In iterative machine learning we repeat the process of training and testing several times. At the first round the user gives examples of objects belonging to some classes and the machine learning algorithm is trained with this data. In the second round, the algorithm shows examples of objects it thinks that belong to these classes. Now, the user merely adds objects to the improved training set which the machine learning algorithm has put into a wrong class. That is, the user only corrects the “misunderstandings” of the algorithm. In this way we can concentrate on difficult examples of objects that are hard to classify or are for some reason easily missed by humans. Such objects may lie close to the decision boundaries or in the periphery in the multidimensional feature space. This iterative process is continued until the machine learning algorithm does not make any mistakes or the classification results do not improve anymore.
-
-Other models
 
 # Appendix Code
 ## Support Vector Machine
@@ -217,8 +213,5 @@ server <- function(input,output) {
   
 }
 ```
-
-
-
 
 # References {#references .unnumbered}
