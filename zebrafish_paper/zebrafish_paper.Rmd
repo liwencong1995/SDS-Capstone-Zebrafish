@@ -16,7 +16,7 @@ author:
 address:
   - code: Smith College
     address: Statistical and Data Sciences, Northampton, MA
-abstract: |
+abstract: Classification of biological creatures’ phenotypes has long been a field that scientists study at. In this project, we utilize support vector machine to distinguish structures of Zebrafish’s brains by using data generated from landmark analysis (cited Morgan’s paper). We create a tool for biologists to intuitively classify three-dimensional biological shapes into two groups, usually defined as wild type and mutant, and understand which part of the shapes have the most impact on the classification result. This project derives from Professor Barresi’s biological image analysis research at Smith College.
  
   
 author_summary: |
@@ -57,8 +57,6 @@ Shape could be described by locating a finite number of points on each specimen 
 The SVM algorithm is a classification algorithm that provides state-of-the-art performance in a wide variety of application domains, image classification. During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems, including protein remote homology detection, microarray gene expressions analysis, prediction of protein-protein interactions, etc. 
 
 In 1999, Jaakkola et al. ushered in stage 4 of the development of homology detection algorithms with a paper that garnered the “Best paper” award at the annual Intelligent Systems for Molecular Biology conference. Their primary insight was that additional accuracy can be obtained by modeling the difference between positive and negative examples. Because the homology task required discriminating between related and unrelated sequences, explicitly modeling the difference between these two sets of sequences yields an extremely powerful method. The algorithm described in that paper is called SVM-Fisher. 
-
-The SVM-Fisher method (Jaakkola et al., 1999, 2000) couples an iterative HMM training scheme with the SVM. For any given family of related proteins, the HMM provides a kernel function. First, the HMM is trained on positive members of the... (to be continued)
 
 
 
@@ -112,14 +110,32 @@ if $f(x) = 0$: the observation is on the hyperplane.
 $ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$ is the perpendicular distance from the ith observation to the hyperplane. If it's >0, the observation falls at the right side of the hyperplane and vice versa.
 
 
-## Implementation
+# Workflow and User Interface
+## Step One: Data Processing and Modelling
+This step is implemented using Python and packages including pandas, nump and sklearn are required. Users would need to run and interact with the Python script `svm.py` to build the model and pre-process the data if needed.   
+
+The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a perticular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
+
+### Input File 
+
+### Input File 
+Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
+In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
+### Sample input file
+### Output File
+
+## Step Two: Result Analyzation and Visualization
+
+## Testing
 ### Cross-Validation
-Because we are working with a small dataset, we used the leave-one-out cross validation method to test our model.
+For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we dicided to use a leave-one-out cross validation method to test our model.   
 For each testing sample, we built 152 SVMs for each landmark.
 For each SVM, we used 10-fold cross validation to select a tuning parameter C value among 0.1, 1 and 10.
 After we get precision scores and predictions of each landmark, we will present the distribution of the landmarks’ precision scores (Figure 3).
 The user would then be allowed to set a threshold for certain precision scores to select out a subset of landmarks that are considered significant.
 A majority vote would then be performed among the selected landmarks to get an overall prediction for the sample.
+
+
 
 ## Result
 ## Visulization
@@ -133,6 +149,11 @@ whether a new sample is of mutant or wild type
 
 ## Discussion
 ()
+
+In the previous method random forest, the number of predictors p exceeds the number of samples. Morgan applied PCA do reduce the dimension of the predictors. The problem with dimension reduction is that it gives a linear combination of the dimensions that are projected on those are kept. While the largest projections still make sense, the minor projections are very random and thus difficult to interpret. 
+
+The SVM model also has its limitation in that it only considers one single landmark at a time without considering the relationship across the landmarks of the whole sample. 
+\
 Strength
 Limitation
 
@@ -149,12 +170,6 @@ Instead of cross-validation, better results (what kind of better results) could 
 
 
 Other models
-
-# User Interface
-## Input file 
-Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
-In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
-### Sample input file
 
 
 # References {#references .unnumbered}
