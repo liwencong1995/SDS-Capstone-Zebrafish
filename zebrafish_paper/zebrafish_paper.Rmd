@@ -16,7 +16,7 @@ author:
 address:
   - code: Smith College
     address: Statistical and Data Sciences, Northampton, MA
-abstract: |
+abstract: Classification of biological creatures’ phenotypes has long been a field that scientists study at. In this project, we utilize support vector machine to distinguish structures of Zebrafish’s brains by using data generated from landmark analysis (cited Morgan’s paper). We create a tool for biologists to intuitively classify three-dimensional biological shapes into two groups, usually defined as wild type and mutant, and understand which part of the shapes have the most impact on the classification result. This project derives from Professor Barresi’s biological image analysis research at Smith College.
  
   
 author_summary: |
