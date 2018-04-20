@@ -193,10 +193,6 @@ biological image analysis research at Smith College.
 \linenumbers
 
 % Use "Eq" instead of "Equation" for equation citations.
-\begin{verbatim}
-## Warning: package 'reticulate' was built under R version 3.4.4
-\end{verbatim}
-
 \section{Acknowledgements}\label{acknowledgements}
 
 This project was completed in partial fulfillment of the requirements of
@@ -360,6 +356,17 @@ nearest data as clean as possible. The parameters \(\beta\) are found by
 solving the optimization problem --to maximize M subject to some
 restrictions -- in 2 dimensions below.
 
+\begin{equation}
+  \left.
+  \begin{array}{l@{\,}l}
+     \sum_{i=1}^n \beta_i^2 = 0 \\
+     \ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i) \\
+     \ \varepsilon_i \geq 0 \\
+     \ \sum_{i=1}^n \varepsilon_i \leq C \\
+  \end{array}
+  \right.
+\end{equation}
+
 \begin{itemize}
 \tightlist
 \item
@@ -367,7 +374,8 @@ restrictions -- in 2 dimensions below.
 \item
   \(M\): margin, distance of the closest points to the hyperplane.
 \item
-  \(e_i\) : slack variable, correct/incorrect classification of a point.
+  \(\varepsilon_i\) : slack variable, an observation is classified at
+  the correct/incorrect side of the margin.
 \end{itemize}
 
 The function of the seperation line:
@@ -518,8 +526,10 @@ better predictions for unknown type.
 \ImportTok{from}\NormalTok{ sklearn.model_selection }\ImportTok{import}\NormalTok{ GridSearchCV}
 \ImportTok{from}\NormalTok{ sklearn.svm }\ImportTok{import}\NormalTok{ SVC}
 \ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ f1_score, precision_score, recall_score}
+
 \CommentTok{'''}
 \CommentTok{A function that builds a SVM model with linear kernel to classify points to two classes.}
+
 \CommentTok{Inputs:}
 \CommentTok{training_landmarks - a pandas dataframe containing all training landmark data.}
 \CommentTok{index              - a perticular landmark id of interest. eg. '101'}
@@ -528,6 +538,7 @@ better predictions for unknown type.
 \CommentTok{class0             - name of the first class. eg. 'wt-at'}
 \CommentTok{class1             - name of the second class. eg. 'mt-at'}
 \CommentTok{C_values           - a list of tunning variable C (penalty parameter of the error term) that the method would grid-search on. Default value is [0.1, 1, 10].}
+
 \CommentTok{Output:}
 \CommentTok{svm                - the SVM model trained from the training dataset}
 \CommentTok{ww                 - among the training samples, the number of wild type samples with chosen landmark predicted as wild type.}
@@ -545,11 +556,14 @@ better predictions for unknown type.
 \NormalTok{    y }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name]}
 \NormalTok{    y }\OperatorTok{=}\NormalTok{ y.replace([class1], }\DecValTok{1}\NormalTok{)}
 \NormalTok{    y }\OperatorTok{=}\NormalTok{ y.replace([class0], }\DecValTok{0}\NormalTok{)}
+
     \CommentTok{# check whether both classes exist}
 \NormalTok{    count_1 }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name].}\BuiltInTok{str}\NormalTok{.contains(class1).}\BuiltInTok{sum}\NormalTok{()}
 \NormalTok{    count_0 }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name].}\BuiltInTok{str}\NormalTok{.contains(class0).}\BuiltInTok{sum}\NormalTok{()}
+
     \ControlFlowTok{if}\NormalTok{ (count_1 }\OperatorTok{<} \DecValTok{2} \KeywordTok{or}\NormalTok{ count_0 }\OperatorTok{<} \DecValTok{2}\NormalTok{):}
         \ControlFlowTok{return} \VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}
+
     \CommentTok{# find the best C value by cross-validation}
 \NormalTok{    tuned_parameters }\OperatorTok{=}\NormalTok{ [\{}\StringTok{'C'}\NormalTok{: C_values\}]}
 \NormalTok{    clf }\OperatorTok{=}\NormalTok{ GridSearchCV(SVC(kernel}\OperatorTok{=}\StringTok{'linear'}\NormalTok{), tuned_parameters, cv}\OperatorTok{=}\DecValTok{10}\NormalTok{, scoring}\OperatorTok{=}\StringTok{'accuracy'}\NormalTok{)}
@@ -560,11 +574,13 @@ better predictions for unknown type.
 \NormalTok{    svc.fit(X, y)}
     
 \NormalTok{    prediction }\OperatorTok{=}\NormalTok{ svc.predict(X)}
+
     \CommentTok{# print confusion matrix}
     \BuiltInTok{print}\NormalTok{(}\StringTok{"confusion matrix: "}\NormalTok{)}
 \NormalTok{    cm }\OperatorTok{=}\NormalTok{ confusion_matrix(y, prediction)}
 \NormalTok{    cm_df }\OperatorTok{=}\NormalTok{ pd.DataFrame(cm.T, index}\OperatorTok{=}\NormalTok{svc.classes_, columns}\OperatorTok{=}\NormalTok{svc.classes_)}
     \BuiltInTok{print}\NormalTok{(cm_df)}
+
     \CommentTok{# Statistics of training precision:}
     \CommentTok{# number of wild type samples with this landmark predicted as wild type.}
 \NormalTok{    ww }\OperatorTok{=}\DecValTok{0}
@@ -578,6 +594,7 @@ better predictions for unknown type.
     \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{ (}\BuiltInTok{len}\NormalTok{(y)):}
 \NormalTok{        _y }\OperatorTok{=}\NormalTok{ y.values[i]}
 \NormalTok{        _p }\OperatorTok{=}\NormalTok{ prediction[i]}
+
         \ControlFlowTok{if}\NormalTok{ _y}\OperatorTok{==}\DecValTok{1} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{1}\NormalTok{:}
 \NormalTok{            mm }\OperatorTok{=}\NormalTok{ mm }\OperatorTok{+} \DecValTok{1}
         \ControlFlowTok{elif}\NormalTok{ _y}\OperatorTok{==}\DecValTok{1} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
@@ -588,6 +605,8 @@ better predictions for unknown type.
 \NormalTok{            wm }\OperatorTok{=}\NormalTok{ wm }\OperatorTok{+} \DecValTok{1}
     
     \ControlFlowTok{return}\NormalTok{ svc, ww, wm, mm, mw}
+
+
 \ControlFlowTok{if} \VariableTok{__name__} \OperatorTok{==} \StringTok{"__main__"}\NormalTok{:}
     \CommentTok{# Get interested chnnel name}
 \NormalTok{    channel }\OperatorTok{=} \StringTok{''}
@@ -596,6 +615,7 @@ better predictions for unknown type.
     
 \NormalTok{    class0 }\OperatorTok{=} \StringTok{'mt-zrf'} \ControlFlowTok{if}\NormalTok{ channel }\OperatorTok{==} \StringTok{'ZRF'} \ControlFlowTok{else} \StringTok{'mt-at'}
 \NormalTok{    class1 }\OperatorTok{=} \StringTok{'wt-zrf'} \ControlFlowTok{if}\NormalTok{ channel }\OperatorTok{==} \StringTok{'ZRF'} \ControlFlowTok{else} \StringTok{'wt-at'}
+
     \CommentTok{# Read in landmark data}
 \NormalTok{    data_type }\OperatorTok{=} \StringTok{'-1'}
     \ControlFlowTok{while}\NormalTok{ (data_type }\OperatorTok{!=} \StringTok{'0'} \KeywordTok{and}\NormalTok{ data_type }\OperatorTok{!=} \StringTok{'1'}\NormalTok{):}
@@ -605,18 +625,22 @@ better predictions for unknown type.
 \NormalTok{        landmarks }\OperatorTok{=}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_AT_filled_w_median.csv'}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ data_type}\OperatorTok{==}\StringTok{'0'} \ControlFlowTok{else}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_AT_filled_w_2median.csv'}\NormalTok{)}
     \ControlFlowTok{else}\NormalTok{:}
 \NormalTok{        landmarks }\OperatorTok{=}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_ZRF_filled_w_median.csv'}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ data_type}\OperatorTok{==}\StringTok{'0'} \ControlFlowTok{else}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_ZRF_filled_w_2median.csv'}\NormalTok{)}
+
     \CommentTok{# Get sample id}
 \NormalTok{    sample }\OperatorTok{=}\NormalTok{ pd.DataFrame()}
     \ControlFlowTok{while}\NormalTok{(sample.shape[}\DecValTok{0}\NormalTok{]}\OperatorTok{<}\DecValTok{2}\NormalTok{):}
 \NormalTok{        sample_id }\OperatorTok{=} \BuiltInTok{str}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter a VALID sample index: "}\NormalTok{))}
 \NormalTok{        sample }\OperatorTok{=}\NormalTok{ landmarks[landmarks.sample_index}\OperatorTok{==}\NormalTok{sample_id]}
+
     \CommentTok{# Get result file's name and create the file with column names}
 \NormalTok{    result_file_name }\OperatorTok{=} \BuiltInTok{str}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter result file name: "}\NormalTok{))}
 \NormalTok{    result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'w'}\NormalTok{)}
 \NormalTok{    result_file.write(}\StringTok{'sample_index, landmark_index, pred, ww, wm, mm, mw}\CharTok{\textbackslash{}n}\StringTok{'}\NormalTok{)}
 \NormalTok{    result_file.close()}
+
     \CommentTok{# Get existing landmark ids}
 \NormalTok{    landmark_ids }\OperatorTok{=}\NormalTok{ sample[}\StringTok{'landmark_index'}\NormalTok{]}
+
 \NormalTok{    leave_one_out }\OperatorTok{=}\NormalTok{ landmarks[landmarks.sample_index}\OperatorTok{!=}\NormalTok{sample_id]}
     \ControlFlowTok{for}\NormalTok{ l }\KeywordTok{in}\NormalTok{ landmark_ids.values:}
         \BuiltInTok{print}\NormalTok{ (}\StringTok{"======================================="}\NormalTok{)}
@@ -634,6 +658,7 @@ better predictions for unknown type.
 \NormalTok{        prediction }\OperatorTok{=}\NormalTok{ svc.predict(sample[sample.landmark_index}\OperatorTok{==}\NormalTok{l][[}\StringTok{'pts'}\NormalTok{, }\StringTok{'r'}\NormalTok{]])}
 \NormalTok{        result }\OperatorTok{=} \StringTok{', '}\NormalTok{.join(}\BuiltInTok{str}\NormalTok{(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ [sample_id, l, prediction[}\DecValTok{0}\NormalTok{], ww, wm, mm, mw]) }\OperatorTok{+} \StringTok{'}\CharTok{\textbackslash{}n}\StringTok{'}
         \BuiltInTok{print}\NormalTok{(}\StringTok{'result:'}\NormalTok{, result)}
+
 \NormalTok{        result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'a'}\NormalTok{)}
 \NormalTok{        result_file.write(result)}
 \NormalTok{        result_file.close()}

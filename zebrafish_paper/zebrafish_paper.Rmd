@@ -72,18 +72,21 @@ Samples with missing values are eliminated by Supporting vector machine. For wed
 # Supporting Vector Machine
 SVM’s have been proven to be a powerful algorithm for supervised clustering. During the past few years, SVM has been applied very broadly within the field of computational biology especially in pattern recognition problems. The goal of SVM is to find a seperation line $f(x) = (\beta_0 + \beta_1 * x_1 + \beta_2 * x_2)$ that separates the nearest data as clean as possible. The parameters $\beta$ are found by solving the optimization problem --to maximize M subject to some restrictions -- in 2 dimensions below. 
 
-$\sum_{i=1}^n \beta_i^2 = 0$
-
-$y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i)$
-
-$\varepsilon_i \geq 0$
-
-$ \sum_{i=1}^n \varepsilon_i \leq C$ 
+\begin{equation}
+  \left.
+  \begin{array}{l@{\,}l}
+     \sum_{i=1}^n \beta_i^2 = 0 \\
+     \ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i) \\
+     \ \varepsilon_i \geq 0 \\
+     \ \sum_{i=1}^n \varepsilon_i \leq C \\
+  \end{array}
+  \right.
+\end{equation}
 
 
 * $C$: tuning parameter, toleration of violation.
 * $M$: margin, distance of the closest points to the hyperplane.
-* $e_i$ : slack variable, correct/incorrect classification of a point.
+* $\varepsilon_i$ : slack variable, an observation is classified at the correct/incorrect side of the margin.
 
 The function of the seperation line:
 
