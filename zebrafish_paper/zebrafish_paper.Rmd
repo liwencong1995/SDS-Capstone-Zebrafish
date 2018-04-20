@@ -23,10 +23,12 @@ bibliography: mybibfile.bib
 output: rticles::plos_article
 csl: plos.csl
 ---
+```{r, echo=FALSE, message=FALSE}
+library(reticulate)
+```
 
 # Acknowledgements
 This project was completed in partial fulfillment of the requirements of SDS 410: SDS Capstone. This course is offered by the Statistical and Data Sciences Program at Smith College, and was taught by Benjamin Baumer in Spring 2018.
-
 
 # Introduction
 This project derives from Professor Barresi’s biological image analysis research at Smith College and provides a tool to classify the structures within zebrafish brains via support vector machine. Our goal is to distinguish the wild and mutant types of zebrafish brain’s structures. Morgan, a student in Barresi Lab, used  landmarks analysis to divide the points in the three-dimentional images into small wedges and computed the landmark, which is the most representative point, within each wedge. The image of signals in a Zebrafish brain is shown in Figure 1. The shape is divided into 30 slices, and each slice is further divided into 8 wedges. The landmark in each wedge is calculated by taking the median distance of all points in each wedge, $R$. We use number of points in each wedge and median R to run SVM models to do classifications.  
@@ -83,7 +85,6 @@ if $f(x) = 0$, the observation is on the seperation line.
 $$ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
 is the perpendicular distance from the ith observation to the hyperplane. If it's >0, the observation falls at the right side of the speration line and vice versa.
 
-
 # Workflow and User Interface
 ```{r fig.width=5, fig.height=4,echo=FALSE}
 library(png)
@@ -105,7 +106,6 @@ library(grid)
 img <- readPNG("./figures/Figure2.png")
 grid.raster(img)
 ```
-
 As shown in `Figure2`, several user inputs are tooken from users when they run the python script.
 
 ### Input File 
@@ -121,7 +121,6 @@ grid.raster(img)
 ```
 
 ### Output File
-
 ```{r fig.width=5, fig.height=3,echo=FALSE}
 library(png)
 library(grid)
@@ -142,28 +141,27 @@ The user would then be allowed to set a threshold for certain precision scores t
 A majority vote would then be performed among the selected landmarks to get an overall prediction for the sample.
 
 # Result
+## Prediction
 ## Visulization
 
 # Discussion
 ## Strengths
-The SVM model application on landmark data gives insightful analysis of:
-which landmark (=which part of the brain) carries more information of the type.
-whether a new sample is of mutant or wild type
-
 In the previous method random forest, the number of predictors p exceeds the number of samples. Morgan applied PCA do reduce the dimension of the predictors. The problem with dimension reduction is that it gives a linear combination of the dimensions that are projected on those are kept. While the largest projections still make sense, the minor projections are very random and thus difficult to interpret. 
+
+The SVM model generated based on landmark data gives insightful analysis of:
+1. which landmark, or which part of the Zebrafish brain, has more predictive power
+2. whether a new Zebrafish brain sample is a mutant or wild type
 
 ## Limitations
 The SVM model also has its limitation in that it only considers one single landmark at a time without considering the relationship across the landmarks of the whole sample.
 
 ## Improvements 
-Itenerating machine learning
-
+### Itenerating machine learning
 Instead of cross-validation, better results could be achieved by using itenerating machine learning method. In iterative machine learning we repeat the process of training and testing several times. At the first round the user gives examples of objects belonging to some classes and the machine learning algorithm is trained with this data. In the second round, the algorithm shows examples of objects it thinks that belong to these classes. Now, the user merely adds objects to the improved training set which the machine learning algorithm has put into a wrong class. That is, the user only corrects the “misunderstandings” of the algorithm. In this way we can concentrate on difficult examples of objects that are hard to classify or are for some reason easily missed by humans. Such objects may lie close to the decision boundaries or in the periphery in the multidimensional feature space. This iterative process is continued until the machine learning algorithm does not make any mistakes or the classification results do not improve anymore. It will improve our classification results and thus is likely to help make better predictions for unknown type. 
 
 ## Future Study
-We will continue to work on:
-making the program more user friendly
-running more tests to prove the accuracy of our model
+1. making the program more user friendly
+2. running more tests to prove the accuracy of our model
 
 # Appendix Code
 ## Support Vector Machine
