@@ -96,6 +96,46 @@
 \newcommand{\lorem}{{\bf LOREM}}
 \newcommand{\ipsum}{{\bf IPSUM}}
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
 
 
 
@@ -153,9 +193,6 @@ biological image analysis research at Smith College.
 \linenumbers
 
 % Use "Eq" instead of "Equation" for equation citations.
-\emph{Text based on plos sample manuscript, see
-\url{http://journals.plos.org/ploscompbiol/s/latex}}
-
 \section{Acknowledgements}\label{acknowledgements}
 
 This project was completed in partial fulfillment of the requirements of
@@ -175,8 +212,8 @@ the landmark, which is the most representative point, within each wedge.
 The image of signals in a Zebrafish brain is shown in Figure 1. The
 shape is divided into 30 slices, and each slice is further divided into
 8 wedges. The landmark in each wedge is calculated by taking the median
-distance of all points in each wedge, R. We use number of points in each
-wedge and median R to run SVM models to do classifications.
+distance of all points in each wedge, \(R\). We use number of points in
+each wedge and median R to run SVM models to do classifications.
 
 \subsection{Landmark Analysis}\label{landmark-analysis}
 
@@ -211,29 +248,34 @@ signal corresponding to the structure. Finally, using the landmark
 system, we are able to identify and quantify structural differences and
 changes in signal distribution between wild type and mutant commissures.
 
-Shape could be described by locating a finite number of points on each
-specimen which are called landmarks. There are three basic types of
-landmarks: scientific, mathematic and pseudo-landmarks. A scientific
-landmark is a point assigned by an expert that corresponds between
-objects in some scientifically meaningful way, for example the corner of
-an eye. Mathematical landmarks are points located on an object according
-to some mathematical or geometrical property of the figure. Since it
-does not assume a preference of one location to another, it is
-particularly useful in automated morphological recognition and analysis
-for under-studied structure. Pseudo-landmarks are constructed points on
-an object, located either around the outline or in between scientific or
+Landmarks describe a shape by locating a finite number of points on each
+specimen. There are three basic types of landmarks: scientific,
+mathematic and pseudo-landmarks. A scientific landmark is a point
+assigned by an expert that corresponds between objects in some
+scientifically meaningful way, for example the corner of an eye.
+Mathematical landmarks are points located on an object according to some
+mathematical or geometrical property of the figure. Since it does not
+assume a preference of one location to another, it is particularly
+useful in automated morphological recognition and analysis for
+under-studied structure. Pseudo-landmarks are constructed points on an
+object, located either around the outline or in between scientific or
 mathematic landmarks. It is often used to approximate continuous curves
 (Dryden and Mardia, 2016). This research has chosen to calculate an
 automatic set of landmarks distributed across the structure in order to
 avoid introducing bias due to expectations about where biological
 differences should emerge.
 
-The SVM algorithm is a classification algorithm that provides
-state-of-the-art performance in a wide variety of application domains,
-image classification. During the past few years, SVM has been applied
-very broadly within the field of computational biology especially in
-pattern recognition problems, including protein remote homology
-detection, microarray gene expressions analysis, prediction of
+Morgan et al. used Random Forest machine leaning method to classify the
+landmarks. Although the classification is quite accurate, it is
+difficult to interpret the result from biological aspects. Instead of
+doing classification on all of the landmarks at the same time, we
+decided to do classifacation on one landmark at a time via Support
+Vector Machine. The SVM algorithm is a classification algorithm that
+provides state-of-the-art performance in a wide variety of application
+domains, image classification. During the past few years, SVM has been
+applied very broadly within the field of computational biology
+especially in pattern recognition problems, including protein remote
+homology detection, microarray gene expressions analysis, prediction of
 protein-protein interactions, etc.
 
 In 1999, Jaakkola et al. ushered in stage 4 of the development of
@@ -244,9 +286,8 @@ obtained by modeling the difference between positive and negative
 examples. Because the homology task required discriminating between
 related and unrelated sequences, explicitly modeling the difference
 between these two sets of sequences yields an extremely powerful method.
-The algorithm described in that paper is called SVM-Fisher.
 
-\section{Data}\label{data}
+\section{Data and Variables}\label{data-and-variables}
 
 We have 43 wildtypes samples and 35 mutant samples for training and
 testing. There are 152 landmarks for each sample, with each of them
@@ -260,10 +301,6 @@ We used the number of points and the median R to do classification via
 support vector machine. For missing `median R' values due to absence of
 points in particular landmarks, we filled them with the median value of
 all the points in that landmark.
-
-\subsection{Variables}\label{variables}
-
-Number of points Median r Alpha Theta
 
 \subsection{Tidy Data}\label{tidy-data}
 
@@ -293,7 +330,8 @@ spread function widened the already wide table by expanding the
 \texttt{ptsOrR} column by creating two columns, each column representing
 median R and the number of points.
 
-\subsection{Missing Value}\label{missing-value}
+\subsection{Dealing with Missing
+Value}\label{dealing-with-missing-value}
 
 Samples with missing values are eliminated by Supporting vector machine.
 For wedges that do not have any point in it, \texttt{median\ r} cannot
@@ -312,81 +350,83 @@ nth landmark of all 78 samples, and then we replace the missing
 SVM's have been proven to be a powerful algorithm for supervised
 clustering. During the past few years, SVM has been applied very broadly
 within the field of computational biology especially in pattern
-recognition problems. The goal of SVM is to find a hyperplane Yi(b0 +
-b1Xi1 + b2Xi2) = 0 that separates the nearest data as clean as possible.
-The parameters bi are found by solving the optimization problem below.
+recognition problems. The goal of SVM is to find a separation line
+\(f(x) = (\beta_0 + \beta_1 * x_1 + \beta_2 * x_2)\) that separates the
+nearest data as clean as possible. The parameters \(\beta\) are found by
+solving the optimization problem --to maximize M subject to some
+restrictions -- in 2 dimensions below.
+
+\begin{equation}
+  \left.
+  \begin{array}{l@{\,}l}
+     \sum_{i=1}^n \beta_i^2 = 0 \\
+     \ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i) \\
+     \ \varepsilon_i \geq 0 \\
+     \ \sum_{i=1}^n \varepsilon_i \leq C \\
+  \end{array}
+  \right.
+\end{equation}
 
 \begin{itemize}
 \tightlist
 \item
-  C: tuning parameter, toleration of violation.
+  \(C\): tuning parameter, toleration of violation.
 \item
-  M: margin, distance of the closest points to the hyperplane.
+  \(M\): margin, distance of the closest points to the hyperplane.
 \item
-  \(e_i\) : slack variable, correct/incorrect classification of a point.
+  \(\varepsilon_i\) : slack variable, an observation is classified at
+  the correct/incorrect side of the margin.
 \end{itemize}
 
-\subsection{What is SVM?}\label{what-is-svm}
-
-(SH) SVM's have been proven to be a powerful algorithm for supervised
-clustering. A good separation is achieved by the hyperplane that has the
-largest distance to the nearest training-data point of any class.
-
-SVM's have been proven to be a powerful algorithm for supervised
-clustering. During the past few years, SVM has been applied very broadly
-within the field of computational biology especially in pattern
-recognition problems. The goal of SVM is to find a hyperplane
-\(Y_i(b0 + b1Xi1 + b2Xi2) = 0\) that separates the nearest data as clean
-as possible. The parameters bi are found by solving the optimization
-problem below.
-
-\begin{itemize}
-\tightlist
-\item
-  C: tuning parameter, toleration of violation.
-\item
-  M: margin, distance of the closest points to the hyperplane.
-\item
-  \(e_i\) : slack variable, correct/incorrect classification of a point.
-\end{itemize}
-
-\subsubsection{The optimization problem}\label{the-optimization-problem}
-
-Here is the function of the hyperplane:
+The function of the separation line:
 
 \[f(x) = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 \]
 
-if \(f(x) = 0\), the observation is on the hyperplane.
+if \(f(x) = 0\), the observation is on the seperation line.
 
-\[ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )\] is the
-perpendicular distance from the ith observation to the hyperplane. If
-it's \textgreater{}0, the observation falls at the right side of the
-hyperplane and vice versa.
+\[ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )\] The above is the
+perpendicular distance from the ith observation to the separation line.
+If it's \textgreater{}0, the observation falls at the right side of the
+separation line and vice versa.
 
 \section{Workflow and User Interface}\label{workflow-and-user-interface}
+
+\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 \subsection{Step One: Data Processing and
 Modelling}\label{step-one-data-processing-and-modelling}
 
-This step is implemented using Python and packages including pandas,
-nump and sklearn are required. Users would need to run and interact with
-the Python script \texttt{svm.py} to build the model and pre-process the
-data if needed.
+This step is implemented using Python (version 3) and packages including
+\texttt{pandas}, \texttt{nump} and \texttt{sklearn} are required. Users
+would need to run and interact with the Python script \texttt{svm.py} to
+pre-process the data and build the model.
 
 The script \texttt{svm.py} contains two components: a general-purpose
 \texttt{svm\_classification()} function that builds a SVM model to
 classify points for a perticular landmark and a \texttt{main()} function
 that runs the \texttt{svm\_classification()} function for each landmark.
 
-\subsubsection{Input File}\label{input-file}
+\subsubsection{User Interaction}\label{user-interaction}
 
-\subsubsection{Input File}\label{input-file-1}
+\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-3-1.pdf}
+As shown in \texttt{Figure2}, several user inputs are tooken from users
+when they run the python script.
+
+\subsubsection{Input File}\label{input-file}
 
 Input file must contain landmark data. Variables that are needed for
 classification are required to be included in the input file. In our
 analysis, we used number of points in each sub-section corresponding to
 each landmark of the 3D shape and the \texttt{median\ R} of points in
-each wedge. \#\#\# Sample input file \#\#\# Output File
+each wedge.
+
+\subsubsection{Sample input file}\label{sample-input-file}
+
+\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\subsubsection{Output File}\label{output-file}
+
+\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 \subsection{Step Two: Result Analyzation and
 Visualization}\label{step-two-result-analyzation-and-visualization}
@@ -400,29 +440,27 @@ mutant-type samples. Due to this limited sample size, we dicided to use
 a leave-one-out cross validation method to test our model.\\
 For each testing sample, we built 152 SVMs for each landmark. For each
 SVM, we used 10-fold cross validation to select a tuning parameter C
-value among 0.1, 1 and 10. After we get precision scores and predictions
-of each landmark, we will present the distribution of the landmarks'
-precision scores (Figure 3). The user would then be allowed to set a
-threshold for certain precision scores to select out a subset of
-landmarks that are considered significant. A majority vote would then be
-performed among the selected landmarks to get an overall prediction for
-the sample.
+value among 0.1, 1 and 10.
 
-\subsection{Result}\label{result}
+\subsubsection{Processing Results and Make
+Predictions}\label{processing-results-and-make-predictions}
+
+After we get precision scores and predictions of each landmark, we will
+present the distribution of the landmarks' precision scores. The user
+would then be allowed to set a threshold for certain precision scores to
+select out a subset of landmarks that are considered significant. A
+majority vote would then be performed among the selected landmarks to
+get an overall prediction for the sample.
+
+\section{Result}\label{result}
+
+\subsection{Prediction}\label{prediction}
 
 \subsection{Visulization}\label{visulization}
 
-()
+\section{Discussion}\label{discussion}
 
-\section{Conclusion}\label{conclusion}
-
-The SVM model application on landmark data gives insightful analysis of:
-which landmark (=which part of the brain) carries more information of
-the type. whether a new sample is of mutant or wild type
-
-\subsection{Discussion}\label{discussion}
-
-()
+\subsection{Strengths}\label{strengths}
 
 In the previous method random forest, the number of predictors p exceeds
 the number of samples. Morgan applied PCA do reduce the dimension of the
@@ -431,47 +469,261 @@ linear combination of the dimensions that are projected on those are
 kept. While the largest projections still make sense, the minor
 projections are very random and thus difficult to interpret.
 
+The SVM model generated based on landmark data gives insightful analysis
+of: 1. which landmark, or which part of the Zebrafish brain, has more
+predictive power 2. whether a new Zebrafish brain sample is a mutant or
+wild type
+
+\subsection{Limitations}\label{limitations}
+
 The SVM model also has its limitation in that it only considers one
 single landmark at a time without considering the relationship across
-the landmarks of the whole sample.\\
-Strength Limitation
+the landmarks of the whole sample.
+
+\subsection{Improvements}\label{improvements}
+
+\subsubsection{Itenerating machine
+learning}\label{itenerating-machine-learning}
+
+Instead of cross-validation, better results could be achieved by using
+itenerating machine learning method. In iterative machine learning we
+repeat the process of training and testing several times. At the first
+round the user gives examples of objects belonging to some classes and
+the machine learning algorithm is trained with this data. In the second
+round, the algorithm shows examples of objects it thinks that belong to
+these classes. Now, the user merely adds objects to the improved
+training set which the machine learning algorithm has put into a wrong
+class. That is, the user only corrects the ``misunderstandings'' of the
+algorithm. In this way we can concentrate on difficult examples of
+objects that are hard to classify or are for some reason easily missed
+by humans. Such objects may lie close to the decision boundaries or in
+the periphery in the multidimensional feature space. This iterative
+process is continued until the machine learning algorithm does not make
+any mistakes or the classification results do not improve anymore. It
+will improve our classification results and thus is likely to help make
+better predictions for unknown type.
 
 \subsection{Future Study}\label{future-study}
 
-We will continue to work on: making the program more user friendly
-running more tests to prove the accuracy of our model
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  making the program more user friendly
+\item
+  running more tests to prove the accuracy of our model
+\end{enumerate}
 
-\subsubsection{Improvement:}\label{improvement}
+\section{Appendix Code}\label{appendix-code}
 
-Itenerating machine learning
+\subsection{Support Vector Machine}\label{support-vector-machine}
 
-Instead of cross-validation, better results (what kind of better
-results) could be achieved by using itenerating machine learning method.
-In iterative machine learning we repeat the process of training and
-testing several times. At the first round the user gives examples of
-objects belonging to some classes and the machine learning algorithm is
-trained with this data. In the second round, the algorithm shows
-examples of objects it thinks that belong to these classes. Now, the
-user merely adds objects to the improved training set which the machine
-learning algorithm has put into a wrong class. That is, the user only
-corrects the ``misunderstandings'' of the algorithm. In this way we can
-concentrate on difficult examples of objects that are hard to classify
-or are for some reason easily missed by humans. Such objects may lie
-close to the decision boundaries or in the periphery in the
-multidimensional feature space. This iterative process is continued
-until the machine learning algorithm does not make any mistakes or the
-classification results do not improve anymore.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ confusion_matrix, classification_report}
+\ImportTok{from}\NormalTok{ sklearn.model_selection }\ImportTok{import}\NormalTok{ GridSearchCV}
+\ImportTok{from}\NormalTok{ sklearn.svm }\ImportTok{import}\NormalTok{ SVC}
+\ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ f1_score, precision_score, recall_score}
 
-Other models
+\CommentTok{'''}
+\CommentTok{A function that builds a SVM model with linear kernel to classify points to two classes.}
+
+\CommentTok{Inputs:}
+\CommentTok{training_landmarks - a pandas dataframe containing all training landmark data.}
+\CommentTok{index              - a perticular landmark id of interest. eg. '101'}
+\CommentTok{x_names            - a list of explanatory variable names. eg. ['pts', 'r']}
+\CommentTok{y_name             - a string representing response variable name. eg. 'stype'}
+\CommentTok{class0             - name of the first class. eg. 'wt-at'}
+\CommentTok{class1             - name of the second class. eg. 'mt-at'}
+\CommentTok{C_values           - a list of tunning variable C (penalty parameter of the error term) that the method would grid-search on. Default value is [0.1, 1, 10].}
+
+\CommentTok{Output:}
+\CommentTok{svm                - the SVM model trained from the training dataset}
+\CommentTok{ww                 - among the training samples, the number of wild type samples with chosen landmark predicted as wild type.}
+\CommentTok{wm                 - among the training samples, the number of wild type samples with chosen landmark predicted as mutant type.}
+\CommentTok{mm                 - among the training samples, the number of mutant type samples with chosen landmark predicted as mutant type.}
+\CommentTok{mw                 - among the training samples, the number of mutant type samples with chosen landmark predicted as wild type.}
+\CommentTok{'''}
+\KeywordTok{def}\NormalTok{ svm_classification(training_landmarks, index, x_names, y_name, class0, class1, C_values }\OperatorTok{=}\NormalTok{ [}\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{] ):}
+    \CommentTok{# filter out the landmarks needed}
+\NormalTok{    chosenLandmark }\OperatorTok{=}\NormalTok{ landmarks[landmarks.landmark_index}\OperatorTok{==}\NormalTok{index]}
+\NormalTok{    chosenLandmark }\OperatorTok{=}\NormalTok{ chosenLandmark[np.isfinite(chosenLandmark[}\StringTok{'r'}\NormalTok{])]}
+    
+    \CommentTok{# create training and testing data}
+\NormalTok{    X }\OperatorTok{=}\NormalTok{ chosenLandmark[x_names]}
+\NormalTok{    y }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name]}
+\NormalTok{    y }\OperatorTok{=}\NormalTok{ y.replace([class1], }\DecValTok{1}\NormalTok{)}
+\NormalTok{    y }\OperatorTok{=}\NormalTok{ y.replace([class0], }\DecValTok{0}\NormalTok{)}
+
+    \CommentTok{# check whether both classes exist}
+\NormalTok{    count_1 }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name].}\BuiltInTok{str}\NormalTok{.contains(class1).}\BuiltInTok{sum}\NormalTok{()}
+\NormalTok{    count_0 }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name].}\BuiltInTok{str}\NormalTok{.contains(class0).}\BuiltInTok{sum}\NormalTok{()}
+
+    \ControlFlowTok{if}\NormalTok{ (count_1 }\OperatorTok{<} \DecValTok{2} \KeywordTok{or}\NormalTok{ count_0 }\OperatorTok{<} \DecValTok{2}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}
+
+    \CommentTok{# find the best C value by cross-validation}
+\NormalTok{    tuned_parameters }\OperatorTok{=}\NormalTok{ [\{}\StringTok{'C'}\NormalTok{: C_values\}]}
+\NormalTok{    clf }\OperatorTok{=}\NormalTok{ GridSearchCV(SVC(kernel}\OperatorTok{=}\StringTok{'linear'}\NormalTok{), tuned_parameters, cv}\OperatorTok{=}\DecValTok{10}\NormalTok{, scoring}\OperatorTok{=}\StringTok{'accuracy'}\NormalTok{)}
+\NormalTok{    clf.fit(X.values, y.values)}
+\NormalTok{    best_c }\OperatorTok{=}\NormalTok{ clf.best_params_[}\StringTok{'C'}\NormalTok{]}
+    
+\NormalTok{    svc }\OperatorTok{=}\NormalTok{ SVC(C}\OperatorTok{=}\NormalTok{best_c, kernel}\OperatorTok{=}\StringTok{'linear'}\NormalTok{)}
+\NormalTok{    svc.fit(X, y)}
+    
+\NormalTok{    prediction }\OperatorTok{=}\NormalTok{ svc.predict(X)}
+
+    \CommentTok{# print confusion matrix}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"confusion matrix: "}\NormalTok{)}
+\NormalTok{    cm }\OperatorTok{=}\NormalTok{ confusion_matrix(y, prediction)}
+\NormalTok{    cm_df }\OperatorTok{=}\NormalTok{ pd.DataFrame(cm.T, index}\OperatorTok{=}\NormalTok{svc.classes_, columns}\OperatorTok{=}\NormalTok{svc.classes_)}
+    \BuiltInTok{print}\NormalTok{(cm_df)}
+
+    \CommentTok{# Statistics of training precision:}
+    \CommentTok{# number of wild type samples with this landmark predicted as wild type.}
+\NormalTok{    ww }\OperatorTok{=}\DecValTok{0}
+    \CommentTok{# number of wild type samples with this landmark predicted as mutant type.}
+\NormalTok{    wm }\OperatorTok{=} \DecValTok{0}
+    \CommentTok{# number of mutant type samples with this landmark predicted as mutant type.}
+\NormalTok{    mm }\OperatorTok{=} \DecValTok{0}
+    \CommentTok{# number of mutant type samples with this landmark predicted as wild type.}
+\NormalTok{    mw }\OperatorTok{=} \DecValTok{0}
+    
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{ (}\BuiltInTok{len}\NormalTok{(y)):}
+\NormalTok{        _y }\OperatorTok{=}\NormalTok{ y.values[i]}
+\NormalTok{        _p }\OperatorTok{=}\NormalTok{ prediction[i]}
+
+        \ControlFlowTok{if}\NormalTok{ _y}\OperatorTok{==}\DecValTok{1} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{1}\NormalTok{:}
+\NormalTok{            mm }\OperatorTok{=}\NormalTok{ mm }\OperatorTok{+} \DecValTok{1}
+        \ControlFlowTok{elif}\NormalTok{ _y}\OperatorTok{==}\DecValTok{1} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+\NormalTok{            mw }\OperatorTok{=}\NormalTok{ mw }\OperatorTok{+} \DecValTok{1}
+        \ControlFlowTok{elif}\NormalTok{ _y}\OperatorTok{==}\DecValTok{0} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+\NormalTok{            ww }\OperatorTok{=}\NormalTok{ ww }\OperatorTok{+} \DecValTok{1}
+        \ControlFlowTok{elif}\NormalTok{ _y}\OperatorTok{==}\DecValTok{0} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{1}\NormalTok{:}
+\NormalTok{            wm }\OperatorTok{=}\NormalTok{ wm }\OperatorTok{+} \DecValTok{1}
+    
+    \ControlFlowTok{return}\NormalTok{ svc, ww, wm, mm, mw}
+
+
+\ControlFlowTok{if} \VariableTok{__name__} \OperatorTok{==} \StringTok{"__main__"}\NormalTok{:}
+    \CommentTok{# Get interested chnnel name}
+\NormalTok{    channel }\OperatorTok{=} \StringTok{''}
+    \ControlFlowTok{while}\NormalTok{ (channel }\OperatorTok{!=} \StringTok{'AT'} \KeywordTok{and}\NormalTok{ channel }\OperatorTok{!=} \StringTok{'ZRF'}\NormalTok{):}
+\NormalTok{        channel }\OperatorTok{=} \BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter 'AT' or 'ZRF' to indicate channel interested: "}\NormalTok{)}
+    
+\NormalTok{    class0 }\OperatorTok{=} \StringTok{'mt-zrf'} \ControlFlowTok{if}\NormalTok{ channel }\OperatorTok{==} \StringTok{'ZRF'} \ControlFlowTok{else} \StringTok{'mt-at'}
+\NormalTok{    class1 }\OperatorTok{=} \StringTok{'wt-zrf'} \ControlFlowTok{if}\NormalTok{ channel }\OperatorTok{==} \StringTok{'ZRF'} \ControlFlowTok{else} \StringTok{'wt-at'}
+
+    \CommentTok{# Read in landmark data}
+\NormalTok{    data_type }\OperatorTok{=} \StringTok{'-1'}
+    \ControlFlowTok{while}\NormalTok{ (data_type }\OperatorTok{!=} \StringTok{'0'} \KeywordTok{and}\NormalTok{ data_type }\OperatorTok{!=} \StringTok{'1'}\NormalTok{):}
+\NormalTok{        data_type }\OperatorTok{=} \BuiltInTok{input}\NormalTok{(}\StringTok{"Enter 0 for filling NaN values with median and 1 for filling with 2*median: "}\NormalTok{)}
+\NormalTok{    landmarks }\OperatorTok{=}\NormalTok{ pd.DataFrame()}
+    \ControlFlowTok{if}\NormalTok{ (channel }\OperatorTok{==} \StringTok{'AT'}\NormalTok{):}
+\NormalTok{        landmarks }\OperatorTok{=}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_AT_filled_w_median.csv'}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ data_type}\OperatorTok{==}\StringTok{'0'} \ControlFlowTok{else}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_AT_filled_w_2median.csv'}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        landmarks }\OperatorTok{=}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_ZRF_filled_w_median.csv'}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ data_type}\OperatorTok{==}\StringTok{'0'} \ControlFlowTok{else}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_ZRF_filled_w_2median.csv'}\NormalTok{)}
+
+    \CommentTok{# Get sample id}
+\NormalTok{    sample }\OperatorTok{=}\NormalTok{ pd.DataFrame()}
+    \ControlFlowTok{while}\NormalTok{(sample.shape[}\DecValTok{0}\NormalTok{]}\OperatorTok{<}\DecValTok{2}\NormalTok{):}
+\NormalTok{        sample_id }\OperatorTok{=} \BuiltInTok{str}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter a VALID sample index: "}\NormalTok{))}
+\NormalTok{        sample }\OperatorTok{=}\NormalTok{ landmarks[landmarks.sample_index}\OperatorTok{==}\NormalTok{sample_id]}
+
+    \CommentTok{# Get result file's name and create the file with column names}
+\NormalTok{    result_file_name }\OperatorTok{=} \BuiltInTok{str}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter result file name: "}\NormalTok{))}
+\NormalTok{    result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'w'}\NormalTok{)}
+\NormalTok{    result_file.write(}\StringTok{'sample_index, landmark_index, pred, ww, wm, mm, mw}\CharTok{\textbackslash{}n}\StringTok{'}\NormalTok{)}
+\NormalTok{    result_file.close()}
+
+    \CommentTok{# Get existing landmark ids}
+\NormalTok{    landmark_ids }\OperatorTok{=}\NormalTok{ sample[}\StringTok{'landmark_index'}\NormalTok{]}
+
+\NormalTok{    leave_one_out }\OperatorTok{=}\NormalTok{ landmarks[landmarks.sample_index}\OperatorTok{!=}\NormalTok{sample_id]}
+    \ControlFlowTok{for}\NormalTok{ l }\KeywordTok{in}\NormalTok{ landmark_ids.values:}
+        \BuiltInTok{print}\NormalTok{ (}\StringTok{"======================================="}\NormalTok{)}
+        \BuiltInTok{print}\NormalTok{ (}\StringTok{"landmark: "}\NormalTok{, }\BuiltInTok{str}\NormalTok{(l))}
+\NormalTok{        svc, ww, wm, mm, mw }\OperatorTok{=}\NormalTok{ svm_classification(training_landmarks }\OperatorTok{=}\NormalTok{ leave_one_out,}
+\NormalTok{                                                 index }\OperatorTok{=}\NormalTok{ l,}
+\NormalTok{                                                 x_names }\OperatorTok{=}\NormalTok{ [}\StringTok{'pts'}\NormalTok{, }\StringTok{'r'}\NormalTok{],}
+\NormalTok{                                                 y_name }\OperatorTok{=} \StringTok{'stype'}\NormalTok{,}
+\NormalTok{                                                 class0 }\OperatorTok{=}\NormalTok{ class0,}
+\NormalTok{                                                 class1 }\OperatorTok{=}\NormalTok{ class1,}
+\NormalTok{                                                 C_values }\OperatorTok{=}\NormalTok{ [}\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{])}
+        \ControlFlowTok{if}\NormalTok{ (svc }\KeywordTok{is} \VariableTok{None}\NormalTok{):}
+            \BuiltInTok{print}\NormalTok{(}\StringTok{"One of the classes have too few samples for this landmark, so skipping it."}\NormalTok{)}
+            \ControlFlowTok{continue}
+\NormalTok{        prediction }\OperatorTok{=}\NormalTok{ svc.predict(sample[sample.landmark_index}\OperatorTok{==}\NormalTok{l][[}\StringTok{'pts'}\NormalTok{, }\StringTok{'r'}\NormalTok{]])}
+\NormalTok{        result }\OperatorTok{=} \StringTok{', '}\NormalTok{.join(}\BuiltInTok{str}\NormalTok{(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ [sample_id, l, prediction[}\DecValTok{0}\NormalTok{], ww, wm, mm, mw]) }\OperatorTok{+} \StringTok{'}\CharTok{\textbackslash{}n}\StringTok{'}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{'result:'}\NormalTok{, result)}
+
+\NormalTok{        result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'a'}\NormalTok{)}
+\NormalTok{        result_file.write(result)}
+\NormalTok{        result_file.close()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Shiny App}\label{shiny-app}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{list_of_indices <-}\StringTok{ }\KeywordTok{c}\NormalTok{(index}\OperatorTok{$}\NormalTok{Index, }\StringTok{"AT"}\NormalTok{, }\StringTok{"ZRF"}\NormalTok{)}
+\NormalTok{list_of_scores <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"precision"}\NormalTok{, }\StringTok{"recall"}\NormalTok{, }\StringTok{"f1"}\NormalTok{, }\StringTok{"w_precision"}\NormalTok{, }\StringTok{"w_recall"}\NormalTok{, }\StringTok{"w_f1"}\NormalTok{, }\StringTok{"m_precision"}\NormalTok{, }\StringTok{"m_recall"}\NormalTok{, }\StringTok{"m_f1"}\NormalTok{)}
+\NormalTok{landmark_xy <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{"/Users/priscilla/Desktop/SDS Capstone/Zebrafish/analysis/landmark_xy.csv"}\NormalTok{)}
+\NormalTok{list_of_channel <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"AT"}\NormalTok{, }\StringTok{"ZRF"}\NormalTok{)}
+
+\CommentTok{# User Interface}
+\NormalTok{ui <-}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}
+  \KeywordTok{titlePanel}\NormalTok{(}\DataTypeTok{title=}\KeywordTok{h4}\NormalTok{(}\StringTok{"Classification of Wildtype and Mutant Zebrafish Brains via Computational Method"}\NormalTok{, }
+                      \DataTypeTok{align=}\StringTok{"center"}\NormalTok{)),}
+  \KeywordTok{selectInput}\NormalTok{(}\StringTok{"channel"}\NormalTok{, }\StringTok{"Channel:"}\NormalTok{, list_of_channel),}
+  \KeywordTok{selectInput}\NormalTok{(}\StringTok{"sampleindex"}\NormalTok{, }\StringTok{"Sample Index:"}\NormalTok{, list_of_indices),}
+  \KeywordTok{selectInput}\NormalTok{(}\StringTok{"score"}\NormalTok{, }\StringTok{"Accuracy Measurement:"}\NormalTok{, list_of_scores),}
+  \KeywordTok{mainPanel}\NormalTok{(}\KeywordTok{fluidRow}\NormalTok{(}
+              \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"90%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot1"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot2"}\NormalTok{))}
+\NormalTok{            ))}
+\NormalTok{)}
+
+\CommentTok{# Server}
+\NormalTok{server <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input,output) \{}
+\NormalTok{  dat <-}\StringTok{ }\KeywordTok{reactive}\NormalTok{(\{}
+\NormalTok{    dir <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(wd, }\StringTok{"/analysis/r"}\NormalTok{, input}\OperatorTok{$}\NormalTok{sampleindex, }\StringTok{"_med_"}\NormalTok{, input}\OperatorTok{$}\NormalTok{channel, }\StringTok{"_result.csv"}\NormalTok{)}
+\NormalTok{    test <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(dir)}
+\NormalTok{    test <-}\StringTok{ }\NormalTok{test }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{left_join}\NormalTok{(landmark_xy, }\DataTypeTok{by=}\StringTok{"landmark_index"}\NormalTok{)}
+    \KeywordTok{print}\NormalTok{(test)}
+\NormalTok{    test}
+\NormalTok{  \})}
+  
+  \CommentTok{# Plot One}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot1 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                 \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ y, }\DataTypeTok{y =}\NormalTok{ x)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ input}\OperatorTok{$}\NormalTok{score)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{19}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p1}
+\NormalTok{  \})}
+  
+  \CommentTok{# Plot Two}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot2 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p2 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(input}\OperatorTok{$}\NormalTok{score, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p2}
+\NormalTok{  \})}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
-
-\section{Appendix}\label{appendix}
-
-\subsection{Figures}\label{figures}
-
-\subsection{Python code}\label{python-code}
 
 \nolinenumbers
 

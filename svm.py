@@ -91,8 +91,8 @@ if __name__ == "__main__":
     while (channel != 'AT' and channel != 'ZRF'):
         channel = input("Please enter 'AT' or 'ZRF' to indicate channel interested: ")
     
-    class0 = 'mt-zrf' if channel == 'ZRF' else 'mt-at'
-    class1 = 'wt-zrf' if channel == 'ZRF' else 'wt-at'
+    class1 = 'mt-zrf' if channel == 'ZRF' else 'mt-at'
+    class0 = 'wt-zrf' if channel == 'ZRF' else 'wt-at'
 
     # Read in landmark data
     data_type = '-1'
