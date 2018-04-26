@@ -19,10 +19,10 @@ C_values           - a list of tunning variable C (penalty parameter of the erro
 
 Output:
 svm                - the SVM model trained from the training dataset
-ww                 - among the training samples, the number of wild type samples with chosen landmark predicted as wild type.
-wm                 - among the training samples, the number of wild type samples with chosen landmark predicted as mutant type.
-mm                 - among the training samples, the number of mutant type samples with chosen landmark predicted as mutant type.
-mw                 - among the training samples, the number of mutant type samples with chosen landmark predicted as wild type.
+c0_c0              - among the training samples, the number of class0 type samples with chosen landmark predicted as class0 type.
+c0_c1              - among the training samples, the number of class0 type samples with chosen landmark predicted as class1 type.
+c1_c1              - among the training samples, the number of class1 type samples with chosen landmark predicted as class1 type.
+c1_c0              - among the training samples, the number of class1 type samples with chosen landmark predicted as class0 type.
 '''
 def svm_classification(training_landmarks, index, x_names, y_name, class0, class1, C_values = [0.1, 1, 10] ):
     # filter out the landmarks needed
@@ -32,8 +32,8 @@ def svm_classification(training_landmarks, index, x_names, y_name, class0, class
     # create training and testing data
     X = chosenLandmark[x_names]
     y = chosenLandmark[y_name]
-    y = y.replace([class1], 1)
-    y = y.replace([class0], 0)
+    #   y = y.replace([class1], 1)
+    #y = y.replace([class0], 0)
 
     # check whether both classes exist
     count_1 = chosenLandmark[y_name].str.contains(class1).sum()
@@ -61,48 +61,86 @@ def svm_classification(training_landmarks, index, x_names, y_name, class0, class
 
     # Statistics of training precision:
     # number of wild type samples with this landmark predicted as wild type.
-    ww =0
+    c0_c0 =0
     # number of wild type samples with this landmark predicted as mutant type.
-    wm = 0
+    c0_c1 = 0
     # number of mutant type samples with this landmark predicted as mutant type.
-    mm = 0
+    c1_c1 = 0
     # number of mutant type samples with this landmark predicted as wild type.
-    mw = 0
+    c1_c0 = 0
     
     for i in range (len(y)):
         _y = y.values[i]
         _p = prediction[i]
 
-        if _y==1 and _p==1:
-            mm = mm + 1
-        elif _y==1 and _p==0:
-            mw = mw + 1
-        elif _y==0 and _p==0:
-            ww = ww + 1
-        elif _y==0 and _p==1:
-            wm = wm + 1
+        if _y==class1 and _p==class1:
+            c1_c1 = c1_c1 + 1
+        elif _y==class1 and _p==class0:
+            c1_c0 = c1_c0 + 1
+        elif _y==class0 and _p==class0:
+            c0_c0 = c0_c0 + 1
+        elif _y==class0 and _p==class1:
+            c0_c1 = c0_c1 + 1
     
-    return svc, ww, wm, mm, mw
+    return svc, c0_c0, c0_c1, c1_c1, c1_c0
 
 
 if __name__ == "__main__":
-    # Get interested chnnel name
-    channel = ''
-    while (channel != 'AT' and channel != 'ZRF'):
-        channel = input("Please enter 'AT' or 'ZRF' to indicate channel interested: ")
-    
-    class1 = 'mt-zrf' if channel == 'ZRF' else 'mt-at'
-    class0 = 'wt-zrf' if channel == 'ZRF' else 'wt-at'
+#    # Get interested chnnel name
+#    channel = ''
+#    while (channel != 'AT' and channel != 'ZRF'):
+#        channel = input("Please enter 'AT' or 'ZRF' to indicate channel interested: ")
+#
+#    class1 = 'mt-zrf' if channel == 'ZRF' else 'mt-at'
+#    class0 = 'wt-zrf' if channel == 'ZRF' else 'wt-at'
+#
+#    # Read in landmark data
+#    data_type = '-1'
+#    while (data_type != '0' and data_type != '1'):
+#        data_type = input("Enter 0 for filling NaN values with median; 1 for filling with 2*median and 2 for keeping the data unchanged: ")
+#    landmarks = pd.DataFrame()
+#    if (channel == 'AT'):
+#        landmarks = pd.read_csv('./data/final/landmark_AT_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_AT_filled_w_2median.csv')
+#    else:
+#        landmarks = pd.read_csv('./data/final/landmark_ZRF_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_ZRF_filled_w_2median.csv')
 
-    # Read in landmark data
-    data_type = '-1'
-    while (data_type != '0' and data_type != '1'):
-        data_type = input("Enter 0 for filling NaN values with median and 1 for filling with 2*median: ")
+    # Get Datafile
     landmarks = pd.DataFrame()
-    if (channel == 'AT'):
-        landmarks = pd.read_csv('./data/final/landmark_AT_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_AT_filled_w_2median.csv')
-    else:
-        landmarks = pd.read_csv('./data/final/landmark_ZRF_filled_w_median.csv') if data_type=='0' else pd.read_csv('./data/final/landmark_ZRF_filled_w_2median.csv')
+    while(landmarks.shape[0]<2):
+        filename = str(input("Please enter dataset's path: "))
+        try:
+            landmarks = pd.read_csv(filename)
+        except Exception:
+            print ("Error in reading the file. Please check whether file exists.")
+
+    # Column names
+    columns = list(landmarks)
+    # Check column names
+    if 'stype' not in columns:
+        print("Incorrect column names: Please name your sample type's column as 'stype' ")
+        exit()
+    if 'sample_index' not in columns:
+        print("Incorrect column names: Please name your sample index's column as 'sample_index' ")
+        exit()
+    if 'landmark_index' not in columns:
+        print("Incorrect column names: Please name your landmark index's column as 'landmark_index' ")
+        exit()
+
+    # Get Parameters' column names
+    parameters = list(set(columns) - set(['stype', 'sample_index', 'landmark_index']))
+
+    # Get class names
+    class0 = ''
+    class1 = ''
+    classes = list(set(landmarks['stype'].values))
+    while (class0 not in classes):
+        class0 = str(input("Please enter name of type 0: "))
+    while (class1 not in classes):
+        class1 = str(input("Please enter name of type 1: "))
+
+    # Remove rows with NaN values
+    for parameter in parameters:
+        landmarks = landmarks[np.isfinite(df[parameter])]
 
     # Get sample id
     sample = pd.DataFrame()
@@ -111,19 +149,22 @@ if __name__ == "__main__":
         sample = landmarks[landmarks.sample_index==sample_id]
 
     # Get result file's name and create the file with column names
-    result_file_name = str(input("Please enter result file name: "))
+    result_file_name = str(input("Please enter result file path: "))
     result_file = open(result_file_name, 'w')
-    result_file.write('sample_index, landmark_index, pred, ww, wm, mm, mw\n')
+    result_file.write('sample_index,stype,landmark_index,pred,c0_c0,c0_c1,c1_c1,c1_c0\n')
     result_file.close()
 
     # Get existing landmark ids
     landmark_ids = sample['landmark_index']
 
+    # Get Actual Type (the Label)
+    stype = sample.iloc[0]['stype']
+
     leave_one_out = landmarks[landmarks.sample_index!=sample_id]
     for l in landmark_ids.values:
         print ("=======================================")
         print ("landmark: ", str(l))
-        svc, ww, wm, mm, mw = svm_classification(training_landmarks = leave_one_out,
+        svc, c0_c0, c0_c1, c1_c1, c1_c0 = svm_classification(training_landmarks = leave_one_out,
                                                  index = l,
                                                  x_names = ['pts', 'r'],
                                                  y_name = 'stype',
@@ -133,8 +174,9 @@ if __name__ == "__main__":
         if (svc is None):
             print("One of the classes have too few samples for this landmark, so skipping it.")
             continue
-        prediction = svc.predict(sample[sample.landmark_index==l][['pts', 'r']])
-        result = ', '.join(str(x) for x in [sample_id, l, prediction[0], ww, wm, mm, mw]) + '\n'
+
+        prediction = svc.predict(sample[sample.landmark_index==l][['pts', 'r']])[0]
+        result = ','.join(str(x) for x in [sample_id, stype, l, prediction, c0_c0, c0_c1, c1_c1, c1_c0 ]) + '\n'
         print('result:', result)
 
         result_file = open(result_file_name, 'a')
