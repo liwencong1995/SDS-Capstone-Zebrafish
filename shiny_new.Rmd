@@ -1,0 +1,95 @@
+---
+title: "shiny_new"
+output: html_document
+---
+
+```{r}
+#Shiny App
+library(shiny)
+library(rsconnect)
+library(dplyr)
+library(data.table)
+library(ggplot2)
+```
+
+```{r}
+
+##note: alpha is var1, theta is var2 in ZBF case
+
+# input: Sample Index
+AT_landmarks <- read_csv("SDS-Capstone-Zebrafish/data/raw/AT_landmarks.csv")
+index <- AT_landmarks[,c(1,306)]
+index <- index %>%
+  arrange(Index)
+list_of_indices <- c(index$Index, "AT", "ZRF")
+list_of_scores <- c("precision", "recall", "f1", "w_precision", "w_recall", "w_f1", "m_precision", "m_recall", "m_f1")
+landmark_xy <- fread("/Users/hushuli/Desktop/senior/SDS410/SDS-Capstone-Zebrafish/landmark_xy.csv")
+list_of_channel <- c("AT", "ZRF")
+
+ui <- fluidPage(
+  titlePanel(title=h4("Classification of Wildtype and Mutant Zebrafish Brains via Computational Method", 
+                      align="center")),
+  selectInput("channel", "Channel:", list_of_channel),
+  selectInput("sampleindex", "Sample Index:", list_of_indices),
+  selectInput("score", "Accuracy Measurement:", list_of_scores),
+  mainPanel(fluidRow(
+              splitLayout(cellWidths = c("90%", "60%"), plotOutput("plot1"), plotOutput("plot2"))
+            ))
+)
+
+```
+
+```{r}
+
+  #coordinates for ggplot
+  #alpha range
+  alpha_range <- landmark_xy %>%
+    summarize(max(y))
+  alpha_max <- alpha_range[1,1]
+  
+  #theta range
+  theta_range <- landmark_xy %>%
+    summarize(max(x))
+  theta_max <- theta_range[1,1]
+  
+
+
+server <- function(input,output) {
+  dat <- reactive({
+    dir <- paste0("/Users/hushuli/Desktop/senior/SDS410/SDS-Capstone-Zebrafish")
+    test <- fread("/Users/hushuli/Desktop/senior/SDS410/SDS-Capstone-Zebrafish/analysis_AT_2med/AT_2med_aggregated.csv") 
+    test <- test %>%
+      left_join(landmark_xy, by="landmark_index")
+    #test <- three_air_zone %>% dplyr::filter(Zone == input$taxizone)
+    print(test)
+    test
+  })
+
+  
+  output$plot1 <- renderPlot({
+    p1 <- ggplot(dat(), 
+                 aes(x = y, y = x)) +
+      geom_tile(aes(fill = precision)) +
+      facet_wrap() +
+      xlab("Alpha") +
+      ylab("Theta") +
+      scale_x_continuous(limits = c(1, alpha_max), breaks=c(1, 10, 19), labels=c("-90.51", "0", "90.51")) +
+      scale_y_continuous(limits = c(1, theta_max), breaks=c(1, 4.5, 8), labels=c("-3.14","0","3.14")) +
+      scale_fill_continuous(limits=c(0, 1), breaks=seq(0,1,by=0.25)) 
+    p1
+  })
+  
+  output$plot2 <- renderPlot({
+    p2 <- qplot(dat()$precision, geom = "histogram") +
+      xlab("Precision") +
+      ylab("Count")  
+    p2
+  })
+  
+}
+
+
+shinyApp(ui, server)
+
+
+```
