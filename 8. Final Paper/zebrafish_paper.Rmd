@@ -100,7 +100,7 @@ if $f(x) = 0$, the observation is on the seperation line.
 $$ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
 The above is the perpendicular distance from the ith observation to the separation line. If it's >0, the observation falls at the right side of the separation line and vice versa.
 
-# Workflow and User Interface
+# Workflow
 ```{r fig.width=5, fig.height=4,echo=FALSE}
 library(png)
 library(grid)
@@ -108,13 +108,15 @@ img <- readPNG("./figures/Figure1.png")
 grid.raster(img)
 ```
 
+# User Interface
+We created an User Interface which allows users to simply input a data file and get an visualization of the modeling result. There are two main components in the User Interface:
+
 ## Step One: Data Processing and Modelling
-This step is implemented using Python (version 3) and packages including `pandas`, `nump` and `sklearn` are required. Users would need to run and interact with the Python script `svm.py` to pre-process the data and build the model.   
+This step is implemented using **Python** (version 3) and packages including `pandas`, `nump` and `sklearn` are required. Users would need to run and interact with the Python script `svm.py` to pre-process the data and build the model.   
 
 The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a perticular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
 
 ### User Interaction
-
 ```{r fig.width=5, fig.height=3,echo=FALSE}
 library(png)
 library(grid)
@@ -143,7 +145,18 @@ img <- readPNG("./figures/Figure4.png")
 grid.raster(img)
 ```
 
-## Step Two: Result Analyzation and Visualization
+
+## Step Two: Result Visualization -- Shiny App
+
+### Input
+Data must be stored in a folder callled data under your work directory, and the CSV file must be named as "output_data.csv". If you do not know what your work directory is, you can check it by using the function `getwd()`.
+
+### Output
+
+
+
+#--------------------------------------------------------------------------------
+# Result Analyzation and
 ## Testing
 ### Cross-Validation
 For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we dicided to use a leave-one-out cross validation method to test our model.   
