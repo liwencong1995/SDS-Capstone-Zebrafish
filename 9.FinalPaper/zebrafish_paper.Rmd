@@ -152,6 +152,11 @@ grid.raster(img)
 Data must be stored in a folder callled data under your work directory, and the CSV file must be named as "output_data.csv". If you do not know what your work directory is, you can check it by using the function `getwd()`.
 
 ### Output
+All SVM models should produce 6 percision measurements:
+
+* They are precision score of type 1, recall score of type 1, and F1 score of type 1.
+* They are precision score of type 2, recall score of type 2, and F1 score of type 2.
+* They are overall precision score, overall recall score, and overall F1 score.
 
 
 
