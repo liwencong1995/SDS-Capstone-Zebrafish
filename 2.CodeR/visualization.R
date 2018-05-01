@@ -222,4 +222,31 @@ list_of_variables[positions[1]]
 list_of_variables[positions[2]]
 list_of_variables[positions[3]]
 
+#---------------------------------------------------------------------------
+# Adding original type of the zebrafish brain
+# type_label <- landmark_AT_w_index %>%
+#   select(sample_index, stype)
+# type_label <- unique(type_label)
+#fwrite(type_label, "3.InputData/tidy/type_label.csv")
+AT <- fread("7.aggregatedResults/AT_2med.csv")
+type_label <- fread("3.InputData/tidy/type_label.csv")
+AT <- AT %>%
+  left_join(type_label, by="sample_index") %>%
+  select(-V1)
+names(AT)
+AT_rename <- AT %>%
+  select(sample_index, landmark_index, stype, pred,
+         c0_c0, c0_c1, c1_c0, c1_c1,
+         c0_precision, c0_recall, c0_f1, c0_support,
+         c1_precision, c1_recall, c1_f1, c1_support,
+         precision, recall, f1)
+#AT_rename <- AT[,c(16,10,19,14,18,17,12,11,2,3,1,4,6,7,5,8,13,15,9)]
+#AT_rename <- AT[,c(12,2,19,10,18,17,8,7,14,15,13,16,4,5,3,6,9,11,1)]
+names(AT_rename)
+names(AT_rename) <- c("sample_index", "landmark_index", "type", "pred",
+                      "type0_0", "type0_1", "type1_0", "type1_1",
+                      "type0_precision", "type0_recall", "type0_f1", "type0_num",
+                      "type1_precision", "type1_recall", "type1_f1", "type1_num",
+                      "overall_precision", "overall_recall", "overall_f1")
+fwrite(AT_rename, "7.aggregatedResults/AT_2med_renamed.csv")
 

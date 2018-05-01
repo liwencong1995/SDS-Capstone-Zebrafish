@@ -3,9 +3,7 @@ library(dplyr)
 library(data.table)
 library(ggplot2)
 library(viridis)
-#library(knitr)
 library(shiny)
-#library(rsconnect)
 
 # Data 
 # Loading Output data files from Step ONE: SVM Model

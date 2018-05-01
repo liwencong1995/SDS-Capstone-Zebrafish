@@ -2,6 +2,16 @@
 # They are precision score of type 1, recall score of type 1, and F1 score of type 1
 # They are precision score of type 2, recall score of type 2, and F1 score of type 2
 # They are overall precision score, overall recall score, and overall F1 score
+# Majority Voting
+#Join original type of the zebrafish
+#User Input
+#Threshold
+#70%
+# Get the overall prediction 
+# accuracy rate
+# format the app
+# Ben
+# 13 variable
 
 # Shiny App------------------------------------------------------------------
 # Loading all packages needed in the creation of the Shiny App
@@ -11,22 +21,25 @@ library(ggplot2)
 library(viridis)
 library(shiny)
 
-AT <- fread("7.aggregatedResults/AT_2med_all.csv")
+AT <- fread("7.aggregatedResults/AT_2med_renamed.csv")
+landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+AT <- AT %>%
+  left_join(landmark_xy, by="landmark_index")
 list_of_indices <- c(unique(AT$sample_index), "aggregated") 
 list_of_scores <- c("precision", "recall", "f1")
 # Baselines
 # 43 wildtype
-c0_p_b <- 0.5
-c0_r_b <- 0.5
-c0_f1_b <- 0.5
+c0_p_b <- 43/78
+c0_r_b <- 1
+c0_f1_b <- 2*c0_p_b*c0_r_b/(c0_p_b + c0_r_b)
 # 35 mutant
-c1_p_b <- 0.5
-c1_r_b <- 0.5
-c1_f1_b <- 0.5
+c1_p_b <- 35/78
+c1_r_b <- 1
+c1_f1_b <- 2*c1_p_b*c1_r_b/(c1_p_b + c1_r_b)
 # overall
-p_b <- 0.5
-r_b <- 0.5
-f1_b <- 0.5
+p_b <- (c0_p_b * 43 + c1_p_b *35)/78
+r_b <- (c0_r_b * 43 + c1_r_b *35)/78
+f1_b <- (c0_f1_b * 43 + c1_f1_b *35)/78
   
 # User Interface
 ui <- fluidPage(
