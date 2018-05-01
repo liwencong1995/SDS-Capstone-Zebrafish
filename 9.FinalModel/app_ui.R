@@ -1,51 +1,58 @@
 # Loading all packages needed in the creation of the Shiny App
-library(shiny)
-library(rsconnect)
 library(dplyr)
-library(knitr)
 library(data.table)
 library(ggplot2)
+library(viridis)
+#library(knitr)
+library(shiny)
+#library(rsconnect)
 
 # Data 
-
 # Loading Output data files from Step ONE: SVM Model
-wd <- getwd()
-datadir <- paste0(wd, "/3. Input Data/output_data.csv")
-
-AT <- fread("/Users/priscilla/Desktop/SDS Capstone/Zebrafish/5. output_AT_2med/AT_2med.csv")
-ZRF <- fread("/Users/priscilla/Desktop/SDS Capstone/Zebrafish/6. output_ZRF_2med/ZRF_2med.csv")
-
 # Generalized Data Directory
 # Data must be stored in a folder callled data under your work directory, and the CSV file must be named as "output_data.csv".
 # If you do not know what your work directory is, you can check it by using the function `getwd()`.
 wd <- getwd()
-datadir <- paste0(wd, "/data/output_data.csv")
-data <- fread(datadir)
+#datadir <- paste0(wd, "/data/output_data.csv")
+data <- fread("data/output_data.csv")
+list_of_variables <- names(data)
+landmark_xy <- fread("data/landmark_xy.csv")
 
+# inputs
+list_of_indices <- c(unique(data$sample_index), "Aggregated")
+list_of_scores <- c("Precision", "Recall", "f1", "w_precision", "w_recall", "w_f1", "m_precision", "m_recall", "m_f1")
+column_num <- 19
+row_num <- 8
 
+#assign a pair of x-y coordinate to each landmark
+# data <- data %>%
+#   mutate(column =  floor((landmark_index/row_num) -0.1)+1)
+# variables named landmark_index, column, and row must be included in the landmark_xy file
+data <- data %>%
+  left_join(landmark_xy, by="landmark_index")
 
-# input: Sample Index
-AT_landmarks <- read_csv("data/raw/AT_landmarks.csv")
-index <- AT_landmarks[,c(1,306)]
-index <- index %>%
-  arrange(Index)
-list_of_indices <- c(index$Index, "AT", "ZRF")
-list_of_scores <- c("precision", "recall", "f1", "w_precision", "w_recall", "w_f1", "m_precision", "m_recall", "m_f1")
-landmark_xy <- fread("/Users/priscilla/Desktop/SDS Capstone/Zebrafish/analysis/landmark_xy.csv")
-list_of_channel <- c("AT", "ZRF")
-
+# Shiny App
+# User Interface
 ui <- fluidPage(
   titlePanel(title=h4("Classification of Wildtype and Mutant Zebrafish Brains via Computational Method", 
                       align="center")),
-  selectInput("channel", "Channel:", list_of_channel),
-  selectInput("sampleindex", "Sample Index:", list_of_indices),
-  selectInput("score", "Accuracy Measurement:", list_of_scores),
-  mainPanel(fluidRow(
-    splitLayout(cellWidths = c("90%", "60%"), plotOutput("plot1"), plotOutput("plot2"))
-  ))
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+    
+    # Input
+    sidebarPanel(
+      selectInput("sampleindex", "Sample Index:", list_of_indices),
+      selectInput("score", "Accuracy Measurement:", list_of_scores)
+    ),
+    
+    # Output
+    mainPanel(plotOutput("plot1"), plotOutput("plot2"), plotOutput("plot3"),
+              plotOutput("plot4"), plotOutput("plot5"), plotOutput("plot6")
+    )
+  )
 )
 
-
+#Server
 server <- function(input,output) {
   dat <- reactive({
     wd <- getwd()

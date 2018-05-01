@@ -167,3 +167,59 @@ ggplot(data = AT_101_vis, aes(x = y, y = x)) +
 
 ggplot(data = AT_101_vis, aes(x = y, y = x)) +
   geom_tile(aes(fill = m_f1))
+
+#----------------------------------------------------------------------------
+# landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+# #assign position to each landmark
+# test <- data %>%
+#   left_join(landmark_xy, by="landmark_index")
+# list_of_variables <- names(AT)
+# #ZRF <- fread("/Users/priscilla/Desktop/SDS Capstone/Zebrafish/7.aggregatedResults/ZRF_2med.csv")
+
+#add aggregated data
+AT <- AT %>%
+  select(-V1)
+aggregated <- AT %>%
+  select(-V1) %>%
+  group_by(landmark_index) %>%
+  summarise(f1 = mean(f1),
+            c1_f1 = mean(c1_f1),
+            c1_precision = mean(c1_precision),
+            c1_recall = mean(c1_recall),
+            c1_support = mean(c1_support),
+            c1_c1 = mean(c1_c1),
+            c1_c0 = mean(c1_c0),
+            precision = mean(precision),
+            pred = mean(pred),
+            recall = mean(recall),
+            sample_index = "aggregated",
+            c0_f1 = mean(c0_f1),
+            c0_precision = mean(c0_precision),
+            c0_recall = mean(c0_recall),
+            c0_support = mean(c0_support),
+            c0_c1 = mean(c0_c1),
+            c0_c0 = mean(c0_c0),
+            min_alpha = mean(min_alpha),
+            min_theta = mean(min_theta),
+            row = mean(row),
+            column = mean(column)
+  )
+aggregated <- aggregated[,c(2,1,3:22)]
+AT_all <- bind_rows(AT, aggregated)
+fwrite(AT_all, "7.aggregatedResults/AT_2med_all.csv")
+
+#assign a pair of x-y coordinate to each landmark
+# AT <- AT %>%
+#   mutate(column =  floor((landmark_index/row_num) -0.1)+1)
+AT <- AT %>%
+  left_join(landmark_xy, by="landmark_index")
+
+#getting the percision scores that will be shown as the output
+grepl("precision", list_of_variables)
+positions <- which(grepl("precision", list_of_variables) %in% TRUE)
+length(positions)
+list_of_variables[positions[1]]
+list_of_variables[positions[2]]
+list_of_variables[positions[3]]
+
+
