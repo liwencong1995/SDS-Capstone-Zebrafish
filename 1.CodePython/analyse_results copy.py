@@ -31,22 +31,22 @@ def process_row_data(input_path):
     print(sample_index)
     results['sample_index'] = sample_index
     
-    results['type0_num'] = (results['ww'] + results['wm'])
-    results['type1_num'] = (results['mm'] + results['mw'])
+    results['c0_support'] = (results['ww'] + results['wm'])
+    results['c1_support'] = (results['mm'] + results['mw'])
 
-    results['type0_precision'] = results['ww'] / (results['ww'] + results['mw'])
-    results['type0_recall'] = results['ww'] / (results['ww'] + results['wm'])
-    results['type1_precision'] = results['mm'] / (results['mm'] + results['wm'])
-    results['type1_recall'] = results['mm'] / (results['mm'] + results['mw'])
+    results['c0_precision'] = results['ww'] / (results['ww'] + results['mw'])
+    results['c0_recall'] = results['ww'] / (results['ww'] + results['wm'])
+    results['c1_precision'] = results['mm'] / (results['mm'] + results['wm'])
+    results['c1_recall'] = results['mm'] / (results['mm'] + results['mw'])
     results = results.fillna(0)
     
-    results['type0_f1'] = ( 2 * results['type0_precision'] * results['type0_recall'] )/ (results['type0_precision'] + results['type0_recall'])
-    results['type1_f1'] = ( 2 * results['type1_precision'] * results['type1_recall'] )/ (results['type1_precision'] + results['type1_recall'])
+    results['c0_f1'] = ( 2 * results['c0_precision'] * results['c0_recall'] )/ (results['c0_precision'] + results['c0_recall'])
+    results['c1_f1'] = ( 2 * results['c1_precision'] * results['c1_recall'] )/ (results['c1_precision'] + results['c1_recall'])
     results = results.fillna(0)
     
-    results['precision'] = ((results['type0_precision'] * results['type0_num']) + (results['type1_precision'] * results['type1_num']))/ (results['type0_num'] + results['type1_num'])
-    results['recall'] = ((results['type0_recall'] * results['type0_num']) + (results['type1_recall'] * results['type1_num']))/ (results['type0_num'] + results['type1_num'])
-    results['f1'] = ((results['type0_f1'] * results['type0_num']) + (results['type1_f1'] * results['type1_num']))/ (results['type0_num'] + results['type1_num'])
+    results['precision'] = ((results['c0_precision'] * results['c0_support']) + (results['c1_precision'] * results['c1_support']))/ (results['c0_support'] + results['c1_support'])
+    results['recall'] = ((results['c0_recall'] * results['c0_support']) + (results['c1_recall'] * results['c1_support']))/ (results['c0_support'] + results['c1_support'])
+    results['f1'] = ((results['c0_f1'] * results['c0_support']) + (results['c1_f1'] * results['c1_support']))/ (results['c0_support'] + results['c1_support'])
     results = results.fillna(0)
     
     return results
