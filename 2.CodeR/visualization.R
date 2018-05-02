@@ -177,35 +177,34 @@ ggplot(data = AT_101_vis, aes(x = y, y = x)) +
 # #ZRF <- fread("/Users/priscilla/Desktop/SDS Capstone/Zebrafish/7.aggregatedResults/ZRF_2med.csv")
 
 #add aggregated data
-AT <- AT %>%
+AT <- AT_test %>%
   select(-V1)
-aggregated <- AT %>%
-  select(-V1) %>%
+aggregated <- AT_test %>%
   group_by(landmark_index) %>%
-  summarise(f1 = mean(f1),
+  summarise(c0_f1 = mean(c0_f1),
+            c0_precision = mean(c0_precision),
+            c0_recall = mean(c0_recall),
+            c0_support = mean(c0_support),
             c1_f1 = mean(c1_f1),
             c1_precision = mean(c1_precision),
             c1_recall = mean(c1_recall),
             c1_support = mean(c1_support),
+            f1 = mean(f1),
             c1_c1 = mean(c1_c1),
             c1_c0 = mean(c1_c0),
             precision = mean(precision),
             pred = mean(pred),
             recall = mean(recall),
             sample_index = "aggregated",
-            c0_f1 = mean(c0_f1),
-            c0_precision = mean(c0_precision),
-            c0_recall = mean(c0_recall),
-            c0_support = mean(c0_support),
             c0_c1 = mean(c0_c1),
-            c0_c0 = mean(c0_c0),
-            min_alpha = mean(min_alpha),
-            min_theta = mean(min_theta),
-            row = mean(row),
-            column = mean(column)
+            c0_c0 = mean(c0_c0)
+            # min_alpha = mean(min_alpha),
+            # min_theta = mean(min_theta),
+            # row = mean(row),
+            # column = mean(column)
   )
-aggregated <- aggregated[,c(2,1,3:22)]
-AT_all <- bind_rows(AT, aggregated)
+aggregated <- aggregated[,c(2: 10,1,11:18)]
+AT_all <- bind_rows(AT_test, aggregated)
 fwrite(AT_all, "7.aggregatedResults/AT_2med_all.csv")
 
 #assign a pair of x-y coordinate to each landmark
@@ -228,11 +227,11 @@ list_of_variables[positions[3]]
 #   select(sample_index, stype)
 # type_label <- unique(type_label)
 #fwrite(type_label, "3.InputData/tidy/type_label.csv")
-AT <- fread("7.aggregatedResults/AT_2med.csv")
+AT <- fread("7.aggregatedResults/AT_2med_all.csv")
 type_label <- fread("3.InputData/tidy/type_label.csv")
 AT <- AT %>%
-  left_join(type_label, by="sample_index") %>%
-  select(-V1)
+  left_join(type_label, by="sample_index")
+
 names(AT)
 AT_rename <- AT %>%
   select(sample_index, landmark_index, stype, pred,
@@ -240,8 +239,6 @@ AT_rename <- AT %>%
          c0_precision, c0_recall, c0_f1, c0_support,
          c1_precision, c1_recall, c1_f1, c1_support,
          precision, recall, f1)
-#AT_rename <- AT[,c(16,10,19,14,18,17,12,11,2,3,1,4,6,7,5,8,13,15,9)]
-#AT_rename <- AT[,c(12,2,19,10,18,17,8,7,14,15,13,16,4,5,3,6,9,11,1)]
 names(AT_rename)
 names(AT_rename) <- c("sample_index", "landmark_index", "type", "pred",
                       "type0_0", "type0_1", "type1_0", "type1_1",
@@ -250,3 +247,16 @@ names(AT_rename) <- c("sample_index", "landmark_index", "type", "pred",
                       "overall_precision", "overall_recall", "overall_f1")
 fwrite(AT_rename, "7.aggregatedResults/AT_2med_renamed.csv")
 
+data <- data %>%
+  mutate(pred = ifelse(pred == 0, "wt-at", "mt-at"))
+fwrite(data, "7.aggregatedResults/AT_2med_renamed_2.csv")
+#----------------------------------------------------------------------------
+#test baselines
+AT_sub <- AT %>%
+  filter(type1_num > 35)
+AT_sub_1 <- AT %>%
+  filter(type1_num <36)
+
+AT_wrong <- AT_sub %>%
+  group_by(sample_index) %>%
+  summarise(N=n())
