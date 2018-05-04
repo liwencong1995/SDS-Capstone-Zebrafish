@@ -18,14 +18,22 @@
 library(dplyr)
 library(data.table)
 library(ggplot2)
-#library(viridis)
 library(shiny)
 
+#AT------------------------------------------------------
 data <- fread("7.aggregatedResults/AT_2med_renamed_2.csv")
-landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
-data <- data %>%
-  left_join(landmark_xy, by="landmark_index")
+# landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+# data <- data %>%
+#   left_join(landmark_xy, by="landmark_index")
+# #ZRF------------------------------------------------------
+# data <- fread("7.aggregatedResults/ZRF_2med_renamed_2.csv")
+# landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+# data <- data %>%
+#   left_join(landmark_xy, by="landmark_index")
+
+#input----------------------------------------------------
 list_of_indices <- c(unique(data$sample_index)) 
+list_of_channels <- c("AT", "ZRF")
 #list_of_scores <- c("precision", "recall", "f1")
 
 # User Interface
@@ -38,18 +46,18 @@ ui <- fluidPage(
     # Input
     sidebarPanel(
       selectInput("sampleindex", "Sample Index:", list_of_indices),
-      #selectInput("score", "Accuracy Measurement:", list_of_scores),
+      selectInput("channel", "Channel:", list_of_channels),
       
       # Input: Simple integer interval ----
       sliderInput("precision", "Precision Rate Threshold:",
                   min = 0, max = 1,
-                  value = 0.5, step = 0.01),
+                  value = 0, step = 0.01),
       sliderInput("recall", "Recall Rate Threshold:",
                   min = 0, max = 1,
-                  value = 0.5, step = 0.01),
+                  value = 0, step = 0.01),
       sliderInput("f1", "F1 Rate Threshold:",
                   min = 0, max = 1,
-                  value = 0.5, step = 0.01)
+                  value = 0, step = 0.01)
     ),
     
     # Output
@@ -57,28 +65,28 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Accuracy Threshold",tableOutput("values")),
         #heatmaps and histograms, side by side
-        tabPanel("Type 1 Precision", fluidRow(
+        tabPanel("Type 0 Precision", fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot2"), plotOutput("plot1"))
           )), 
-        tabPanel("Type 2 Precision", fluidRow(
+        tabPanel("Type 1 Precision", fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot4"), plotOutput("plot3"))
           )),
         tabPanel("Precision",fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot6"), plotOutput("plot5"))
           )),
-        tabPanel("Type 1 Recall", fluidRow(
+        tabPanel("Type 0 Recall", fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot8"), plotOutput("plot7"))
         )), 
-        tabPanel("Type 2 Recall", fluidRow(
+        tabPanel("Type 1 Recall", fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot10"), plotOutput("plot9"))
         )),
         tabPanel("Recall",fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot12"), plotOutput("plot11"))
         )),
-        tabPanel("Type 1 F1", fluidRow(
+        tabPanel("Type 0 F1", fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot14"), plotOutput("plot13"))
         )), 
-        tabPanel("Type 2 F1", fluidRow(
+        tabPanel("Type 1 F1", fluidRow(
           splitLayout(cellWidths = c("40%", "60%"), plotOutput("plot16"), plotOutput("plot15"))
         )),
         tabPanel("F1",fluidRow(
@@ -91,30 +99,48 @@ ui <- fluidPage(
 
 # Server---------------------------------------------------------------------
 server <- function(input,output) {
-
+  
   #loading data needed to create visualizations
   # data <- fread("7.aggregatedResults/AT_2med_renamed.csv")
   # positions <- which(grepl(input$score, list_of_variables) %in% TRUE)
   # Baselines
   # 43 wildtype
-  data_base <- data %>%
-    mutate(type0_p_b = type0_num/(type0_num+type1_num),
-           type0_r_b = 1,
-           type0_f1_b = 2*type0_p_b*type0_r_b/(type0_p_b + type0_r_b),
-           # 35 mutant
-           type1_p_b = type1_num/(type0_num+type1_num),
-           type1_r_b = 1,
-           type1_f1_b = 2*type1_p_b*type1_r_b/(type1_p_b + type1_r_b),
-           # overall
-           p_b = (type0_p_b * type0_num + type1_p_b *type1_num)/(type0_num+type1_num),
-           r_b = (type0_r_b * type0_num + type1_r_b *type1_num)/(type0_num+type1_num),
-           f1_b = (type0_f1_b * type0_num + type1_f1_b *type1_num)/(type0_num+type1_num))
-  list_of_variables <- names(data_base)
   
+  dat <- reactive({
+    path <- paste0("7.aggregatedResults/", input$channel, "_2med_renamed_2.csv")
+    data <- fread(path)
+    landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+    data <- data %>%
+      left_join(landmark_xy, by="landmark_index")
+    data_base <- data %>%
+      filter(overall_precision >= input$precision,
+             overall_recall >= input$recall,
+             overall_f1 >= input$f1) %>%
+      mutate(type0_p_b = type0_num/(type0_num+type1_num),
+             type0_r_b = 1,
+             type0_f1_b = 2*type0_p_b*type0_r_b/(type0_p_b + type0_r_b),
+             # 35 mutant
+             type1_p_b = type1_num/(type0_num+type1_num),
+             type1_r_b = 1,
+             type1_f1_b = 2*type1_p_b*type1_r_b/(type1_p_b + type1_r_b),
+             # overall
+             p_b = (type0_p_b * type0_num + type1_p_b *type1_num)/(type0_num+type1_num),
+             r_b = (type0_r_b * type0_num + type1_r_b *type1_num)/(type0_num+type1_num),
+             f1_b = (type0_f1_b * type0_num + type1_f1_b *type1_num)/(type0_num+type1_num))
+    #filter out the sample not interested
+    test <- data_base %>%
+      filter(sample_index == input$sampleindex)
+    
+    #return dataset
+    print(test[1,])
+    test
+    })
+
   scoreSelect <- reactive({
+    list_of_variables <- names( dat() )
     #show what is selected
     positions <- which(grepl(input$score, list_of_variables) %in% TRUE)
-    test_small <- data_base %>%
+    test_small <- dat() %>%
       select(positions) %>%
       head()
     scoresS <- names(test_small)
@@ -122,21 +148,9 @@ server <- function(input,output) {
     scoresS
   })
   
-  scoreOne <- reactive({
-    scoreSelect()[1]
-  })
-  
-  #render data
-  dat <- reactive({
-    # #loading data need to create visualizations
-    # data <- fread("7.aggregatedResults/AT_2med_all.csv")
-    #filter out the observations not needed
-    test <- data_base %>%
-      filter(sample_index == input$sampleindex)
-    #return dataset
-    print(test[1,])
-    test
-  })
+  # scoreOne <- reactive({
+  #   scoreSelect()[1]
+  # })
   
   # Reactive expression to create data frame of all input values ----
   sliderValues <- reactive({
