@@ -99,7 +99,7 @@ $$ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
 The above is the perpendicular distance from the ith observation to the separation line. If it's >0, the observation falls at the right side of the separation line and vice versa.
 
 # Workflow
-```{r fig.width=5, fig.height=4,echo=FALSE}
+```{r workflow, fig.cap = "Summary of Workflow", fig.width=5, fig.height=4,echo=FALSE}
 library(png)
 library(grid)
 img <- readPNG("./figures/Figure1.png")
@@ -115,11 +115,8 @@ This step is implemented using **Python** (version 3) and packages including `pa
 The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a perticular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
 
 ### User Interaction
-```{r fig.width=5, fig.height=3,echo=FALSE}
-library(png)
-library(grid)
-img <- readPNG("./figures/Figure2.png")
-grid.raster(img)
+```{r useri, fig.cap = "Example of User Interaction in Step One of the User Interface", fig.width=5, fig.height=3,echo=FALSE}
+knitr::include_graphics("figures/Figure2.png", dpi = 260 )
 ```
 As shown in `Figure2`, several user inputs are tooken from users when they run the python script.
 
@@ -128,21 +125,14 @@ Input file must contain landmark data. Variables that are needed for classificat
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
 
 ### Sample input file
-```{r fig.width=5, fig.height=3,echo=FALSE}
-library(png)
-library(grid)
-img <- readPNG("./figures/Figure3.png")
-grid.raster(img)
+```{r inputdata, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.width=5, fig.height=3,echo=FALSE}
+knitr::include_graphics("figures/Figure3.png", dpi = 260 )
 ```
 
 ### Output File
-```{r fig.width=5, fig.height=3,echo=FALSE}
-library(png)
-library(grid)
-img <- readPNG("./figures/Figure4.png")
-grid.raster(img)
+```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.width=5, fig.height=3,echo=FALSE}
+knitr::include_graphics("figures/Figure4.png", dpi = 260 )
 ```
-
 
 ## Step Two: Visualization Output from Step One -- Shiny App
 After building SVM models in step one, we insert the output from the SVM models into step two to visualize the results. Steps two uses the accuracy scores output from step one to create a user-friendly app which generates visualizations to help users to understand the SVM results. 
@@ -180,54 +170,54 @@ We visualize the 9 accuracy scores by using both histograms and the correspondin
 There are 10 tabs included in the user interface of the app: 1 Accuracy Threshold Summary tab and 9 accuracy score visualization tabs.
 
 ```{r shiny1, fig.cap= "User Interface: Accuracy Threshold Summary Tab of AT Channel" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny1.png", dpi = 120 )
+knitr::include_graphics("figures/shiny1.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny1) displays the Accuracy Score Threshold Summary tab of the first sample of AT channel. Users can drag the dot on the slidebar to set the thresholds of overall precision, recall, and f1 scores. The threshold of the three scores are updated in the summary table. Default thresholds are 0 for all three accuracy measurements. We then use the landmark observations that fulfill the threshold requirements to predict the type of the sample of choice by doing a majority vote. We simply count the total number of landmarks that are classified as type 0 and type 1, and then we determine whether there are more of them that are classified as type 0 or type 1. The type that gets more vote is the predicted type of the sample. The resuting predicted sample type is also updated in the summary table.
+Figure 5 displays the Accuracy Score Threshold Summary tab of the first sample of AT channel. Users can drag the dot on the slidebar to set the thresholds of overall precision, recall, and f1 scores. The threshold of the three scores are updated in the summary table. Default thresholds are 0 for all three accuracy measurements. We then use the landmark observations that fulfill the threshold requirements to predict the type of the sample of choice by doing a majority vote. We simply count the total number of landmarks that are classified as type 0 and type 1, and then we determine whether there are more of them that are classified as type 0 or type 1. The type that gets more vote is the predicted type of the sample. The resuting predicted sample type is also updated in the summary table.
 
 Other information, such as the true type of the sample and the number of wildetypes and mutants used in training the SVM models are also included in the summary table.
 
 ```{r shiny2, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny2.png", dpi = 120 )
+knitr::include_graphics("figures/shiny2.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny2) displays the Precision Score Visualization tab of the first sample of AT channel. In this case, all three thresholds are at default level, 0. Therefore, all landmarks' precision scores are shown in both the histogram and the heatmap.
+Figure 6 displays the Precision Score Visualization tab of the first sample of AT channel. In this case, all three thresholds are at default level, 0. Therefore, all landmarks' precision scores are shown in both the histogram and the heatmap.
 
 ```{r shiny3, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny3.png", dpi = 120 )
+knitr::include_graphics("figures/shiny3.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny3) also displays the Precision Score Visualization tab of the first sample of AT channel. In this case, recall and f1 scores' thresholds are at default level and precision threshold is set to be 0.75. Therefore, only landmarks that have precision scores that are equal to or greater than 0.75 are shown in the visualizations. As shown in the histogram, all values less than 0.75 are removed from the histogram in figure \@ref(fig:shiny2). Some of the blocks in figure \@ref(fig:shiny2) are turned into blank blocks after the precision threshold is increased to 0.75.
+Figure 7 also displays the Precision Score Visualization tab of the first sample of AT channel. In this case, recall and f1 scores' thresholds are at default level and precision threshold is set to be 0.75. Therefore, only landmarks that have precision scores that are equal to or greater than 0.75 are shown in the visualizations. As shown in the histogram, all values less than 0.75 are removed from the histogram in figure 6. Some of the blocks in figure 6 are turned into blank blocks after the precision threshold is increased to 0.75.
 
 ```{r shiny4, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny4.png", dpi = 120 )
+knitr::include_graphics("figures/shiny4.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny4) displays the Recall Score Visualization tab of the first sample of AT channel.
+Figure 8 displays the Recall Score Visualization tab of the first sample of AT channel.
 
 ```{r shiny5, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny5.png", dpi = 120 )
+knitr::include_graphics("figures/shiny5.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny5) displays the Recall Score Visualization tab of the first sample of AT channel with recall threshold equals to 0.75.
+Figure 9 displays the Recall Score Visualization tab of the first sample of AT channel with recall threshold equals to 0.75.
 
 ```{r shiny6, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny6.png", dpi = 120 )
+knitr::include_graphics("figures/shiny6.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny6) displays the F1 Score Visualization tab of the first sample of AT channel.
+Figure 10 displays the F1 Score Visualization tab of the first sample of AT channel.
 
 ```{r shiny7, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny7.png", dpi = 120 )
+knitr::include_graphics("figures/shiny7.png", dpi = 260 )
 ```
 
-Figure \@ref(fig:shiny7) displays the F1 Score Visualization tab of the first sample of AT channel with f1 threshold equals to 0.75.
+Figure 11 displays the F1 Score Visualization tab of the first sample of AT channel with f1 threshold equals to 0.75.
 
 ```{r shiny9, fig.cap= "User Interface: F1 Score Visualization Tab of ZRF Channel" ,fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/shiny9.png", dpi = 120 )
+knitr::include_graphics("figures/shiny9.png", dpi = 260 )
 ```
 
-Users can also choose to observe the SVM results of ZRF channel. Figure \@ref(fig:shiny9) displays the F1 Score Visualization tab of the first sample of ZRF channel with all thresholds equal to 0.
+Users can also choose to observe the SVM results of ZRF channel. Figure 12 displays the F1 Score Visualization tab of the first sample of ZRF channel with all thresholds equal to 0.
 
 # Analyzing Result
 ## Testing

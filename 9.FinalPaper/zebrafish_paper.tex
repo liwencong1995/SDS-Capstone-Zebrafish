@@ -193,12 +193,9 @@ biological image analysis research at Smith College.
 \linenumbers
 
 % Use "Eq" instead of "Equation" for equation citations.
-\section{Acknowledgements}\label{acknowledgements}
-
-This project was completed in partial fulfillment of the requirements of
-SDS 410: SDS Capstone. This course is offered by the Statistical and
-Data Sciences Program at Smith College, and was taught by Benjamin
-Baumer in Spring 2018.
+\begin{verbatim}
+## Warning: package 'reticulate' was built under R version 3.4.4
+\end{verbatim}
 
 \section{Introduction}\label{introduction}
 
@@ -315,20 +312,22 @@ refers to the median r value or number of points, it was very difficult
 to see what each column actually represented. The ideal format of the
 data set was to have the sample index, minimum and maximum Alpha,
 minimum and maximum Theta, number of points, median r, and type of
-sample each be its own column. Hence, three key functions were used from
-the tidyr package: gather, separate, and spread. The gather function
-separated the dataset into key and value pairs for each index. The key
-was the column name containing all essential information connected by
-underscores and the value included the number of points or median r
-value. Then, the separate function separated the result from the gather
-function divided the column connected by underscore into 5 different
-columns, named as \texttt{min\_alpha}, \texttt{max\_alpha},
-\texttt{min\_theta}, \texttt{max\_theta}, and \texttt{ptsOrR}. This was
-added to the result of the gather function that contained the index and
-value of each cell, either median R or number of points. Afterwards, the
-spread function widened the already wide table by expanding the
-\texttt{ptsOrR} column by creating two columns, each column representing
-median R and the number of points.
+sample each be its own column.
+
+Hence, three key functions were used from the tidyr package: gather,
+separate, and spread. The gather function separated the dataset into key
+and value pairs for each index. The key was the column name containing
+all essential information connected by underscores and the value
+included the number of points or median r value. Then, the separate
+function separated the result from the gather function divided the
+column connected by underscore into 5 different columns, named as
+\texttt{min\_alpha}, \texttt{max\_alpha}, \texttt{min\_theta},
+\texttt{max\_theta}, and \texttt{ptsOrR}. This was added to the result
+of the gather function that contained the index and value of each cell,
+either median R or number of points. Afterwards, the spread function
+widened the already wide table by expanding the \texttt{ptsOrR} column
+by creating two columns, each column representing median R and the
+number of points.
 
 \subsection{Dealing with Missing
 Value}\label{dealing-with-missing-value}
@@ -389,17 +388,27 @@ perpendicular distance from the ith observation to the separation line.
 If it's \textgreater{}0, the observation falls at the right side of the
 separation line and vice versa.
 
-\section{Workflow and User Interface}\label{workflow-and-user-interface}
+\section{Workflow}\label{workflow}
 
-\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-2-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{zebrafish_paper_files/figure-latex/workflow-1.pdf}
+\caption{Summary of Workflow}
+\end{figure}
+
+\section{User Interface}\label{user-interface}
+
+We created an User Interface which allows users to simply input a data
+file and get an visualization of the modeling result. There are two main
+components in the User Interface:
 
 \subsection{Step One: Data Processing and
 Modelling}\label{step-one-data-processing-and-modelling}
 
-This step is implemented using Python (version 3) and packages including
-\texttt{pandas}, \texttt{nump} and \texttt{sklearn} are required. Users
-would need to run and interact with the Python script \texttt{svm.py} to
-pre-process the data and build the model.
+This step is implemented using \textbf{Python} (version 3) and packages
+including \texttt{pandas}, \texttt{nump} and \texttt{sklearn} are
+required. Users would need to run and interact with the Python script
+\texttt{svm.py} to pre-process the data and build the model.
 
 The script \texttt{svm.py} contains two components: a general-purpose
 \texttt{svm\_classification()} function that builds a SVM model to
@@ -408,7 +417,10 @@ that runs the \texttt{svm\_classification()} function for each landmark.
 
 \subsubsection{User Interaction}\label{user-interaction}
 
-\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-3-1.pdf}
+\begin{figure}
+\includegraphics[width=4.85in]{figures/Figure2} \caption{Example of User Interaction in Step One of the User Interface}\label{fig:useri}
+\end{figure}
+
 As shown in \texttt{Figure2}, several user inputs are tooken from users
 when they run the python script.
 
@@ -422,14 +434,218 @@ each wedge.
 
 \subsubsection{Sample input file}\label{sample-input-file}
 
-\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-4-1.pdf}
+\begin{figure}
+\includegraphics[width=5.11in]{figures/Figure3} \caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata}
+\end{figure}
 
 \subsubsection{Output File}\label{output-file}
 
-\includegraphics{zebrafish_paper_files/figure-latex/unnamed-chunk-5-1.pdf}
+\begin{figure}
+\includegraphics[width=5.65in]{figures/Figure4} \caption{Sample Data Output File of First Step of the User Interface}\label{fig:outputdata}
+\end{figure}
 
-\subsection{Step Two: Result Analyzation and
-Visualization}\label{step-two-result-analyzation-and-visualization}
+\subsection{Step Two: Visualization Output from Step One -- Shiny
+App}\label{step-two-visualization-output-from-step-one-shiny-app}
+
+After building SVM models in step one, we insert the output from the SVM
+models into step two to visualize the results. Steps two uses the
+accuracy scores output from step one to create a user-friendly app which
+generates visualizations to help users to understand the SVM results.
+
+\subsubsection{Input}\label{input}
+
+\paragraph{Data File}\label{data-file}
+
+Input \texttt{CSV} data file must be stored in a folder called
+\texttt{data} under your working directory, and the \texttt{CSV} file
+must be named as \texttt{output\_data.csv}. If you do not know what your
+working directory is, you can check it by using the function
+\texttt{getwd()} in base R.
+
+\paragraph{Input Variables}\label{input-variables}
+
+All SVM models from step one produce the following 9 accuracy
+measurements:
+
+\begin{itemize}
+\tightlist
+\item
+  Precision score of type 0
+\item
+  Recall score of type 0
+\item
+  F1 score of type 0
+\item
+  Precision score of type 1
+\item
+  Recall score of type 1
+\item
+  F1 score of type 1
+\item
+  Overall precision score
+\item
+  Overall recall score
+\item
+  Overall F1 score
+\end{itemize}
+
+These 9 accuracy scores are the variables needed in the second step of
+the user interface to create the visualizations. Users can select
+\texttt{channel} and \texttt{sample\ index} to filter the input dataset
+to only keep the accuracy scores of the observations that users are
+interested in.
+
+In addition, users can set the threshold of the following variables:
+
+\begin{itemize}
+\tightlist
+\item
+  Overall precision score
+\item
+  Overall recall score
+\item
+  Overall F1 score
+\end{itemize}
+
+The dataset used to create the visualizations is rendered everytime
+users cahnge one or multiple thresholds. Our app filters out the
+observations that do not fulfill the threshold requirements and uses the
+resulting dataset to update the histograms and heatmaps.
+
+\subsubsection{Output}\label{output}
+
+We visualize the 9 accuracy scores by using both histograms and the
+corresponding heatmaps that display the scores inlcuded in the
+histograms in rectangular shapes that are colored with different shades
+of blue according to their magnitudes. The positions of the shapes are
+determined with respect to their relative positions within the
+biological structure. In the study of Zebrafish, we used the relative
+positions of the wedges used in landmark analysis to determine the
+position of the wedges in the heatmap.
+
+There are 10 tabs included in the user interface of the app: 1 Accuracy
+Threshold Summary tab and 9 accuracy score visualization tabs.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny1} 
+
+}
+
+\caption{User Interface: Accuracy Threshold Summary Tab of AT Channel}\label{fig:shiny1}
+\end{figure}
+
+Figure 5 displays the Accuracy Score Threshold Summary tab of the first
+sample of AT channel. Users can drag the dot on the slidebar to set the
+thresholds of overall precision, recall, and f1 scores. The threshold of
+the three scores are updated in the summary table. Default thresholds
+are 0 for all three accuracy measurements. We then use the landmark
+observations that fulfill the threshold requirements to predict the type
+of the sample of choice by doing a majority vote. We simply count the
+total number of landmarks that are classified as type 0 and type 1, and
+then we determine whether there are more of them that are classified as
+type 0 or type 1. The type that gets more vote is the predicted type of
+the sample. The resuting predicted sample type is also updated in the
+summary table.
+
+Other information, such as the true type of the sample and the number of
+wildetypes and mutants used in training the SVM models are also included
+in the summary table.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny2} 
+
+}
+
+\caption{User Interface: Precision Score Visualization Tab of AT Channel}\label{fig:shiny2}
+\end{figure}
+
+Figure 6 displays the Precision Score Visualization tab of the first
+sample of AT channel. In this case, all three thresholds are at default
+level, 0. Therefore, all landmarks' precision scores are shown in both
+the histogram and the heatmap.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny3} 
+
+}
+
+\caption{User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75}\label{fig:shiny3}
+\end{figure}
+
+Figure 7 also displays the Precision Score Visualization tab of the
+first sample of AT channel. In this case, recall and f1 scores'
+thresholds are at default level and precision threshold is set to be
+0.75. Therefore, only landmarks that have precision scores that are
+equal to or greater than 0.75 are shown in the visualizations. As shown
+in the histogram, all values less than 0.75 are removed from the
+histogram in figure 6. Some of the blocks in figure 6 are turned into
+blank blocks after the precision threshold is increased to 0.75.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny4} 
+
+}
+
+\caption{User Interface: Recall Score Visualization Tab of AT Channel}\label{fig:shiny4}
+\end{figure}
+
+Figure 8 displays the Recall Score Visualization tab of the first sample
+of AT channel.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny5} 
+
+}
+
+\caption{User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75}\label{fig:shiny5}
+\end{figure}
+
+Figure 9 displays the Recall Score Visualization tab of the first sample
+of AT channel with recall threshold equals to 0.75.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny6} 
+
+}
+
+\caption{User Interface: F1 Score Visualization Tab of AT Channel}\label{fig:shiny6}
+\end{figure}
+
+Figure 10 displays the F1 Score Visualization tab of the first sample of
+AT channel.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny7} 
+
+}
+
+\caption{User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75}\label{fig:shiny7}
+\end{figure}
+
+Figure 11 displays the F1 Score Visualization tab of the first sample of
+AT channel with f1 threshold equals to 0.75.
+
+\begin{figure}
+
+{\centering \includegraphics[width=5.54in]{figures/shiny9} 
+
+}
+
+\caption{User Interface: F1 Score Visualization Tab of ZRF Channel}\label{fig:shiny9}
+\end{figure}
+
+Users can also choose to observe the SVM results of ZRF channel. Figure
+12 displays the F1 Score Visualization tab of the first sample of ZRF
+channel with all thresholds equal to 0.
+
+\section{Analyzing Result}\label{analyzing-result}
 
 \subsection{Testing}\label{testing}
 
@@ -514,6 +730,13 @@ better predictions for unknown type.
   running more tests to prove the accuracy of our model
 \end{enumerate}
 
+\section{Acknowledgements}\label{acknowledgements}
+
+This project was completed in partial fulfillment of the requirements of
+SDS 410: SDS Capstone. This course is offered by the Statistical and
+Data Sciences Program at Smith College, and was taught by Benjamin
+Baumer in Spring 2018.
+
 \section{Appendix Code}\label{appendix-code}
 
 \subsection{Support Vector Machine}\label{support-vector-machine}
@@ -526,10 +749,8 @@ better predictions for unknown type.
 \ImportTok{from}\NormalTok{ sklearn.model_selection }\ImportTok{import}\NormalTok{ GridSearchCV}
 \ImportTok{from}\NormalTok{ sklearn.svm }\ImportTok{import}\NormalTok{ SVC}
 \ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ f1_score, precision_score, recall_score}
-
 \CommentTok{'''}
 \CommentTok{A function that builds a SVM model with linear kernel to classify points to two classes.}
-
 \CommentTok{Inputs:}
 \CommentTok{training_landmarks - a pandas dataframe containing all training landmark data.}
 \CommentTok{index              - a perticular landmark id of interest. eg. '101'}
@@ -538,7 +759,6 @@ better predictions for unknown type.
 \CommentTok{class0             - name of the first class. eg. 'wt-at'}
 \CommentTok{class1             - name of the second class. eg. 'mt-at'}
 \CommentTok{C_values           - a list of tunning variable C (penalty parameter of the error term) that the method would grid-search on. Default value is [0.1, 1, 10].}
-
 \CommentTok{Output:}
 \CommentTok{svm                - the SVM model trained from the training dataset}
 \CommentTok{ww                 - among the training samples, the number of wild type samples with chosen landmark predicted as wild type.}
@@ -556,14 +776,11 @@ better predictions for unknown type.
 \NormalTok{    y }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name]}
 \NormalTok{    y }\OperatorTok{=}\NormalTok{ y.replace([class1], }\DecValTok{1}\NormalTok{)}
 \NormalTok{    y }\OperatorTok{=}\NormalTok{ y.replace([class0], }\DecValTok{0}\NormalTok{)}
-
     \CommentTok{# check whether both classes exist}
 \NormalTok{    count_1 }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name].}\BuiltInTok{str}\NormalTok{.contains(class1).}\BuiltInTok{sum}\NormalTok{()}
 \NormalTok{    count_0 }\OperatorTok{=}\NormalTok{ chosenLandmark[y_name].}\BuiltInTok{str}\NormalTok{.contains(class0).}\BuiltInTok{sum}\NormalTok{()}
-
     \ControlFlowTok{if}\NormalTok{ (count_1 }\OperatorTok{<} \DecValTok{2} \KeywordTok{or}\NormalTok{ count_0 }\OperatorTok{<} \DecValTok{2}\NormalTok{):}
         \ControlFlowTok{return} \VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{, }\VariableTok{None}
-
     \CommentTok{# find the best C value by cross-validation}
 \NormalTok{    tuned_parameters }\OperatorTok{=}\NormalTok{ [\{}\StringTok{'C'}\NormalTok{: C_values\}]}
 \NormalTok{    clf }\OperatorTok{=}\NormalTok{ GridSearchCV(SVC(kernel}\OperatorTok{=}\StringTok{'linear'}\NormalTok{), tuned_parameters, cv}\OperatorTok{=}\DecValTok{10}\NormalTok{, scoring}\OperatorTok{=}\StringTok{'accuracy'}\NormalTok{)}
@@ -574,13 +791,11 @@ better predictions for unknown type.
 \NormalTok{    svc.fit(X, y)}
     
 \NormalTok{    prediction }\OperatorTok{=}\NormalTok{ svc.predict(X)}
-
     \CommentTok{# print confusion matrix}
     \BuiltInTok{print}\NormalTok{(}\StringTok{"confusion matrix: "}\NormalTok{)}
 \NormalTok{    cm }\OperatorTok{=}\NormalTok{ confusion_matrix(y, prediction)}
 \NormalTok{    cm_df }\OperatorTok{=}\NormalTok{ pd.DataFrame(cm.T, index}\OperatorTok{=}\NormalTok{svc.classes_, columns}\OperatorTok{=}\NormalTok{svc.classes_)}
     \BuiltInTok{print}\NormalTok{(cm_df)}
-
     \CommentTok{# Statistics of training precision:}
     \CommentTok{# number of wild type samples with this landmark predicted as wild type.}
 \NormalTok{    ww }\OperatorTok{=}\DecValTok{0}
@@ -594,7 +809,6 @@ better predictions for unknown type.
     \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{ (}\BuiltInTok{len}\NormalTok{(y)):}
 \NormalTok{        _y }\OperatorTok{=}\NormalTok{ y.values[i]}
 \NormalTok{        _p }\OperatorTok{=}\NormalTok{ prediction[i]}
-
         \ControlFlowTok{if}\NormalTok{ _y}\OperatorTok{==}\DecValTok{1} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{1}\NormalTok{:}
 \NormalTok{            mm }\OperatorTok{=}\NormalTok{ mm }\OperatorTok{+} \DecValTok{1}
         \ControlFlowTok{elif}\NormalTok{ _y}\OperatorTok{==}\DecValTok{1} \KeywordTok{and}\NormalTok{ _p}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
@@ -605,8 +819,6 @@ better predictions for unknown type.
 \NormalTok{            wm }\OperatorTok{=}\NormalTok{ wm }\OperatorTok{+} \DecValTok{1}
     
     \ControlFlowTok{return}\NormalTok{ svc, ww, wm, mm, mw}
-
-
 \ControlFlowTok{if} \VariableTok{__name__} \OperatorTok{==} \StringTok{"__main__"}\NormalTok{:}
     \CommentTok{# Get interested chnnel name}
 \NormalTok{    channel }\OperatorTok{=} \StringTok{''}
@@ -615,7 +827,6 @@ better predictions for unknown type.
     
 \NormalTok{    class0 }\OperatorTok{=} \StringTok{'mt-zrf'} \ControlFlowTok{if}\NormalTok{ channel }\OperatorTok{==} \StringTok{'ZRF'} \ControlFlowTok{else} \StringTok{'mt-at'}
 \NormalTok{    class1 }\OperatorTok{=} \StringTok{'wt-zrf'} \ControlFlowTok{if}\NormalTok{ channel }\OperatorTok{==} \StringTok{'ZRF'} \ControlFlowTok{else} \StringTok{'wt-at'}
-
     \CommentTok{# Read in landmark data}
 \NormalTok{    data_type }\OperatorTok{=} \StringTok{'-1'}
     \ControlFlowTok{while}\NormalTok{ (data_type }\OperatorTok{!=} \StringTok{'0'} \KeywordTok{and}\NormalTok{ data_type }\OperatorTok{!=} \StringTok{'1'}\NormalTok{):}
@@ -625,22 +836,18 @@ better predictions for unknown type.
 \NormalTok{        landmarks }\OperatorTok{=}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_AT_filled_w_median.csv'}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ data_type}\OperatorTok{==}\StringTok{'0'} \ControlFlowTok{else}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_AT_filled_w_2median.csv'}\NormalTok{)}
     \ControlFlowTok{else}\NormalTok{:}
 \NormalTok{        landmarks }\OperatorTok{=}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_ZRF_filled_w_median.csv'}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ data_type}\OperatorTok{==}\StringTok{'0'} \ControlFlowTok{else}\NormalTok{ pd.read_csv(}\StringTok{'./data/final/landmark_ZRF_filled_w_2median.csv'}\NormalTok{)}
-
     \CommentTok{# Get sample id}
 \NormalTok{    sample }\OperatorTok{=}\NormalTok{ pd.DataFrame()}
     \ControlFlowTok{while}\NormalTok{(sample.shape[}\DecValTok{0}\NormalTok{]}\OperatorTok{<}\DecValTok{2}\NormalTok{):}
 \NormalTok{        sample_id }\OperatorTok{=} \BuiltInTok{str}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter a VALID sample index: "}\NormalTok{))}
 \NormalTok{        sample }\OperatorTok{=}\NormalTok{ landmarks[landmarks.sample_index}\OperatorTok{==}\NormalTok{sample_id]}
-
     \CommentTok{# Get result file's name and create the file with column names}
 \NormalTok{    result_file_name }\OperatorTok{=} \BuiltInTok{str}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Please enter result file name: "}\NormalTok{))}
 \NormalTok{    result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'w'}\NormalTok{)}
 \NormalTok{    result_file.write(}\StringTok{'sample_index, landmark_index, pred, ww, wm, mm, mw}\CharTok{\textbackslash{}n}\StringTok{'}\NormalTok{)}
 \NormalTok{    result_file.close()}
-
     \CommentTok{# Get existing landmark ids}
 \NormalTok{    landmark_ids }\OperatorTok{=}\NormalTok{ sample[}\StringTok{'landmark_index'}\NormalTok{]}
-
 \NormalTok{    leave_one_out }\OperatorTok{=}\NormalTok{ landmarks[landmarks.sample_index}\OperatorTok{!=}\NormalTok{sample_id]}
     \ControlFlowTok{for}\NormalTok{ l }\KeywordTok{in}\NormalTok{ landmark_ids.values:}
         \BuiltInTok{print}\NormalTok{ (}\StringTok{"======================================="}\NormalTok{)}
@@ -658,7 +865,6 @@ better predictions for unknown type.
 \NormalTok{        prediction }\OperatorTok{=}\NormalTok{ svc.predict(sample[sample.landmark_index}\OperatorTok{==}\NormalTok{l][[}\StringTok{'pts'}\NormalTok{, }\StringTok{'r'}\NormalTok{]])}
 \NormalTok{        result }\OperatorTok{=} \StringTok{', '}\NormalTok{.join(}\BuiltInTok{str}\NormalTok{(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ [sample_id, l, prediction[}\DecValTok{0}\NormalTok{], ww, wm, mm, mw]) }\OperatorTok{+} \StringTok{'}\CharTok{\textbackslash{}n}\StringTok{'}
         \BuiltInTok{print}\NormalTok{(}\StringTok{'result:'}\NormalTok{, result)}
-
 \NormalTok{        result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'a'}\NormalTok{)}
 \NormalTok{        result_file.write(result)}
 \NormalTok{        result_file.close()}
