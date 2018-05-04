@@ -145,7 +145,7 @@ grid.raster(img)
 
 
 ## Step Two: Visualization Output from Step One -- Shiny App
-After building SVM models in step one, we insert the output from the SVM models into step two to visualize the results. Steps two uses the accuracy scores output from step one to create a user-friendly APP which generates visualizations to help users to understand the SVM results. 
+After building SVM models in step one, we insert the output from the SVM models into step two to visualize the results. Steps two uses the accuracy scores output from step one to create a user-friendly app which generates visualizations to help users to understand the SVM results. 
 
 ### Input
 #### Data File
@@ -160,56 +160,76 @@ All SVM models from step one produce the following 9 accuracy measurements:
 * Precision score of type 1
 * Recall score of type 1 
 * F1 score of type 1
+* Overall precision score
+* Overall recall score
+* Overall F1 score
 
-These 9 accuracy scores are the variables needed in the second step of the user interface to create the visualizations. Users can select `channel` and `sample index`, and these two variables are used to filter on the input dataset to only keep the accuracy scores of the observations that users are interested in.
+These 9 accuracy scores are the variables needed in the second step of the user interface to create the visualizations. Users can select `channel` and `sample index` to filter the input dataset to only keep the accuracy scores of the observations that users are interested in.
 
-In addition, users can set the threshold of one of the following variables:
+In addition, users can set the threshold of the following variables:
 
 * Overall precision score
 * Overall recall score
 * Overall F1 score
 
-The dataset used to create the visualizations is rendered when users cahnge one or multiple thresholds. Our APP filters out the observations that do not fulfill the threshold requirements, and uses the resulting dataset to update the histograms and heatmaps.
+The dataset used to create the visualizations is rendered everytime users cahnge one or multiple thresholds. Our app filters out the observations that do not fulfill the threshold requirements and uses the resulting dataset to update the histograms and heatmaps. 
 
 ### Output
-We visualize the 9 accuracy scores by generating both histograms of the accuracy scores and the corresponding heatmaps that color the magnitude of the accuracy scores with respect to the relative positions of the scores in the Zebrafish brains.
+We visualize the 9 accuracy scores by using both histograms and the corresponding heatmaps that display the scores inlcuded in the histograms in rectangular shapes that are colored with different shades of blue according to their magnitudes. The positions of the shapes are determined with respect to their relative positions within the biological structure. In the study of Zebrafish, we used the relative positions of the wedges used in landmark analysis to determine the position of the wedges in the heatmap.
+
+There are 10 tabs included in the user interface of the app: 1 Accuracy Threshold Summary tab and 9 accuracy score visualization tabs.
 
 ```{r shiny1, fig.cap= "User Interface: Accuracy Threshold Summary Tab of AT Channel" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny1.png", dpi = 120 )
 ```
 
+Figure \@ref(fig:shiny1) displays the Accuracy Score Threshold Summary tab of the first sample of AT channel. Users can drag the dot on the slidebar to set the thresholds of overall precision, recall, and f1 scores. The threshold of the three scores are updated in the summary table. Default thresholds are 0 for all three accuracy measurements. We then use the landmark observations that fulfill the threshold requirements to predict the type of the sample of choice by doing a majority vote. We simply count the total number of landmarks that are classified as type 0 and type 1, and then we determine whether there are more of them that are classified as type 0 or type 1. The type that gets more vote is the predicted type of the sample. The resuting predicted sample type is also updated in the summary table.
+
+Other information, such as the true type of the sample and the number of wildetypes and mutants used in training the SVM models are also included in the summary table.
 
 ```{r shiny2, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny2.png", dpi = 120 )
 ```
 
+Figure \@ref(fig:shiny2) displays the Precision Score Visualization tab of the first sample of AT channel. In this case, all three thresholds are at default level, 0. Therefore, all landmarks' precision scores are shown in both the histogram and the heatmap.
+
 ```{r shiny3, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny3.png", dpi = 120 )
 ```
+
+Figure \@ref(fig:shiny3) also displays the Precision Score Visualization tab of the first sample of AT channel. In this case, recall and f1 scores' thresholds are at default level and precision threshold is set to be 0.75. Therefore, only landmarks that have precision scores that are equal to or greater than 0.75 are shown in the visualizations. As shown in the histogram, all values less than 0.75 are removed from the histogram in figure \@ref(fig:shiny2). Some of the blocks in figure \@ref(fig:shiny2) are turned into blank blocks after the precision threshold is increased to 0.75.
 
 ```{r shiny4, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny4.png", dpi = 120 )
 ```
 
+Figure \@ref(fig:shiny4) displays the Recall Score Visualization tab of the first sample of AT channel.
 
 ```{r shiny5, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny5.png", dpi = 120 )
 ```
 
+Figure \@ref(fig:shiny5) displays the Recall Score Visualization tab of the first sample of AT channel with recall threshold equals to 0.75.
+
 ```{r shiny6, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny6.png", dpi = 120 )
 ```
+
+Figure \@ref(fig:shiny6) displays the F1 Score Visualization tab of the first sample of AT channel.
 
 ```{r shiny7, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny7.png", dpi = 120 )
 ```
 
+Figure \@ref(fig:shiny7) displays the F1 Score Visualization tab of the first sample of AT channel with f1 threshold equals to 0.75.
+
 ```{r shiny9, fig.cap= "User Interface: F1 Score Visualization Tab of ZRF Channel" ,fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny9.png", dpi = 120 )
 ```
 
-#--------------------------------------------------------------------------------
-# Result Analyzation and
+Users can also choose to observe the SVM results of ZRF channel. Figure \@ref(fig:shiny9) displays the F1 Score Visualization tab of the first sample of ZRF channel with all thresholds equal to 0.
+
+# Analyzing Result
 ## Testing
 ### Cross-Validation
 For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we dicided to use a leave-one-out cross validation method to test our model.   
