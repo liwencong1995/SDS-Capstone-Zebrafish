@@ -20,15 +20,13 @@ address:
 abstract: Classification of biological creatures’ phenotypes has long been a field that scientists study at. In this project, we utilize support vector machine to distinguish structures of Zebrafish’s brains by using data generated from landmark analysis (cited Morgan’s paper). We create a tool for biologists to intuitively classify three-dimensional biological shapes into two groups, usually defined as wild type and mutant, and understand which part of the shapes have the most impact on the classification result. This project derives from Professor Barresi’s biological image analysis research at Smith College.
  
 bibliography: mybibfile.bib
+space_between_paragraphs: true
 output: rticles::plos_article
 csl: plos.csl
 ---
 ```{r, echo=FALSE, message=FALSE}
 library(reticulate)
 ```
-
-# Acknowledgements
-This project was completed in partial fulfillment of the requirements of SDS 410: SDS Capstone. This course is offered by the Statistical and Data Sciences Program at Smith College, and was taught by Benjamin Baumer in Spring 2018.
 
 # Introduction
 This project derives from Professor Barresi’s biological image analysis research at Smith College and provides a tool to classify the structures within zebrafish brains via support vector machine. Our goal is to distinguish the wild and mutant types of zebrafish brain’s structures. Morgan, a student in Barresi Lab, used  landmarks analysis to divide the points in the three-dimentional images into small wedges and computed the landmark, which is the most representative point, within each wedge. The image of signals in a Zebrafish brain is shown in Figure 1. The shape is divided into 30 slices, and each slice is further divided into 8 wedges. The landmark in each wedge is calculated by taking the median distance of all points in each wedge, $R$. We use number of points in each wedge and median R to run SVM models to do classifications.  
@@ -146,19 +144,69 @@ grid.raster(img)
 ```
 
 
-## Step Two: Result Visualization -- Shiny App
+## Step Two: Visualization Output from Step One -- Shiny App
+After building SVM models in step one, we insert the output from the SVM models into step two to visualize the results. Steps two uses the accuracy scores output from step one to create a user-friendly APP which generates visualizations to help users to understand the SVM results. 
 
 ### Input
-Data must be stored in a folder callled data under your work directory, and the CSV file must be named as "output_data.csv". If you do not know what your work directory is, you can check it by using the function `getwd()`.
+#### Data File
+Input `CSV` data file must be stored in a folder called `data` under your working directory, and the `CSV` file must be named as `output_data.csv`. If you do not know what your working directory is, you can check it by using the function `getwd()` in base R.
+
+#### Input Variables
+All SVM models from step one produce the following 9 accuracy measurements:
+
+* Precision score of type 0
+* Recall score of type 0
+* F1 score of type 0
+* Precision score of type 1
+* Recall score of type 1 
+* F1 score of type 1
+
+These 9 accuracy scores are the variables needed in the second step of the user interface to create the visualizations. Users can select `channel` and `sample index`, and these two variables are used to filter on the input dataset to only keep the accuracy scores of the observations that users are interested in.
+
+In addition, users can set the threshold of one of the following variables:
+
+* Overall precision score
+* Overall recall score
+* Overall F1 score
+
+The dataset used to create the visualizations is rendered when users cahnge one or multiple thresholds. Our APP filters out the observations that do not fulfill the threshold requirements, and uses the resulting dataset to update the histograms and heatmaps.
 
 ### Output
-All SVM models should produce 6 percision measurements:
+We visualize the 9 accuracy scores by generating both histograms of the accuracy scores and the corresponding heatmaps that color the magnitude of the accuracy scores with respect to the relative positions of the scores in the Zebrafish brains.
 
-* They are precision score of type 1, recall score of type 1, and F1 score of type 1.
-* They are precision score of type 2, recall score of type 2, and F1 score of type 2.
-* They are overall precision score, overall recall score, and overall F1 score.
+```{r shiny1, fig.cap= "User Interface: Accuracy Threshold Summary Tab of AT Channel" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny1.png", dpi = 120 )
+```
 
 
+```{r shiny2, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny2.png", dpi = 120 )
+```
+
+```{r shiny3, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny3.png", dpi = 120 )
+```
+
+```{r shiny4, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny4.png", dpi = 120 )
+```
+
+
+```{r shiny5, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny5.png", dpi = 120 )
+```
+
+```{r shiny6, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny6.png", dpi = 120 )
+```
+
+```{r shiny7, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny7.png", dpi = 120 )
+```
+
+```{r shiny9, fig.cap= "User Interface: F1 Score Visualization Tab of ZRF Channel" ,fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/shiny9.png", dpi = 120 )
+```
 
 #--------------------------------------------------------------------------------
 # Result Analyzation and
@@ -195,6 +243,9 @@ Instead of cross-validation, better results could be achieved by using itenerati
 ## Future Study
 1. making the program more user friendly
 2. running more tests to prove the accuracy of our model
+
+# Acknowledgements
+This project was completed in partial fulfillment of the requirements of SDS 410: SDS Capstone. This course is offered by the Statistical and Data Sciences Program at Smith College, and was taught by Benjamin Baumer in Spring 2018.
 
 # Appendix Code
 ## Support Vector Machine
