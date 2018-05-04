@@ -197,6 +197,10 @@ biological image analysis research at Smith College.
 ## Warning: package 'reticulate' was built under R version 3.4.4
 \end{verbatim}
 
+\begin{verbatim}
+## Warning: package 'knitr' was built under R version 3.4.3
+\end{verbatim}
+
 \section{Introduction}\label{introduction}
 
 This project derives from Professor Barresi's biological image analysis
@@ -417,7 +421,7 @@ that runs the \texttt{svm\_classification()} function for each landmark.
 
 \subsubsection{User Interaction}\label{user-interaction}
 
-\begin{figure}
+\begin{figure}[h]
 \includegraphics[width=4.85in]{figures/Figure2} \caption{Example of User Interaction in Step One of the User Interface}\label{fig:useri}
 \end{figure}
 
@@ -434,13 +438,13 @@ each wedge.
 
 \subsubsection{Sample input file}\label{sample-input-file}
 
-\begin{figure}
+\begin{figure}[h]
 \includegraphics[width=5.11in]{figures/Figure3} \caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata}
 \end{figure}
 
 \subsubsection{Output File}\label{output-file}
 
-\begin{figure}
+\begin{figure}[h]
 \includegraphics[width=5.65in]{figures/Figure4} \caption{Sample Data Output File of First Step of the User Interface}\label{fig:outputdata}
 \end{figure}
 
@@ -451,6 +455,20 @@ After building SVM models in step one, we insert the output from the SVM
 models into step two to visualize the results. Steps two uses the
 accuracy scores output from step one to create a user-friendly app which
 generates visualizations to help users to understand the SVM results.
+
+The repository containing the shiny app can be access by doing the
+following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"liwencong1995/SDS-Capstone-Zebrafish"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The file containing the source code of the shiny app can be found in
+\texttt{9.FinalModel} folder of the repository. The file is named as
+\texttt{shiny\_app.R}.
 
 \subsubsection{Input}\label{input}
 
@@ -526,9 +544,9 @@ position of the wedges in the heatmap.
 There are 10 tabs included in the user interface of the app: 1 Accuracy
 Threshold Summary tab and 9 accuracy score visualization tabs.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics[width=5.54in]{figures/shiny1} 
+{\centering \includegraphics[width=3.66in]{figures/shiny1} 
 
 }
 
@@ -552,9 +570,9 @@ Other information, such as the true type of the sample and the number of
 wildetypes and mutants used in training the SVM models are also included
 in the summary table.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics[width=5.54in]{figures/shiny2} 
+{\centering \includegraphics[width=4.92in]{figures/shiny2} 
 
 }
 
@@ -566,9 +584,9 @@ sample of AT channel. In this case, all three thresholds are at default
 level, 0. Therefore, all landmarks' precision scores are shown in both
 the histogram and the heatmap.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics[width=5.54in]{figures/shiny3} 
+{\centering \includegraphics[width=4.9in]{figures/shiny3} 
 
 }
 
@@ -584,66 +602,19 @@ in the histogram, all values less than 0.75 are removed from the
 histogram in figure 6. Some of the blocks in figure 6 are turned into
 blank blocks after the precision threshold is increased to 0.75.
 
-\begin{figure}
+\begin{figure}[h]
 
-{\centering \includegraphics[width=5.54in]{figures/shiny4} 
-
-}
-
-\caption{User Interface: Recall Score Visualization Tab of AT Channel}\label{fig:shiny4}
-\end{figure}
-
-Figure 8 displays the Recall Score Visualization tab of the first sample
-of AT channel.
-
-\begin{figure}
-
-{\centering \includegraphics[width=5.54in]{figures/shiny5} 
+{\centering \includegraphics[width=5.04in]{figures/shiny8} 
 
 }
 
-\caption{User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75}\label{fig:shiny5}
-\end{figure}
-
-Figure 9 displays the Recall Score Visualization tab of the first sample
-of AT channel with recall threshold equals to 0.75.
-
-\begin{figure}
-
-{\centering \includegraphics[width=5.54in]{figures/shiny6} 
-
-}
-
-\caption{User Interface: F1 Score Visualization Tab of AT Channel}\label{fig:shiny6}
-\end{figure}
-
-Figure 10 displays the F1 Score Visualization tab of the first sample of
-AT channel.
-
-\begin{figure}
-
-{\centering \includegraphics[width=5.54in]{figures/shiny7} 
-
-}
-
-\caption{User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75}\label{fig:shiny7}
-\end{figure}
-
-Figure 11 displays the F1 Score Visualization tab of the first sample of
-AT channel with f1 threshold equals to 0.75.
-
-\begin{figure}
-
-{\centering \includegraphics[width=5.54in]{figures/shiny9} 
-
-}
-
-\caption{User Interface: F1 Score Visualization Tab of ZRF Channel}\label{fig:shiny9}
+\caption{User Interface: F1 Score Visualization Tab of ZRF Channel}\label{fig:shiny8}
 \end{figure}
 
 Users can also choose to observe the SVM results of ZRF channel. Figure
-12 displays the F1 Score Visualization tab of the first sample of ZRF
-channel with all thresholds equal to 0.
+8 displays the Precision Score Visualization tab of the first sample of
+ZRF channel with all thresholds equal to 0. More sample visualizations
+of other accuracy scores can be found in Appendix A.
 
 \section{Analyzing Result}\label{analyzing-result}
 
@@ -737,7 +708,67 @@ SDS 410: SDS Capstone. This course is offered by the Statistical and
 Data Sciences Program at Smith College, and was taught by Benjamin
 Baumer in Spring 2018.
 
-\section{Appendix Code}\label{appendix-code}
+\newpage
+
+\section{Appendix A: Shiny App Accuracy Score
+Visualizations}\label{appendix-a-shiny-app-accuracy-score-visualizations}
+
+\subsection{Recall Score Visualization tab of the first sample of AT
+channel}\label{recall-score-visualization-tab-of-the-first-sample-of-at-channel}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=4.91in]{figures/shiny4} 
+
+}
+
+\caption{User Interface: Recall Score Visualization Tab of AT Channel}\label{fig:shiny4}
+\end{figure}
+
+\subsection{Recall Score Visualization tab of the first sample of AT
+channel with recall threshold equals to
+0.75}\label{recall-score-visualization-tab-of-the-first-sample-of-at-channel-with-recall-threshold-equals-to-0.75}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=4.91in]{figures/shiny5} 
+
+}
+
+\caption{User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75}\label{fig:shiny5}
+\end{figure}
+
+\newpage
+
+\subsection{F1 Score Visualization tab of the first sample of AT
+channel}\label{f1-score-visualization-tab-of-the-first-sample-of-at-channel}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=4.9in]{figures/shiny6} 
+
+}
+
+\caption{User Interface: F1 Score Visualization Tab of AT Channel}\label{fig:shiny6}
+\end{figure}
+
+\subsection{F1 Score Visualization tab of the first sample of AT channel
+with f1 threshold equals to
+0.75}\label{f1-score-visualization-tab-of-the-first-sample-of-at-channel-with-f1-threshold-equals-to-0.75}
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=4.9in]{figures/shiny7} 
+
+}
+
+\caption{User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75}\label{fig:shiny7}
+\end{figure}
+
+\newpage
+
+\section{Appendix B: Source Code for User
+Interface}\label{appendix-b-source-code-for-user-interface}
 
 \subsection{Support Vector Machine}\label{support-vector-machine}
 
@@ -873,58 +904,488 @@ Baumer in Spring 2018.
 
 \subsection{Shiny App}\label{shiny-app}
 
+\subsubsection{Package Dependency}\label{package-dependency}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{list_of_indices <-}\StringTok{ }\KeywordTok{c}\NormalTok{(index}\OperatorTok{$}\NormalTok{Index, }\StringTok{"AT"}\NormalTok{, }\StringTok{"ZRF"}\NormalTok{)}
-\NormalTok{list_of_scores <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"precision"}\NormalTok{, }\StringTok{"recall"}\NormalTok{, }\StringTok{"f1"}\NormalTok{, }\StringTok{"w_precision"}\NormalTok{, }\StringTok{"w_recall"}\NormalTok{, }\StringTok{"w_f1"}\NormalTok{, }\StringTok{"m_precision"}\NormalTok{, }\StringTok{"m_recall"}\NormalTok{, }\StringTok{"m_f1"}\NormalTok{)}
-\NormalTok{landmark_xy <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{"/Users/priscilla/Desktop/SDS Capstone/Zebrafish/analysis/landmark_xy.csv"}\NormalTok{)}
-\NormalTok{list_of_channel <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"AT"}\NormalTok{, }\StringTok{"ZRF"}\NormalTok{)}
+\CommentTok{# Shiny App---------------------------------------------------}
+\CommentTok{# Loading packages needed in the creation of the Shiny App}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(data.table)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(shiny)}
+\end{Highlighting}
+\end{Shaded}
 
+\subsubsection{User Input}\label{user-input}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# User Input -------------------------------------------------}
+\CommentTok{# Please modify the file directory accordingly}
+\NormalTok{data <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{"data/output_data_type0.csv"}\NormalTok{)}
+
+\CommentTok{# List of input variables ------------------------------------}
+\NormalTok{list_of_indices <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{unique}\NormalTok{(data}\OperatorTok{$}\NormalTok{sample_index)) }
+\CommentTok{# Please add or subtract channels from the list_of_channels accordingly}
+\NormalTok{list_of_channels <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"type0"}\NormalTok{, }\StringTok{"type1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{User Interface}\label{user-interface-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{# User Interface}
 \NormalTok{ui <-}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}
-  \KeywordTok{titlePanel}\NormalTok{(}\DataTypeTok{title=}\KeywordTok{h4}\NormalTok{(}\StringTok{"Classification of Wildtype and Mutant Zebrafish Brains via Computational Method"}\NormalTok{, }
+  \KeywordTok{titlePanel}\NormalTok{(}\DataTypeTok{title=}\KeywordTok{h4}\NormalTok{(}\StringTok{"Classification of Wildtype and Mutant }
+\StringTok{                      Zebrafish Brains via Computational Method"}\NormalTok{, }
                       \DataTypeTok{align=}\StringTok{"center"}\NormalTok{)),}
-  \KeywordTok{selectInput}\NormalTok{(}\StringTok{"channel"}\NormalTok{, }\StringTok{"Channel:"}\NormalTok{, list_of_channel),}
-  \KeywordTok{selectInput}\NormalTok{(}\StringTok{"sampleindex"}\NormalTok{, }\StringTok{"Sample Index:"}\NormalTok{, list_of_indices),}
-  \KeywordTok{selectInput}\NormalTok{(}\StringTok{"score"}\NormalTok{, }\StringTok{"Accuracy Measurement:"}\NormalTok{, list_of_scores),}
-  \KeywordTok{mainPanel}\NormalTok{(}\KeywordTok{fluidRow}\NormalTok{(}
-              \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"90%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot1"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot2"}\NormalTok{))}
-\NormalTok{            ))}
+  
+  \CommentTok{# Sidebar containing all input variables}
+  \KeywordTok{sidebarLayout}\NormalTok{(}
+    
+    \CommentTok{# User Inputs}
+    \KeywordTok{sidebarPanel}\NormalTok{(}
+      \KeywordTok{selectInput}\NormalTok{(}\StringTok{"sampleindex"}\NormalTok{, }\StringTok{"Sample Index:"}\NormalTok{, list_of_indices),}
+      \KeywordTok{selectInput}\NormalTok{(}\StringTok{"channel"}\NormalTok{, }\StringTok{"Channel:"}\NormalTok{, list_of_channels),}
+      
+      \CommentTok{# Input accuracy score threshold: 0-1 intervals}
+      \KeywordTok{sliderInput}\NormalTok{(}\StringTok{"precision"}\NormalTok{, }\StringTok{"Precision Rate Threshold:"}\NormalTok{,}
+                  \DataTypeTok{min =} \DecValTok{0}\NormalTok{, }\DataTypeTok{max =} \DecValTok{1}\NormalTok{,}
+                  \DataTypeTok{value =} \DecValTok{0}\NormalTok{, }\DataTypeTok{step =} \FloatTok{0.01}\NormalTok{),}
+      \KeywordTok{sliderInput}\NormalTok{(}\StringTok{"recall"}\NormalTok{, }\StringTok{"Recall Rate Threshold:"}\NormalTok{,}
+                  \DataTypeTok{min =} \DecValTok{0}\NormalTok{, }\DataTypeTok{max =} \DecValTok{1}\NormalTok{,}
+                  \DataTypeTok{value =} \DecValTok{0}\NormalTok{, }\DataTypeTok{step =} \FloatTok{0.01}\NormalTok{),}
+      \KeywordTok{sliderInput}\NormalTok{(}\StringTok{"f1"}\NormalTok{, }\StringTok{"F1 Rate Threshold:"}\NormalTok{,}
+                  \DataTypeTok{min =} \DecValTok{0}\NormalTok{, }\DataTypeTok{max =} \DecValTok{1}\NormalTok{,}
+                  \DataTypeTok{value =} \DecValTok{0}\NormalTok{, }\DataTypeTok{step =} \FloatTok{0.01}\NormalTok{)}
+\NormalTok{    ),}
+    
+    \CommentTok{# Output}
+    \KeywordTok{mainPanel}\NormalTok{(}
+      \KeywordTok{tabsetPanel}\NormalTok{(}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Accuracy Threshold"}\NormalTok{,}\KeywordTok{tableOutput}\NormalTok{(}\StringTok{"values"}\NormalTok{)),}
+        \CommentTok{#heatmaps and histograms, side by side}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Type 0 Precision"}\NormalTok{, }\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot2"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot1"}\NormalTok{))}
+\NormalTok{          )), }
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Type 1 Precision"}\NormalTok{, }\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot4"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot3"}\NormalTok{))}
+\NormalTok{          )),}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Precision"}\NormalTok{,}\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot6"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot5"}\NormalTok{))}
+\NormalTok{          )),}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Type 0 Recall"}\NormalTok{, }\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot8"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot7"}\NormalTok{))}
+\NormalTok{        )), }
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Type 1 Recall"}\NormalTok{, }\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot10"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot9"}\NormalTok{))}
+\NormalTok{        )),}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Recall"}\NormalTok{,}\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot12"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot11"}\NormalTok{))}
+\NormalTok{        )),}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Type 0 F1"}\NormalTok{, }\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot14"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot13"}\NormalTok{))}
+\NormalTok{        )), }
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Type 1 F1"}\NormalTok{, }\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot16"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot15"}\NormalTok{))}
+\NormalTok{        )),}
+        \KeywordTok{tabPanel}\NormalTok{(}\StringTok{"F1"}\NormalTok{,}\KeywordTok{fluidRow}\NormalTok{(}
+          \KeywordTok{splitLayout}\NormalTok{(}\DataTypeTok{cellWidths =} \KeywordTok{c}\NormalTok{(}\StringTok{"40%"}\NormalTok{, }\StringTok{"60%"}\NormalTok{), }
+                      \KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot18"}\NormalTok{), }\KeywordTok{plotOutput}\NormalTok{(}\StringTok{"plot17"}\NormalTok{))}
+\NormalTok{        ))}
+\NormalTok{        )}
+\NormalTok{      )}
+\NormalTok{  )}
 \NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{# Server}
+\subsubsection{Shiny App Server}\label{shiny-app-server}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Server------------------------------------------------------}
 \NormalTok{server <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input,output) \{}
+  
+  \CommentTok{#loading data needed to create visualizations}
 \NormalTok{  dat <-}\StringTok{ }\KeywordTok{reactive}\NormalTok{(\{}
-\NormalTok{    dir <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(wd, }\StringTok{"/analysis/r"}\NormalTok{, input}\OperatorTok{$}\NormalTok{sampleindex, }\StringTok{"_med_"}\NormalTok{, input}\OperatorTok{$}\NormalTok{channel, }\StringTok{"_result.csv"}\NormalTok{)}
-\NormalTok{    test <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(dir)}
-\NormalTok{    test <-}\StringTok{ }\NormalTok{test }\OperatorTok{%>%}
+    
+    \CommentTok{# Please modify the file directory accordingly}
+\NormalTok{    path <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"data/output_data_"}\NormalTok{, input}\OperatorTok{$}\NormalTok{channel, }\StringTok{".csv"}\NormalTok{)}
+    \CommentTok{# path <- paste0("7.aggregatedResults/", input$channel, }
+    \StringTok{"_2med_renamed_2.csv"}\ErrorTok{)}
+\NormalTok{    data <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(path)}
+    
+    \CommentTok{# Please modify the file directory accordingly}
+\NormalTok{    landmark_xy <-}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{"data/landmark_xy.csv"}\NormalTok{)}
+    \CommentTok{# landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")}
+    
+    \CommentTok{# Adding position of each landmark}
+\NormalTok{    data <-}\StringTok{ }\NormalTok{data }\OperatorTok{%>%}
 \StringTok{      }\KeywordTok{left_join}\NormalTok{(landmark_xy, }\DataTypeTok{by=}\StringTok{"landmark_index"}\NormalTok{)}
-    \KeywordTok{print}\NormalTok{(test)}
+    
+    \CommentTok{# Adding baselines to the data file}
+\NormalTok{    data_base <-}\StringTok{ }\NormalTok{data }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(overall_precision }\OperatorTok{>=}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{precision,}
+\NormalTok{             overall_recall }\OperatorTok{>=}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{recall,}
+\NormalTok{             overall_f1 }\OperatorTok{>=}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{f1) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{mutate}\NormalTok{(}\CommentTok{# type 0}
+             \DataTypeTok{type0_p_b =}\NormalTok{ type0_num}\OperatorTok{/}\NormalTok{(type0_num}\OperatorTok{+}\NormalTok{type1_num),}
+             \DataTypeTok{type0_r_b =} \DecValTok{1}\NormalTok{,}
+             \DataTypeTok{type0_f1_b =} \DecValTok{2}\OperatorTok{*}\NormalTok{type0_p_b}\OperatorTok{*}\NormalTok{type0_r_b}\OperatorTok{/}
+\StringTok{               }\NormalTok{(type0_p_b }\OperatorTok{+}\StringTok{ }\NormalTok{type0_r_b),}
+             
+             \CommentTok{# type 1}
+             \DataTypeTok{type1_p_b =}\NormalTok{ type1_num}\OperatorTok{/}
+\StringTok{               }\NormalTok{(type0_num}\OperatorTok{+}\NormalTok{type1_num),}
+             \DataTypeTok{type1_r_b =} \DecValTok{1}\NormalTok{,}
+             \DataTypeTok{type1_f1_b =} \DecValTok{2}\OperatorTok{*}\NormalTok{type1_p_b}\OperatorTok{*}\NormalTok{type1_r_b}\OperatorTok{/}
+\StringTok{               }\NormalTok{(type1_p_b }\OperatorTok{+}\StringTok{ }\NormalTok{type1_r_b),}
+             
+             \CommentTok{# overall}
+             \DataTypeTok{p_b =}\NormalTok{ (type0_p_b }\OperatorTok{*}\StringTok{ }\NormalTok{type0_num }\OperatorTok{+}\StringTok{ }\NormalTok{type1_p_b }\OperatorTok{*}\NormalTok{type1_num)}\OperatorTok{/}
+\StringTok{               }\NormalTok{(type0_num}\OperatorTok{+}\NormalTok{type1_num),}
+             \DataTypeTok{r_b =}\NormalTok{ (type0_r_b }\OperatorTok{*}\StringTok{ }\NormalTok{type0_num }\OperatorTok{+}\StringTok{ }\NormalTok{type1_r_b }\OperatorTok{*}\NormalTok{type1_num)}\OperatorTok{/}
+\StringTok{               }\NormalTok{(type0_num}\OperatorTok{+}\NormalTok{type1_num),}
+             \DataTypeTok{f1_b =}\NormalTok{ (type0_f1_b }\OperatorTok{*}\StringTok{ }\NormalTok{type0_num }\OperatorTok{+}\StringTok{ }\NormalTok{type1_f1_b }\OperatorTok{*}\NormalTok{type1_num)}\OperatorTok{/}
+\StringTok{               }\NormalTok{(type0_num}\OperatorTok{+}\NormalTok{type1_num)}
+\NormalTok{             )}
+    
+    \CommentTok{#filter out the sample not interested}
+\NormalTok{    test <-}\StringTok{ }\NormalTok{data_base }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(sample_index }\OperatorTok{==}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{sampleindex)}
+    
+    \CommentTok{#return dataset}
+    \KeywordTok{print}\NormalTok{(test[}\DecValTok{1}\NormalTok{,])}
 \NormalTok{    test}
+\NormalTok{    \})}
+  
+  \CommentTok{# Reactive expression to create data frame of all input values}
+\NormalTok{  sliderValues <-}\StringTok{ }\KeywordTok{reactive}\NormalTok{(\{}
+    
+    \CommentTok{# Getting the true type of the sample}
+\NormalTok{    type <-}\StringTok{ }\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type[}\DecValTok{1}\NormalTok{]}
+    
+    \CommentTok{# Doing majority vote and perdicting the type of the sample}
+\NormalTok{    test_pred <-}\StringTok{ }\KeywordTok{dat}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(overall_precision }\OperatorTok{>=}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{precision,}
+\NormalTok{             overall_recall }\OperatorTok{>=}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{recall,}
+\NormalTok{             overall_f1 }\OperatorTok{>=}\StringTok{ }\NormalTok{input}\OperatorTok{$}\NormalTok{f1)}\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{group_by}\NormalTok{(pred) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{max =} \KeywordTok{max}\NormalTok{(N)) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{predict =} \KeywordTok{ifelse}\NormalTok{(N }\OperatorTok{==}\StringTok{ }\NormalTok{max, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(predict }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{    prediction <-}\StringTok{ }\NormalTok{test_pred}\OperatorTok{$}\NormalTok{pred[}\DecValTok{1}\NormalTok{]}
+    
+    \CommentTok{# summary table}
+    \KeywordTok{data.frame}\NormalTok{(}
+      \DataTypeTok{Name =} \KeywordTok{c}\NormalTok{(}\StringTok{"Precision Rate Threshold"}\NormalTok{,}
+               \StringTok{"Recall Rate Threshold"}\NormalTok{,}
+               \StringTok{"F1 Rate Threshold"}\NormalTok{,}
+               \StringTok{"Type"}\NormalTok{,}
+               \StringTok{"Prediction"}\NormalTok{,}
+               \StringTok{"Number of Type 0 Samples Used In Model"}\NormalTok{,}
+               \StringTok{"Number of Type 1 Samples Used In Model"}\NormalTok{),}
+      \DataTypeTok{Value =} \KeywordTok{as.character}\NormalTok{(}\KeywordTok{c}\NormalTok{(input}\OperatorTok{$}\NormalTok{precision,}
+\NormalTok{                             input}\OperatorTok{$}\NormalTok{recall,}
+\NormalTok{                             input}\OperatorTok{$}\NormalTok{f1,}
+\NormalTok{                             type,}
+\NormalTok{                             prediction,}
+                             \KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_num),}
+                             \KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_num)}
+\NormalTok{                             )),}
+      \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
 \NormalTok{  \})}
   
-  \CommentTok{# Plot One}
+  \CommentTok{# Show the threshold values in an summary table}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{values <-}\StringTok{ }\KeywordTok{renderTable}\NormalTok{(\{}
+    \KeywordTok{sliderValues}\NormalTok{()}
+\NormalTok{  \})}
+  
+  \CommentTok{# precision ------------------------------------------------}
 \NormalTok{  output}\OperatorTok{$}\NormalTok{plot1 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
-\NormalTok{    p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
-                 \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ y, }\DataTypeTok{y =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ input}\OperatorTok{$}\NormalTok{score)) }\OperatorTok{+}
+\NormalTok{    p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(),}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ type0_precision)) }\OperatorTok{+}
 \StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
 \StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{19}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
 \NormalTok{    p1}
 \NormalTok{  \})}
   
-  \CommentTok{# Plot Two}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot3 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p3 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{      }\CommentTok{#scale_color_viridis() +}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ type1_precision)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p3}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot5 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p5 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{      }\CommentTok{#scale_color_viridis() +}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ overall_precision)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p5}
+\NormalTok{  \})}
+  
 \NormalTok{  output}\OperatorTok{$}\NormalTok{plot2 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
-\NormalTok{    p2 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(input}\OperatorTok{$}\NormalTok{score, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_p_b)}
+\NormalTok{    p2 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_precision, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
 \StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
 \StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
 \NormalTok{    p2}
 \NormalTok{  \})}
   
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot4 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_p_b)}
+\NormalTok{    p4 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_precision, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p4}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot6 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{p_b)}
+\NormalTok{    p6 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{overall_precision, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p6}
+\NormalTok{  \})}
+  
+  \CommentTok{# recall ---------------------------------------------------}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot7 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p7 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(),}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ type0_recall)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p7}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot9 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p9 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                 \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{      }\CommentTok{#scale_color_viridis() +}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ type1_recall)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p9}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot11 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p11 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                 \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{      }\CommentTok{#scale_color_viridis() +}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ overall_recall)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p11}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot8 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_r_b)}
+\NormalTok{    p8 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_recall, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p8}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot10 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_r_b)}
+\NormalTok{    p10 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_recall, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p10}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot12 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{r_b)}
+\NormalTok{    p12 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{overall_recall, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p12}
+\NormalTok{  \})}
+  
+  \CommentTok{# f1 --------------------------------------------------------------------------------------}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot13 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p13 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(),}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ type0_f1)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p13}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot15 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p15 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                 \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{      }\CommentTok{#scale_color_viridis() +}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ type1_f1)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{),}
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p15}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot17 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    p17 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{(), }
+                  \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ column, }\DataTypeTok{y =}\NormalTok{ row)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{      }\CommentTok{#scale_color_viridis() +}
+\StringTok{      }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ overall_f1)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Alpha"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Theta"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-90.51"}\NormalTok{, }\StringTok{"0"}\NormalTok{, }\StringTok{"90.51"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }
+                         \DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{4.5}\NormalTok{, }\DecValTok{8}\NormalTok{), }
+                         \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"-3.14"}\NormalTok{,}\StringTok{"0"}\NormalTok{,}\StringTok{"3.14"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_fill_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+                            \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.25}\NormalTok{)) }
+\NormalTok{    p17}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot14 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_f1_b)}
+\NormalTok{    p14 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type0_f1, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p14}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot16 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_f1_b)}
+\NormalTok{    p16 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{type1_f1, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p16}
+\NormalTok{  \})}
+  
+\NormalTok{  output}\OperatorTok{$}\NormalTok{plot18 <-}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{    baseline <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{f1_b)}
+\NormalTok{    p18 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\KeywordTok{dat}\NormalTok{()}\OperatorTok{$}\NormalTok{overall_f1, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{baseline, }\DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                 \DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Precision"}\NormalTok{) }\OperatorTok{+}
+\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Count"}\NormalTok{)  }
+\NormalTok{    p18}
+\NormalTok{  \})}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Outputting the Shiny App}\label{outputting-the-shiny-app}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Creating the Shiny App}
+\KeywordTok{shinyApp}\NormalTok{(ui, server)}
 \end{Highlighting}
 \end{Shaded}
 

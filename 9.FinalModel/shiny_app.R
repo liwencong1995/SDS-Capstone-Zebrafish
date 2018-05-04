@@ -1,54 +1,35 @@
-# All SVM models should produce 6 percision measurements. 
-# They are precision score of type 1, recall score of type 1, and F1 score of type 1
-# They are precision score of type 2, recall score of type 2, and F1 score of type 2
-# They are overall precision score, overall recall score, and overall F1 score
-# Majority Voting
-#Join original type of the zebrafish
-#User Input
-#Threshold
-#70%
-# Get the overall prediction 
-# accuracy rate
-# format the app
-# Ben
-# 13 variable
-
-# Shiny App------------------------------------------------------------------
-# Loading all packages needed in the creation of the Shiny App
+# Shiny App---------------------------------------------------
+# Loading packages needed in the creation of the Shiny App
 library(dplyr)
 library(data.table)
 library(ggplot2)
 library(shiny)
 
-#AT------------------------------------------------------
-data <- fread("7.aggregatedResults/AT_2med_renamed_2.csv")
-# landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
-# data <- data %>%
-#   left_join(landmark_xy, by="landmark_index")
-# #ZRF------------------------------------------------------
-# data <- fread("7.aggregatedResults/ZRF_2med_renamed_2.csv")
-# landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
-# data <- data %>%
-#   left_join(landmark_xy, by="landmark_index")
+# User Input -------------------------------------------------
+# Please modify the file directory accordingly
+data <- fread("data/output_data_type0.csv")
+# data <- fread("7.aggregatedResults/AT_2med_renamed_2.csv")
 
-#input----------------------------------------------------
+# List of input variables ------------------------------------
 list_of_indices <- c(unique(data$sample_index)) 
-list_of_channels <- c("AT", "ZRF")
-#list_of_scores <- c("precision", "recall", "f1")
+# Please add or subtract channels from the list_of_channels accordingly
+list_of_channels <- c("type0", "type1")
+# list_of_channels <- c("AT", "ZRF")
 
 # User Interface
 ui <- fluidPage(
   titlePanel(title=h4("Classification of Wildtype and Mutant Zebrafish Brains via Computational Method", 
                       align="center")),
-  # Sidebar layout with input and output definitions
+  
+  # Sidebar containing all input variables
   sidebarLayout(
     
-    # Input
+    # User Inputs
     sidebarPanel(
       selectInput("sampleindex", "Sample Index:", list_of_indices),
       selectInput("channel", "Channel:", list_of_channels),
       
-      # Input: Simple integer interval ----
+      # Input accuracy score threshold: 0-1 intervals
       sliderInput("precision", "Precision Rate Threshold:",
                   min = 0, max = 1,
                   value = 0, step = 0.01),
@@ -97,36 +78,46 @@ ui <- fluidPage(
   )
 )
 
-# Server---------------------------------------------------------------------
+# Server------------------------------------------------------
 server <- function(input,output) {
   
   #loading data needed to create visualizations
-  # data <- fread("7.aggregatedResults/AT_2med_renamed.csv")
-  # positions <- which(grepl(input$score, list_of_variables) %in% TRUE)
-  # Baselines
-  # 43 wildtype
-  
   dat <- reactive({
-    path <- paste0("7.aggregatedResults/", input$channel, "_2med_renamed_2.csv")
+    
+    # Please modify the file directory accordingly
+    path <- paste0("data/output_data_", input$channel, ".csv")
+    # path <- paste0("7.aggregatedResults/", input$channel, "_2med_renamed_2.csv")
     data <- fread(path)
-    landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+    
+    # Please modify the file directory accordingly
+    landmark_xy <- fread("data/landmark_xy.csv")
+    # landmark_xy <- fread("3.InputData/tidy/landmark_xy.csv")
+    
+    # Adding position of each landmark
     data <- data %>%
       left_join(landmark_xy, by="landmark_index")
+    
+    # Adding baselines to the data file
     data_base <- data %>%
       filter(overall_precision >= input$precision,
              overall_recall >= input$recall,
              overall_f1 >= input$f1) %>%
-      mutate(type0_p_b = type0_num/(type0_num+type1_num),
+      mutate(# type 0
+             type0_p_b = type0_num/(type0_num+type1_num),
              type0_r_b = 1,
              type0_f1_b = 2*type0_p_b*type0_r_b/(type0_p_b + type0_r_b),
-             # 35 mutant
+             
+             # type 1
              type1_p_b = type1_num/(type0_num+type1_num),
              type1_r_b = 1,
              type1_f1_b = 2*type1_p_b*type1_r_b/(type1_p_b + type1_r_b),
+             
              # overall
              p_b = (type0_p_b * type0_num + type1_p_b *type1_num)/(type0_num+type1_num),
              r_b = (type0_r_b * type0_num + type1_r_b *type1_num)/(type0_num+type1_num),
-             f1_b = (type0_f1_b * type0_num + type1_f1_b *type1_num)/(type0_num+type1_num))
+             f1_b = (type0_f1_b * type0_num + type1_f1_b *type1_num)/(type0_num+type1_num)
+             )
+    
     #filter out the sample not interested
     test <- data_base %>%
       filter(sample_index == input$sampleindex)
@@ -135,29 +126,14 @@ server <- function(input,output) {
     print(test[1,])
     test
     })
-
-  scoreSelect <- reactive({
-    list_of_variables <- names( dat() )
-    #show what is selected
-    positions <- which(grepl(input$score, list_of_variables) %in% TRUE)
-    test_small <- dat() %>%
-      select(positions) %>%
-      head()
-    scoresS <- names(test_small)
-    print(scoresS)
-    scoresS
-  })
   
-  # scoreOne <- reactive({
-  #   scoreSelect()[1]
-  # })
-  
-  # Reactive expression to create data frame of all input values ----
+  # Reactive expression to create data frame of all input values
   sliderValues <- reactive({
-    # original type
+    
+    # Getting the true type of the sample
     type <- dat()$type[1]
     
-    # perdicting type
+    # Doing majority vote and perdicting the type of the sample
     test_pred <- dat() %>%
       filter(overall_precision >= input$precision,
              overall_recall >= input$recall,
@@ -169,6 +145,7 @@ server <- function(input,output) {
       filter(predict == TRUE)
     prediction <- test_pred$pred[1]
     
+    # summary table
     data.frame(
       Name = c("Precision Rate Threshold",
                "Recall Rate Threshold",
@@ -188,12 +165,12 @@ server <- function(input,output) {
       stringsAsFactors = FALSE)
   })
   
-  # Show the values in an HTML table ----
+  # Show the threshold values in an summary table
   output$values <- renderTable({
     sliderValues()
   })
   
-  # precision -------------------------------------------------------------------------------
+  # precision ------------------------------------------------
   output$plot1 <- renderPlot({
     p1 <- ggplot(dat(),aes(x = column, y = row)) +
       geom_tile(aes(fill = type0_precision)) +
@@ -262,7 +239,8 @@ server <- function(input,output) {
       ylab("Count")  
     p6
   })
-  # recall ---------------------------------------------------------------------------------
+  
+  # recall ---------------------------------------------------
   output$plot7 <- renderPlot({
     p7 <- ggplot(dat(),aes(x = column, y = row)) +
       geom_tile(aes(fill = type0_recall)) +
@@ -331,6 +309,7 @@ server <- function(input,output) {
       ylab("Count")  
     p12
   })
+  
   # f1 --------------------------------------------------------------------------------------
   output$plot13 <- renderPlot({
     p13 <- ggplot(dat(),aes(x = column, y = row)) +
@@ -403,6 +382,6 @@ server <- function(input,output) {
 }
 
 
-# Shiny App
+# Outputting the Shiny App
 shinyApp(ui, server)
 
