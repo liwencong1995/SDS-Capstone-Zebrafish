@@ -121,7 +121,7 @@ We created a two-step interactive classification tool which allows users to simp
 ```{r workflow, fig.cap = "Summary of Workflow", fig.width=5, fig.height=4,echo=FALSE}
 knitr::include_graphics("figures/Figure1.png", dpi = 260 )
 ```
-Figure 1 displays the overall workflow of the final product. 
+Figure 1 displays the overall workflow leading to the final product of classification. It begins with the cleaning and restructuring of the raw landmarks data. The tidied landmarks data that has the NA values filled contains 152 distinct landmarks. Each landmark has its own representative SVM model that used the 77 samples out of 78 for training from applying the leave-one-out cross validation method. That one sample that is left out from each landmark is used for testing the model that was built from the 77 samples. Then, based on the training accuracy of each model, only those that consist of reliable landmarks are filtered out. The number of wildtypes and mutants predicted with each model are calculated and this leads to the final classification result of using SVMs. 
 
 ## Step One: Data Processing and Modelling
 This step is implemented using **Python** (version 3) and packages including `pandas`, `nump` and `sklearn` are required. Users would need to run and interact with the Python script `svm.py` to pre-process the data and build the model.   
