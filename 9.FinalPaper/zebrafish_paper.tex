@@ -193,13 +193,7 @@ biological image analysis research at Smith College.
 \linenumbers
 
 % Use "Eq" instead of "Equation" for equation citations.
-\begin{verbatim}
-## Warning: package 'reticulate' was built under R version 3.4.4
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: package 'knitr' was built under R version 3.4.3
-\end{verbatim}
+\newpage
 
 \section{Introduction}\label{introduction}
 
@@ -218,14 +212,33 @@ each wedge and median R to run SVM models to do classifications.
 
 \subsection{Landmark Analysis}\label{landmark-analysis}
 
-\subsection{Programming languages
-used}\label{programming-languages-used}
+\subsection{Programming Languages}\label{programming-languages}
 
-\subsubsection{Python}\label{python}
+Two programming languages are used in this study, Python and R. Python
+is used to run our model and output the result in the correct format.
+\textbf{R} is used generally for data cleaning and creating interactive
+user interface.
 
-\subsubsection{R}\label{r}
+\subsection{\texorpdfstring{Git, \texttt{knitr}, and Reproducible
+Research}{Git, knitr, and Reproducible Research}}\label{git-knitr-and-reproducible-research}
 
-\subsubsection{Git}\label{git}
+Reproducible research and open source are two main points of emphasis in
+this honors project. As scholars place more emphasis on the
+reproducibility of research studies, it is essential for us to make our
+code publicly available for people to recreate both the model and the
+user interface.
+
+\texttt{knitr} {[}1{]} and Github are used in this project to make the
+study reproducible, ranging from the initial data source to the
+\texttt{nyctaxi} package to the statistical data analysis. We used an
+\textbf{R} package called \texttt{rticles} to write this paper. This
+tool allows authors to create reproducible and dynamic technical
+scientific paper in \textbf{R} Markdown. It also allows users to embed
+\textbf{R} code and interactive applicationis, and output into PDF.
+\texttt{rticles} helps users to efficiently put together scientific
+paper with similar format {[}2{]}. Github is used to store the scripts
+for our final paper, and the source code for our final production which
+contains the final model and user interface.
 
 \section{Literature Review}\label{literature-review}
 
@@ -292,11 +305,22 @@ between these two sets of sequences yields an extremely powerful method.
 
 We have 43 wildtypes samples and 35 mutant samples for training and
 testing. There are 152 landmarks for each sample, with each of them
-containing the following variables: number of points in that wedge
-median R (micro-meter): the median of the distances to the center of the
-slice of all the points in that wedge. alpha (micro-meter): distance
-from the center of the landmark to the midline theta (radian): the
-degree that shows the location of the wedge of a slice
+containing the following variables:
+
+\begin{itemize}
+\tightlist
+\item
+  number of points in each wedge
+\item
+  median \(R\) (micro-meter): the median of the distances to the center
+  of the slice of all the points in each wedge
+\item
+  \(alpha\) (micro-meter): distance from the center of the landmark to
+  the midline
+\item
+  \(theta\) (radian): the degree the describes the location of a wedge
+  within each slice
+\end{itemize}
 
 We used the number of points and the median R to do classification via
 support vector machine. For missing `median R' values due to absence of
@@ -392,19 +416,29 @@ perpendicular distance from the ith observation to the separation line.
 If it's \textgreater{}0, the observation falls at the right side of the
 separation line and vice versa.
 
-\section{Workflow}\label{workflow}
+\subsection{Cross-Validation}\label{cross-validation}
 
-\begin{figure}
-\centering
-\includegraphics{zebrafish_paper_files/figure-latex/workflow-1.pdf}
-\caption{Summary of Workflow}
+For our project, we have access to 43 wild-type samples and 35
+mutant-type samples. Due to this limited sample size, we dicided to use
+a leave-one-out cross validation method to test our model.\\
+For each testing sample, we built 152 SVMs for each landmark. For each
+SVM, we used 10-fold cross validation to select a tuning parameter C
+value among 0.1, 1 and 10.
+
+\section{Final Product: Two-Step Interactive Classification
+Tool}\label{final-product-two-step-interactive-classification-tool}
+
+We created a two-step interactive classification tool which allows users
+to simply input a data file and get an visualization of the modeling
+result. There are two main components in the tool:
+
+\subsection{General Workflow}\label{general-workflow}
+
+\begin{figure}[h]
+\includegraphics[width=5.55in]{figures/Figure1} \caption{Summary of Workflow}\label{fig:workflow}
 \end{figure}
 
-\section{User Interface}\label{user-interface}
-
-We created an User Interface which allows users to simply input a data
-file and get an visualization of the modeling result. There are two main
-components in the User Interface:
+Figure 1 displays the overall workflow of the final product.
 
 \subsection{Step One: Data Processing and
 Modelling}\label{step-one-data-processing-and-modelling}
@@ -425,8 +459,8 @@ that runs the \texttt{svm\_classification()} function for each landmark.
 \includegraphics[width=4.85in]{figures/Figure2} \caption{Example of User Interaction in Step One of the User Interface}\label{fig:useri}
 \end{figure}
 
-As shown in \texttt{Figure2}, several user inputs are tooken from users
-when they run the python script.
+As shown in Figure 2, several user inputs are taken from users when they
+run the python script.
 
 \subsubsection{Input File}\label{input-file}
 
@@ -448,8 +482,8 @@ each wedge.
 \includegraphics[width=5.65in]{figures/Figure4} \caption{Sample Data Output File of First Step of the User Interface}\label{fig:outputdata}
 \end{figure}
 
-\subsection{Step Two: Visualization Output from Step One -- Shiny
-App}\label{step-two-visualization-output-from-step-one-shiny-app}
+\subsection{Step Two: Interactive Visualization
+Tool}\label{step-two-interactive-visualization-tool}
 
 After building SVM models in step one, we insert the output from the SVM
 models into step two to visualize the results. Steps two uses the
@@ -470,9 +504,8 @@ The file containing the source code of the shiny app can be found in
 \texttt{9.FinalModel} folder of the repository. The file is named as
 \texttt{shiny\_app.R}.
 
-\subsubsection{Input}\label{input}
-
-\paragraph{Data File}\label{data-file}
+\subsubsection{Input 1: Data File and
+Variables}\label{input-1-data-file-and-variables}
 
 Input \texttt{CSV} data file must be stored in a folder called
 \texttt{data} under your working directory, and the \texttt{CSV} file
@@ -480,12 +513,11 @@ must be named as \texttt{output\_data.csv}. If you do not know what your
 working directory is, you can check it by using the function
 \texttt{getwd()} in base R.
 
-\paragraph{Input Variables}\label{input-variables}
-
 All SVM models from step one produce the following 9 accuracy
 measurements:
 
-\begin{itemize}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   Precision score of type 0
@@ -505,12 +537,15 @@ measurements:
   Overall recall score
 \item
   Overall F1 score
-\end{itemize}
+\end{enumerate}
 
 These 9 accuracy scores are the variables needed in the second step of
-the user interface to create the visualizations. Users can select
-\texttt{channel} and \texttt{sample\ index} to filter the input dataset
-to only keep the accuracy scores of the observations that users are
+the user interface to create the visualizations.
+
+\subsubsection{Input 2: User Inputs}\label{input-2-user-inputs}
+
+Users can select \texttt{channel} and \texttt{sample\ index} to filter
+the input dataset to only keep the observations that users are
 interested in.
 
 In addition, users can set the threshold of the following variables:
@@ -530,7 +565,23 @@ users cahnge one or multiple thresholds. Our app filters out the
 observations that do not fulfill the threshold requirements and uses the
 resulting dataset to update the histograms and heatmaps.
 
-\subsubsection{Output}\label{output}
+\subsubsection{Output: Interactive User
+Interface}\label{output-interactive-user-interface}
+
+This interactive user interface was built upon several \textbf{R}
+packages:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{dplyr} {[}3{]}
+\item
+  \texttt{data.table} {[}4{]}
+\item
+  \texttt{ggplot2} {[}5{]}
+\item
+  \texttt{shiny} {[}6{]}
+\end{itemize}
 
 We visualize the 9 accuracy scores by using both histograms and the
 corresponding heatmaps that display the scores inlcuded in the
@@ -616,38 +667,13 @@ Users can also choose to observe the SVM results of ZRF channel. Figure
 ZRF channel with all thresholds equal to 0. More sample visualizations
 of other accuracy scores can be found in Appendix A.
 
-\section{Analyzing Result}\label{analyzing-result}
-
-\subsection{Testing}\label{testing}
-
-\subsubsection{Cross-Validation}\label{cross-validation}
-
-For our project, we have access to 43 wild-type samples and 35
-mutant-type samples. Due to this limited sample size, we dicided to use
-a leave-one-out cross validation method to test our model.\\
-For each testing sample, we built 152 SVMs for each landmark. For each
-SVM, we used 10-fold cross validation to select a tuning parameter C
-value among 0.1, 1 and 10.
-
-\subsubsection{Processing Results and Make
-Predictions}\label{processing-results-and-make-predictions}
-
-After we get precision scores and predictions of each landmark, we will
-present the distribution of the landmarks' precision scores. The user
-would then be allowed to set a threshold for certain precision scores to
-select out a subset of landmarks that are considered significant. A
-majority vote would then be performed among the selected landmarks to
-get an overall prediction for the sample.
-
-\section{Result}\label{result}
-
-\subsection{Prediction}\label{prediction}
-
-\subsection{Visulization}\label{visulization}
-
-\section{Discussion}\label{discussion}
+\section{Conclusion and Discussion}\label{conclusion-and-discussion}
 
 \subsection{Strengths}\label{strengths}
+
+Our final product has several strengths:
+
+\subsubsection{Easy Interpretation}\label{easy-interpretation}
 
 In the previous method random forest, the number of predictors p exceeds
 the number of samples. Morgan applied PCA do reduce the dimension of the
@@ -656,21 +682,33 @@ linear combination of the dimensions that are projected on those are
 kept. While the largest projections still make sense, the minor
 projections are very random and thus difficult to interpret.
 
-The SVM model generated based on landmark data gives insightful analysis
-of: 1. which landmark, or which part of the Zebrafish brain, has more
-predictive power 2. whether a new Zebrafish brain sample is a mutant or
-wild type
+The SVM model is generated based on landmark data gives insightful
+analysis of: * which landmark, or which part of the Zebrafish brain, has
+more predictive power * whether a new Zebrafish brain sample is a mutant
+or wild type
 
-\subsection{Limitations}\label{limitations}
+\subsubsection{Implementing User
+Feedback}\label{implementing-user-feedback}
 
-The SVM model also has its limitation in that it only considers one
-single landmark at a time without considering the relationship across
-the landmarks of the whole sample.
+We have implemented feedbacks from users in our user interface.
+Originally, our shiny app only produces visualizations of one channel's
+data, but we added an additional variable, \texttt{channel}, for users
+to analyze three-dimentional data with more or multiple channels.
+Because of this improvement, it is more convenient for users to compare
+and contrast results from different channels.
 
-\subsection{Improvements}\label{improvements}
+\subsection{Limitations and
+Improvements}\label{limitations-and-improvements}
 
-\subsubsection{Itenerating machine
-learning}\label{itenerating-machine-learning}
+\subsubsection{Interaction Between
+Channels}\label{interaction-between-channels}
+
+Our SVM model only make prediction of the sample type based on a single
+channel's information, and it does not consider the interaction between
+channels.
+
+\subsubsection{Itenerating Machine
+Learning}\label{itenerating-machine-learning}
 
 Instead of cross-validation, better results could be achieved by using
 itenerating machine learning method. In iterative machine learning we
@@ -692,14 +730,20 @@ better predictions for unknown type.
 
 \subsection{Future Study}\label{future-study}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  making the program more user friendly
-\item
-  running more tests to prove the accuracy of our model
-\end{enumerate}
+\subsubsection{Interaction Between
+Channels}\label{interaction-between-channels-1}
+
+If more time is given, we could add factors that describe the
+interaction between channels into our SVM model in order to combine
+information from multiple channels to predict sample type.
+
+\subsubsection{Improving User Interface}\label{improving-user-interface}
+
+Since we have only received feedback from three users at Smith College,
+we would love to get more feedbacks from other scientists and improve
+our model and user interface accordingly.
+
+\subsubsection{Improving Model Accuracy}\label{improving-model-accuracy}
 
 \section{Acknowledgements}\label{acknowledgements}
 
@@ -932,7 +976,7 @@ Interface}\label{appendix-b-source-code-for-user-interface}
 \end{Highlighting}
 \end{Shaded}
 
-\subsubsection{User Interface}\label{user-interface-1}
+\subsubsection{User Interface}\label{user-interface}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1389,8 +1433,49 @@ Interface}\label{appendix-b-source-code-for-user-interface}
 \end{Highlighting}
 \end{Shaded}
 
+\newpage
+
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
+
+\markboth{References}{References}
+
+\noindent
+
+\setlength{\parindent}{-0.20in} \setlength{\leftskip}{0.20in}
+\setlength{\parskip}{8pt}
+
+\hypertarget{refs}{}
+\hypertarget{ref-pkgknitr}{}
+1. Xie Y. Knitr: A general-purpose package for dynamic report generation
+in r {[}Internet{]}. 2018. Available:
+\url{https://CRAN.R-project.org/package=knitr}
+
+\hypertarget{ref-pkgrticles}{}
+2. Allaire J, R Foundation, Wickham H, Journal of Statistical Software,
+Xie Y, Vaidyanathan R, et al. Rticles: Article formats for r markdown
+{[}Internet{]}. 2017. Available:
+\url{https://CRAN.R-project.org/package=rticles}
+
+\hypertarget{ref-pkgdplyr}{}
+3. Wickham H, Francois R, Henry L, Müller K. Dplyr: A grammar of data
+manipulation {[}Internet{]}. 2017. Available:
+\url{https://CRAN.R-project.org/package=dplyr}
+
+\hypertarget{ref-pkgdatatable}{}
+4. Dowle M, Srinivasan A. Data.table: Extension of `data.frame`
+{[}Internet{]}. 2017. Available:
+\url{https://CRAN.R-project.org/package=data.table}
+
+\hypertarget{ref-pkgggplot2}{}
+5. Wickham H. Ggplot2: Elegant graphics for data analysis
+{[}Internet{]}. Springer-Verlag New York; 2009. Available:
+\url{http://ggplot2.org}
+
+\hypertarget{ref-pkgshiny}{}
+6. Chang W, Cheng J, Allaire J, Xie Y, McPherson J. Shiny: Web
+application framework for r {[}Internet{]}. 2017. Available:
+\url{https://CRAN.R-project.org/package=shiny}
 
 \nolinenumbers
 
