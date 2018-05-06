@@ -435,7 +435,18 @@ result. There are two main components in the tool:
 \includegraphics[width=5.55in]{figures/Figure1} \caption{Summary of Workflow}\label{fig:workflow}
 \end{figure}
 
-Figure 1 displays the overall workflow of the final product.
+Figure 1 displays the overall workflow leading to the final product of
+classification. It begins with the cleaning and restructuring of the raw
+landmarks data. The tidied landmarks data that has the NA values filled
+contains 152 distinct landmarks. Each landmark has its own
+representative SVM model that used the 77 samples out of 78 for training
+from applying the leave-one-out cross validation method. That one sample
+that is left out from each landmark is used for testing the model that
+was built from the 77 samples. Then, based on the training accuracy of
+each model, only those that consist of reliable landmarks are filtered
+out. The number of wildtypes and mutants predicted with each model are
+calculated and this leads to the final classification result of using
+SVMs.
 
 \subsection{Step One: Data Processing and
 Modelling}\label{step-one-data-processing-and-modelling}
