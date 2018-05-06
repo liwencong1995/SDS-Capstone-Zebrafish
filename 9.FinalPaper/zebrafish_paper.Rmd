@@ -83,18 +83,21 @@ Support Vector Machine (SVM) cannot be fit to data with missing values. For wedg
 # Support Vector Machine
 The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 * x_1 + \beta_2 * x_2)$ that separates the nearest data as clean as possible. The parameters $\beta$ are found by solving the optimization problem --to maximize M subject to some restrictions -- in 2 dimensions below. 
 
-```{r fig.width=5, fig.height=4,echo=FALSE}
+
+```{r fig.width=4, fig.height=3,echo=FALSE}
 library(png)
 library(grid)
 img <- readPNG("./figures/svm_fig.png")
 grid.raster(img)
 ```
 
+
+
 \begin{equation}
   \left.
   \begin{array}{l@{\,}l}
      \sum_{i=1}^n \beta_i^2 = 0 \\
-     \ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i) \\
+     \ y_i * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i) \\
      \ \varepsilon_i \geq 0 \\
      \ \sum_{i=1}^n \varepsilon_i \leq C \\
   \end{array}
@@ -102,19 +105,24 @@ grid.raster(img)
 \end{equation}
 
 
-* $C$: tuning parameter, toleration of violation.
-* $M$: margin, distance of the closest points to the hyperplane.
+* $C$: tuning parameter, toleration of misclassification.
+* $M$: margin is the distance of the closest points to the hyperplane. It is the distance between the two light grey lines. 
 * $\varepsilon_i$ : slack variable, an observation is classified at the correct/incorrect side of the margin.
+
+
+
+The slack variable $\varepsilon_i$ tells us where the ith observation is located, relative to the separation line and relative to the margin. If $\varepsilon_i = 0$ then the ith observation is on the correct side of the margin. If $\varepsilon_i > 0$ then the ith observation is on the wrong side of the margin. If $\varepsilon_i > 1$ then it is on the wrong side of the separation line.
+
+The tuning parameter C bounds the sum of the $\varepsilon_i$, and so it determines the number and severity of the violations to the margin and to the separation line that we will tolerate. We can think of C as a budget for the amount that the margin can be violated by the n observations. If $C = 0$ then there is no budget for violations to the margin, and it must be the case that $\varepsilon_1 = . . . = \varepsilon_n = 0$. For $C > 0$ no more than C observations can be on the wrong side of the separation line, because if an observation is on the wrong side of the separation line then $\varepsilon_i > 1$. As the budget C increases, we become more tolerant of violations to the margin, and so the margin will widen. Conversely, as C decreases, we become less tolerant of violations to the margin and so the margin narrows.
 
 The function of the separation line:
 
 $$f(x) = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 $$
+$y_i$ is the vector representing the coordinate of a data point. The dot product of $y_i$ and the function of the seperation line gives the perpendicular distance from the data point to the separation line:
 
-if $f(x) = 0$, the observation is on the seperation line. 
+$$ y_i * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
 
-
-$$ y * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
-The above is the perpendicular distance from the ith observation to the separation line. If it's >0, the observation falls at the right side of the separation line and vice versa.
+If the dot product is greater than 0, the observation falls at the right side of the separation line and vice versa.
 
 ## Cross-Validation
 For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we dicided to use a leave-one-out cross validation method to test our model.   
