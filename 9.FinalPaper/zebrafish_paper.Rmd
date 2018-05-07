@@ -84,7 +84,6 @@ Hence, three key functions were used from the tidyr package [@pkgtidyr]: gather(
 ## Dealing with Missing Values
 Support Vector Machine (SVM) cannot be fit to data with missing values. For wedges that do not have any points, median $r$ cannot be calculated, which means that these sample will be eliminated when running SVM. Wedges without points have biologically meanings, so we should not ignore these wedges in our model. In order to keep the wedges in our model, we need to artificially pick a median $r$ value to replace the missing ones. SVM is sensitive to outliers, so we cannot pick an $r$ value that could become outliers. We decided to calculate the mean of median $r$ for the nth landmark of all 78 samples, and then we replace the missing median$r$ values with the 2 * median $r$ value for each landmark of each channel.
 
-
 # Support Vector Machine 
 The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the nearest data as cleanly as possible. The parameters $\beta$ are found by solving the optimization problem --to maximize Margin subject to some restrictions -- in 2 dimensions below [@James2013].
 
