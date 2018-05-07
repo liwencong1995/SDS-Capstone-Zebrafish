@@ -84,18 +84,9 @@ Support Vector Machine (SVM) cannot be fit to data with missing values. For wedg
 # Support Vector Machine
 The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the nearest data as cleanly as possible. The parameters $\beta$ are found by solving the optimization problem --to maximize M subject to some restrictions -- in 2 dimensions below. 
 
-<<<<<<< HEAD
 ```{r svmfig, fig.cap = "SVM model", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
 ```
-
-=======
-```{r svmfig, fig.cap ="SVM", fig.width=5, fig.height=3,echo=FALSE}
-knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
-```
-
-
->>>>>>> ed9b652a3a2ea494f764f107d07616048d9dcc14
 \begin{equation}
   \left.
   \begin{array}{l@{\,}l}
@@ -136,15 +127,10 @@ For each SVM, we used 10-fold cross validation to select a tuning parameter C va
 We created a two-step interactive classification tool which allows users to simply input a data file and get an visualization of the modeling result. There are two main components in the tool:
 
 ## General Workflow
-<<<<<<< HEAD
 ```{r workflow, fig.cap = "Summary of Workflow", fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/Figure1.png", dpi = 260 )
-=======
-```{r workflow, fig.cap = "Summary of Workflow", fig.width=1, fig.height=1,echo=FALSE}
 knitr::include_graphics("figures/Figure1.jpg", dpi = 260 )
->>>>>>> ed9b652a3a2ea494f764f107d07616048d9dcc14
 ```
-**Fig 2** displays the overall workflow leading to the final product of classification. It begins with the cleaning and restructuring of the raw landmarks data. The tidied landmarks data that has the NA values filled contains 152 distinct landmarks. Each landmark has its own representative SVM model that used the 77 samples out of 78 for training from applying the leave-one-out cross validation method. That one sample that is left out from each landmark is used for testing the model that was built from the 77 samples. Then, based on the training accuracy of each model, only those that consist of reliable landmarks are filtered out. The number of wildtypes and mutants predicted with each model are calculated and this leads to the final classification result of using SVMs. 
+**Fig 3** displays the overall workflow leading to the final product of classification. It begins with the cleaning and restructuring of the raw landmarks data. The tidied landmarks data that has the NA values filled contains 152 distinct landmarks. Each landmark has its own representative SVM model that used the 77 samples out of 78 for training from applying the leave-one-out cross validation method. That one sample that is left out from each landmark is used for testing the model that was built from the 77 samples. Then, based on the training accuracy of each model, only those that consist of reliable landmarks are filtered out. The number of wildtypes and mutants predicted with each model are calculated and this leads to the final classification result of using SVMs. 
 
 ## Step One: Data Processing and Modelling
 This step is implemented using **Python** (version 3) and packages including `pandas`, `numpy` and `sklearn` are required. Users would need to run and interact with the Python script `svm.py` to pre-process the data and build the model. Then, they would need to run another script `analyse_results.py` to analyse the raw results and produce aggregated results.   
@@ -154,47 +140,32 @@ The script `svm.py` contains two components: a general-purpose `svm_classificati
 The script `analyse_results.py` contains three components: a helper function `get_result_file_pathes()` that returns a list of result file pathes in the output folder; a helper function `process_row_data()` that takes a path of raw data file and returns one with accuracy scores calculated and attached; a `main()` function that runs the two helper function to process all raw data files and generates an aggregated `CSV` file comtaining results from all samples.
 
 ### User Interaction
-<<<<<<< HEAD
 ```{r useri, fig.cap = "Example of User Interaction in Step One of the User Interface", fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/Figure2.png", dpi = 260 )
-=======
-```{r useri, fig.cap = "Example of User Interaction for Running svm.py", fig.width=5, fig.height=3,echo=FALSE}
 knitr::include_graphics("figures/Figure2.jpg", dpi = 260 )
->>>>>>> ed9b652a3a2ea494f764f107d07616048d9dcc14
 ```
 ```{r useri2, fig.cap = "Example of User Interaction for Running svm.py", fig.width=5, fig.height=3,echo=FALSE}
-knitr::include_graphics("figures/Figure3.png", dpi = 260 )
+knitr::include_graphics("figures/Figure4.png", dpi = 260 )
 ```
 
-As shown in **Fig 3** and **Fig 4**, several user inputs are taken from users when they run the python scripts.
+As shown in **Fig 4** and **Fig 5**, several user inputs are taken from users when they run the python scripts.
 
 ### Input File 
 Input file must contain landmark data. Variables that are needed for classification are required to be included in the input file.
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
 
 ### Sample input file
-<<<<<<< HEAD
-```{r inputdata, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center', echo=FALSE}
+```{r inputdata, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
 knitr::include_graphics("figures/Figure3.png", dpi = 260 )
-=======
-```{r inputdata, fig.cap ="Random Sample of a Input File for svm.py", out.width = "300px",echo=FALSE}
-knitr::include_graphics("figures/Figure4.png", dpi = 260 )
->>>>>>> ed9b652a3a2ea494f764f107d07616048d9dcc14
 ```
 
-**Fig 5** shows a ramdom sample of an input file for the script `svm.py`. The columns `stype`(sample type), `landmark_index` and `sample_index` are arequired and the other two columns (`pts` and `r` in this example) are the two parameters for building SVM.
+**Fig 6** shows a ramdom sample of an input file for the script `svm.py`. The columns `stype`(sample type), `landmark_index` and `sample_index` are arequired and the other two columns (`pts` and `r` in this example) are the two parameters for building SVM.
 
 ### Output File
-<<<<<<< HEAD
-```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/Figure4.png", dpi = 260 )
-=======
-```{r outputdata, fig.cap ="Output File Columns of Aggregated Result", out.width = "300px",echo=FALSE}
+```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
 knitr::include_graphics("figures/Figure5.png", dpi = 260 )
->>>>>>> ed9b652a3a2ea494f764f107d07616048d9dcc14
 ```
 
-**Fig 6** shows the columns of the final result file produced by the `analyse_results.py` script. The first 4 columns are describing the testing sample's information while the rest of the columns are all precision statistics discribing the accuracy of the model built. Here are the discriptions of all the columns:
+**Fig 7** shows the columns of the final result file produced by the `analyse_results.py` script. The first 4 columns are describing the testing sample's information while the rest of the columns are all precision statistics discribing the accuracy of the model built. Here are the discriptions of all the columns:
 
 * `sample_index`: sample index of the testing sample.
 * `landmark_index`: the landmark that this row is representing.
