@@ -155,9 +155,6 @@ Input file must contain landmark data. Variables that are needed for classificat
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
 
 ### Sample input file
-```{r inputdata, fig.cap ="Random Sample of a Input File for svm.py", out.width = "300px",echo=FALSE}
-knitr::include_graphics("figures/Figure4.png", dpi = 260 )
-```
 
 ```{r inputdata2, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
 knitr::include_graphics("figures/Figure3.png", dpi = 260 )
@@ -166,9 +163,6 @@ knitr::include_graphics("figures/Figure3.png", dpi = 260 )
 **Fig 6** shows a ramdom sample of an input file for the script `svm.py`. The columns `stype`(sample type), `landmark_index` and `sample_index` are arequired and the other two columns (`pts` and `r` in this example) are the two parameters for building SVM.
 
 ### Output File
-```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center', echo=FALSE}
-knitr::include_graphics("figures/Figure4.png", dpi = 260 )
-```
 
 ```{r outputdata2, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
 knitr::include_graphics("figures/Figure5.png", dpi = 260 )
