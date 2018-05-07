@@ -379,11 +379,14 @@ calculated, which means that these sample will be eliminated when
 running SVM. Wedges without points have biologically meanings, so we
 should not ignore these wedges in our model. In order to keep the wedges
 in our model, we need to artificially pick a \texttt{median\ r} value to
-replace the missing ones. SVM is sensitive to outliers, so we cannot
-pick an \texttt{r} value that could become outliers. We decided to
-calculate the mean of \texttt{median\ r} for the nth landmark of all 78
-samples, and then we replace the missing \texttt{median\ r} values with
-the 2 * median R value for each landmark of each channel.
+replace the missing ones. From biological perspective, the reason that
+there is no point in a particular wedge might be that the data points
+are too far away from the scanned area to be captured. Therefore, we
+decided to calculate the mean of \texttt{median\ r} for the nth landmark
+of all 78 samples, and then we replace the missing \texttt{median\ r}
+values with the 2 * median R value for each landmark of each channel to
+represent that the points in this wedge is far away from the scanned
+area.
 
 \section{Support Vector Machine}\label{support-vector-machine-1}
 
