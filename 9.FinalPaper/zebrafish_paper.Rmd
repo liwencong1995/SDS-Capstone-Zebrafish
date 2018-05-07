@@ -12,7 +12,7 @@ author:
     email: \email{dtang@smith.edu}
   - name: Ji Young Yun
     affiliation: Smith College
-    email: \email{jyun38@smith.edu}2
+    email: \email{jyun38@smith.edu}
 address:
   - code: Smith College
     address: Statistical and Data Sciences, Northampton, MA
@@ -37,8 +37,6 @@ knitr::opts_chunk$set(fig.pos = 'h')
 # Introduction
 This project derives from Professor Barresi’s biological image analysis research at Smith College and provides a tool to classify the structures within zebrafish brains via support vector machine. Our goal is to distinguish the wild and mutant types of zebrafish brain’s structures. Schwartz, a student in Barresi Lab, used  landmarks analysis to divide the points in the three-dimentional images into small wedges and computed the landmark, which is the most representative point, within each wedge. The image of signals in a Zebrafish brain is shown in Figure 1. The shape is divided into 30 slices, and each slice is further divided into 8 wedges. The landmark in each wedge is calculated by taking the median distance of all points in each wedge, $R$. We use number of points in each wedge and median R to run SVM models to do classifications.  
 
-## Landmark Analysis
-
 ## Programming Languages
 Two programming languages are used in this study, Python and R. Python is used to run our model and output the result in the correct format. **R** is used generally for data cleaning and creating interactive user interface.
 
@@ -57,7 +55,7 @@ phenotypes. [@Sch2017]
 
 Landmarks describe a shape by locating a finite number of points on each specimen. There are three basic types of landmarks: scientific, mathematic and pseudo-landmarks. A scientific landmark is a point assigned by an expert that corresponds between objects in some scientifically meaningful way, for example the corner of an eye. Mathematical landmarks are points located on an object according to some mathematical or geometrical property of the figure. Since it does not assume a preference of one location to another, it is particularly useful in automated morphological recognition and analysis for under-studied structure. Pseudo-landmarks are constructed points on an object, located either around the outline or in between scientific or mathematic landmarks. It is often used to approximate continuous curves [@Dryden2016]. This research has chosen to calculate an automatic set of landmarks distributed across the structure in order to avoid introducing bias due to expectations about where biological differences should emerge.
 
-Schwartz et al. (2018) have utilized the open source program, Ilastik, which employs a training based machine learning, to eliminate the image noise. Then they preformed principal component analysis to align commissures between samples, reducing misalignment artifacts, and implemented a cylindrical coordinate system which preserves image dimensionality normally lost in maximum intensity projection (MIP), which facilitates presentation of the data, but sacrifices much of the complexity and relational data contained in the image. Then they reduced the points identified by the program as belonging to the structure to a set of landmark points that describe the shape and distribution of signal corresponding to the structure. Finally, using the landmark system, we are able to identify and quantify structural differences and changes in signal distribution between wild type and mutant commissures. 
+Schwartz et al. (2018) have utilized the open source program, Ilastik, which employs a training based machine learning, to eliminate the image noise. Then they performed principal component analysis to align commissures between samples, reducing misalignment artifacts, and implemented a cylindrical coordinate system. This preserves image dimensionality normally lost in maximum intensity projection (MIP), which facilitates presentation of the data but sacrifices much of the complexity and relational data contained in the image. Then they reduced the points identified by the program as belonged to the structure to a set of landmark points that describe the shape and distribution of signal corresponding to the structure. Finally, using the landmark system, we are able to identify and quantify structural differences and changes in signal distribution between wild type and mutant commissures. 
 
 ####Support Vector Machine
 
@@ -130,7 +128,7 @@ We created a two-step interactive classification tool which allows users to simp
 
 ## General Workflow
 
-```{r workflow, fig.cap = "Summary of Workflow", fig.align='center', echo=FALSE}
+```{r workflow, fig.cap = "Summary of Workflow", fig.align='center', fig.height = 5, fig.width=4, echo=FALSE}
 knitr::include_graphics("figures/Figure1.jpg", dpi = 260 )
 ```
 
@@ -160,15 +158,15 @@ In our analysis, we used number of points in each sub-section corresponding to e
 
 ### Sample input file
 
-```{r inputdata2, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
-knitr::include_graphics("figures/Figure3.png")
+```{r inputdata2, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center', out.width = "300px", echo=FALSE}
+knitr::include_graphics("figures/Figure3.png", dpi = 260)
 ```
 
 **Fig 6** shows a ramdom sample of an input file for the script `svm.py`. The columns `stype`(sample type), `landmark_index` and `sample_index` are arequired and the other two columns (`pts` and `r` in this example) are the two parameters for building SVM.
 
 ### Output File
 
-```{r outputdata2, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
+```{r outputdata2, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center', out.width = "300px", echo=FALSE}
 knitr::include_graphics("figures/Figure5.png")
 ```
 
