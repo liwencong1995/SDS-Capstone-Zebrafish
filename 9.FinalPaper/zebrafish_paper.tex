@@ -179,7 +179,7 @@ Ji Young Yun\textsuperscript{\getAff{Smith College}}\\
 Classification of biological creatures' phenotypes has long been a field
 that scientists study at. In this project, we utilize support vector
 machine to distinguish structures of Zebrafish's brains by using data
-generated from landmark analysis (cited Morgan's paper). We create a
+generated from landmark analysis (cited Schwartz's paper). We create a
 tool for biologists to intuitively classify three-dimensional biological
 shapes into two groups, usually defined as wild type and mutant, and
 understand which part of the shapes have the most impact on the
@@ -201,14 +201,15 @@ This project derives from Professor Barresi's biological image analysis
 research at Smith College and provides a tool to classify the structures
 within zebrafish brains via support vector machine. Our goal is to
 distinguish the wild and mutant types of zebrafish brain's structures.
-Morgan, a student in Barresi Lab, used landmarks analysis to divide the
-points in the three-dimentional images into small wedges and computed
-the landmark, which is the most representative point, within each wedge.
-The image of signals in a Zebrafish brain is shown in Figure 1. The
-shape is divided into 30 slices, and each slice is further divided into
-8 wedges. The landmark in each wedge is calculated by taking the median
-distance of all points in each wedge, \(R\). We use number of points in
-each wedge and median R to run SVM models to do classifications.
+Schwartz, a student in Barresi Lab, used landmarks analysis to divide
+the points in the three-dimentional images into small wedges and
+computed the landmark, which is the most representative point, within
+each wedge. The image of signals in a Zebrafish brain is shown in Figure
+1. The shape is divided into 30 slices, and each slice is further
+divided into 8 wedges. The landmark in each wedge is calculated by
+taking the median distance of all points in each wedge, \(R\). We use
+number of points in each wedge and median R to run SVM models to do
+classifications.
 
 \subsection{Landmark Analysis}\label{landmark-analysis}
 
@@ -248,7 +249,7 @@ intensity projections that surrender the power of three dimensional
 data. Statistical methods to analyze visual data are needed,
 particularly to detect subtle phenotypes.
 
-Morgan et al. (2018) have utilized the open source program, Ilastik,
+Schwartz et al. (2018) have utilized the open source program, Ilastik,
 which employs a training based machine learning, to eliminate the image
 noise. Then they preformed principal component analysis to align
 commissures between samples, reducing misalignment artifacts, and
@@ -279,8 +280,8 @@ automatic set of landmarks distributed across the structure in order to
 avoid introducing bias due to expectations about where biological
 differences should emerge.
 
-Morgan et al. used Random Forest machine leaning method to classify the
-landmarks. Although the classification is quite accurate, it is
+Schwartz et al. used Random Forest machine leaning method to classify
+the landmarks. Although the classification is quite accurate, it is
 difficult to interpret the result from biological aspects. Instead of
 doing classification on all of the landmarks at the same time, we
 decided to do classifacation on one landmark at a time via Support
@@ -457,7 +458,7 @@ side of the separation line and vice versa.
 \subsection{Cross-Validation}\label{cross-validation}
 
 For our project, we have access to 43 wild-type samples and 35
-mutant-type samples. Due to this limited sample size, we dicided to use
+mutant-type samples. Due to this limited sample size, we decided to use
 a leave-one-out cross validation method to test our model.\\
 For each testing sample, we built 152 SVMs for each landmark. For each
 SVM, we used 10-fold cross validation to select a tuning parameter C
@@ -474,17 +475,17 @@ result. There are two main components in the tool:
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=5.53in]{figures/Figure1} 
+{\centering \includegraphics{figures/Figure1} 
 
 }
 
 \caption{Summary of Workflow}\label{fig:workflow}
 \end{figure}
 
-Figure 1 displays the overall workflow leading to the final product of
-classification. It begins with the cleaning and restructuring of the raw
-landmarks data. The tidied landmarks data that has the NA values filled
-contains 152 distinct landmarks. Each landmark has its own
+\textbf{Fig 2} displays the overall workflow leading to the final
+product of classification. It begins with the cleaning and restructuring
+of the raw landmarks data. The tidied landmarks data that has the NA
+values filled contains 152 distinct landmarks. Each landmark has its own
 representative SVM model that used the 77 samples out of 78 for training
 from applying the leave-one-out cross validation method. That one sample
 that is left out from each landmark is used for testing the model that
@@ -498,28 +499,43 @@ SVMs.
 Modelling}\label{step-one-data-processing-and-modelling}
 
 This step is implemented using \textbf{Python} (version 3) and packages
-including \texttt{pandas}, \texttt{nump} and \texttt{sklearn} are
+including \texttt{pandas}, \texttt{numpy} and \texttt{sklearn} are
 required. Users would need to run and interact with the Python script
-\texttt{svm.py} to pre-process the data and build the model.
+\texttt{svm.py} to pre-process the data and build the model. Then, they
+would need to run another script \texttt{analyse\_results.py} to analyse
+the raw results and produce aggregated results.
 
 The script \texttt{svm.py} contains two components: a general-purpose
 \texttt{svm\_classification()} function that builds a SVM model to
 classify points for a perticular landmark and a \texttt{main()} function
 that runs the \texttt{svm\_classification()} function for each landmark.
 
+The script \texttt{analyse\_results.py} contains three components: a
+helper function \texttt{get\_result\_file\_pathes()} that returns a list
+of result file pathes in the output folder; a helper function
+\texttt{process\_row\_data()} that takes a path of raw data file and
+returns one with accuracy scores calculated and attached; a
+\texttt{main()} function that runs the two helper function to process
+all raw data files and generates an aggregated CSV file comtaining
+results from all samples.
+
 \subsubsection{User Interaction}\label{user-interaction}
 
 \begin{figure}[h]
 
-{\centering \includegraphics[width=4.85in]{figures/Figure2} 
+{\centering \includegraphics{figures/Figure2} 
 
 }
 
 \caption{Example of User Interaction in Step One of the User Interface}\label{fig:useri}
 \end{figure}
 
-As shown in Figure 2, several user inputs are taken from users when they
-run the python script.
+\begin{figure}[h]
+\includegraphics[width=5.11in]{figures/Figure3} \caption{Example of User Interaction for Running svm.py}\label{fig:useri2}
+\end{figure}
+
+As shown in \textbf{Fig 3} and \textbf{Fig 4}, several user inputs are
+taken from users when they run the python scriptsf.
 
 \subsubsection{Input File}\label{input-file}
 
@@ -532,13 +548,14 @@ each wedge.
 \subsubsection{Sample input file}\label{sample-input-file}
 
 \begin{figure}[h]
-
-{\centering \includegraphics[width=5.11in]{figures/Figure3} 
-
-}
-
-\caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata}
+\includegraphics[width=300px]{figures/Figure4} \caption{Random Sample of a Input File for svm.py}\label{fig:inputdata}
 \end{figure}
+
+\textbf{Fig 5} shows a ramdom sample of an input file for the script
+\texttt{svm.py}. The columns \texttt{stype}(sample type),
+\texttt{landmark\_index} and \texttt{sample\_index} are arequired and
+the other two columns (\texttt{pts} and \texttt{r} in this example) are
+the two parameters for building SVM.
 
 \subsubsection{Output File}\label{output-file}
 
@@ -550,6 +567,13 @@ each wedge.
 
 \caption{Sample Data Output File of First Step of the User Interface}\label{fig:outputdata}
 \end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=300px]{figures/Figure5} \caption{Output File Columns of Aggregated Result}\label{fig:outputdata2}
+\end{figure}
+
+\textbf{Fig 6} shows the columns of the final result file produced by
+the \texttt{analyse\_results.py} script.
 
 \subsection{Step Two: Interactive Visualization
 Tool}\label{step-two-interactive-visualization-tool}
@@ -744,12 +768,13 @@ Our final product has several strengths:
 
 \subsubsection{Easy Interpretation}\label{easy-interpretation}
 
-In the previous method random forest, the number of predictors p exceeds
-the number of samples. Morgan applied PCA do reduce the dimension of the
-predictors. The problem with dimension reduction is that it gives a
-linear combination of the dimensions that are projected on those are
-kept. While the largest projections still make sense, the minor
-projections are very random and thus difficult to interpret.
+In the previous method random forest, the number of predictors \(p\)
+exceeds the number of samples. Schwartz applied PCA to reduce the
+dimension of the predictors. The problem with dimension reduction is
+that the parameters gaining weights at last are linear combinations of
+the original landmarks. While the patterns of the first several
+projections still make sense, the minor projections are very random and
+thus difficult to interpret.
 
 The SVM model is generated based on landmark data gives insightful
 analysis of: * which landmark, or which part of the Zebrafish brain, has
@@ -776,11 +801,11 @@ Our SVM model only make prediction of the sample type based on a single
 channel's information, and it does not consider the interaction between
 channels.
 
-\subsubsection{Itenerating Machine
-Learning}\label{itenerating-machine-learning}
+\subsubsection{Iterating Machine
+Learning}\label{iterating-machine-learning}
 
 Instead of cross-validation, better results could be achieved by using
-itenerating machine learning method. In iterative machine learning we
+iterating machine learning method. In iterative machine learning we
 repeat the process of training and testing several times. At the first
 round the user gives examples of objects belonging to some classes and
 the machine learning algorithm is trained with this data. In the second
