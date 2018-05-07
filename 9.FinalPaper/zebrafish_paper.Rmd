@@ -130,7 +130,7 @@ We created a two-step interactive classification tool which allows users to simp
 ## General Workflow
 
 ```{r workflow, fig.cap = "Summary of Workflow", fig.align='center', fig.height = 5, fig.width=4, echo=FALSE}
-knitr::include_graphics("figures/Figure1.jpg", dpi = 260 )
+knitr::include_graphics("figures/Figure1.jpg", dpi = 500 )
 ```
 
 **Fig 3** displays the overall workflow leading to the final product of classification. It begins with the cleaning and restructuring of the raw landmarks data. The tidied landmarks data that has the NA values filled contains 152 distinct landmarks. Each landmark has its own representative SVM model that used the 77 samples out of 78 for training from applying the leave-one-out cross validation method. That one sample that is left out from each landmark is used for testing the model that was built from the 77 samples. Then, based on the training accuracy of each model, only those that consist of reliable landmarks are filtered out. The number of wildtypes and mutants predicted with each model are calculated and this leads to the final classification result of using SVMs. 
@@ -143,7 +143,7 @@ The script `svm.py` contains two components: a general-purpose `svm_classificati
 The script `analyse_results.py` contains three components: a helper function `get_result_file_pathes()` that returns a list of result file pathes in the output folder; a helper function `process_row_data()` that takes a path of raw data file and returns one with accuracy scores calculated and attached; a `main()` function that runs the two helper function to process all raw data files and generates an aggregated `CSV` file comtaining results from all samples.
 
 ### User Interaction
-```{r useri, fig.cap = "Example of User Interaction in Step One of the User Interface", fig.align='center', echo=FALSE}
+```{r useri, fig.cap = "Example of User Interaction in Step One of the User Interface", fig.width= 5, fig.height=3, fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Figure2.jpg", dpi = 260 )
 ```
 
