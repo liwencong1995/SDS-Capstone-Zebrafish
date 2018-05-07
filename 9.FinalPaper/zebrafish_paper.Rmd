@@ -107,13 +107,13 @@ knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
 * $\varepsilon_i$ : slack variable.
 * $C$: Tuning parameter, toleration of total misclassification.
 
-The slack variable $\varepsilon_i$ tells us where the ith observation is located, relative to the separation line and relative to the margin. If $\varepsilon_i = 0$ then the ith observation is on the correct side of the margin. If $\varepsilon_i > 0$ then the ith observation is on the wrong side of the margin. If $\varepsilon_i > 1$ then it is on the wrong side of the separation line.
+The slack variable $\varepsilon_i$ tells us where the $i^{th}$ observation is located, relative to the separation line and relative to the margin. If $\varepsilon_i = 0$ then the $i^{th}$ observation is on the correct side of the margin. If $\varepsilon_i > 0$ then the ith observation is on the wrong side of the margin. If $\varepsilon_i > 1$ then it is on the wrong side of the separation line.
 
 The tuning parameter C bounds the sum of the $\varepsilon_i$, and so it determines the number and severity of the violations to the margin and to the separation line that we will tolerate. We can think of C as a budget for the amount that the margin can be violated by the n observations. If $C = 0$ then there is no budget for violations to the margin, and it must be the case that $\varepsilon_1 = . . . = \varepsilon_n = 0$. For $C > 0$ no more than C observations can be on the wrong side of the separation line, because if an observation is on the wrong side of the separation line then $\varepsilon_i > 1$. As the budget C increases, we become more tolerant of violations to the margin, and so the margin will widen. Conversely, as C decreases, we become less tolerant of violations to the margin and so the margin narrows.
 
 $y_i$ is the vector representing the coordinate of a data point. The dot product of $y_i$ and the function of the seperation line gives the perpendicular distance from the data point to the separation line:
 
-$$y_i * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
+$$y_i * ( \beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 )$$
 
 If the dot product is greater than 0, the observation falls at the right side of the separation line and vice versa. 
 
