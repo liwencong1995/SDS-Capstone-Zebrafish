@@ -390,8 +390,8 @@ the 2 * median R value for each landmark of each channel.
 The goal of SVM is to find a separation line
 \(f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)\) that
 separates the nearest data as cleanly as possible. The parameters
-\(\beta\) are found by solving the optimization problem --to maximize M
-subject to some restrictions -- in 2 dimensions below {[}7{]}.
+\(\beta\) are found by solving the optimization problem --to maximize
+Margin subject to some restrictions -- in 2 dimensions below {[}7{]}.
 
 \begin{figure}[h]
 
@@ -416,13 +416,12 @@ subject to some restrictions -- in 2 dimensions below {[}7{]}.
 \begin{itemize}
 \tightlist
 \item
-  \(C\): tuning parameter, toleration of misclassification.
+  \(C\): Tuning parameter, toleration of total misclassification.
 \item
-  \(M\): margin is the distance of the closest points to the hyperplane.
-  It is the distance between the two light grey lines.
+  \(M\): Margin is the sum of distance of the two closest points from
+  each class to the separation line.
 \item
-  \(\varepsilon_i\) : slack variable, an observation is classified at
-  the correct/incorrect side of the margin.
+  \(\varepsilon_i\) : slack variable.
 \end{itemize}
 
 The slack variable \(\varepsilon_i\) tells us where the ith observation
@@ -446,17 +445,19 @@ tolerant of violations to the margin, and so the margin will widen.
 Conversely, as C decreases, we become less tolerant of violations to the
 margin and so the margin narrows.
 
-The function of the separation line:
-
-\[f(x) = \beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 \] \(y_i\) is
-the vector representing the coordinate of a data point. The dot product
-of \(y_i\) and the function of the seperation line gives the
+\(y_i\) is the vector representing the coordinate of a data point. The
+dot product of \(y_i\) and the function of the seperation line gives the
 perpendicular distance from the data point to the separation line:
 
 \[y_i * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )\]
 
 If the dot product is greater than 0, the observation falls at the right
 side of the separation line and vice versa.
+
+In general, we want to find a classification that the distance from a
+data point to the separation line is larger than the margin, while we
+can tolerate some points being in the middle of the margins or
+misclassified.
 
 \subsection{Cross-Validation}\label{cross-validation}
 
@@ -844,12 +845,12 @@ Our final product has several strengths:
 \subsubsection{Easy Interpretation}\label{easy-interpretation}
 
 In the previous method random forest, the number of predictors \(p\)
-exceeds the number of samples. Schwartz applied PCA to reduce the
-dimension of the predictors. The problem with dimension reduction is
-that the parameters gaining weights at last are linear combinations of
-the original landmarks. While the patterns of the first several
-projections still make sense, the minor projections are very random and
-thus difficult to interpret.
+exceeds the number of samples. Schwartz applied Principle Componen
+Analysis to reduce the dimension of the predictors. The problem with
+dimension reduction is that the parameters gaining weights at last are
+linear combinations of the original landmarks. While the patterns of the
+first several projections still make sense, the minor projections are
+very random and thus difficult to interpret.
 
 The SVM model is generated based on landmark data gives insightful
 analysis of: * which landmark, or which part of the Zebrafish brain, has
@@ -869,12 +870,13 @@ and contrast results from different channels.
 \subsection{Limitations and
 Improvements}\label{limitations-and-improvements}
 
-\subsubsection{Interaction Between
-Channels}\label{interaction-between-channels}
+\subsubsection{Interaction Between Channels and
+sections}\label{interaction-between-channels-and-sections}
 
-Our SVM model only make prediction of the sample type based on a single
-channel's information, and it does not consider the interaction between
-channels.
+Our SVM model only make prediction based on a single channel's
+information and the SVM is run for one single landmark at a time. It
+does not consider the interactions between channels and between
+different sections of the sample.
 
 \subsubsection{Iterating Machine
 Learning}\label{iterating-machine-learning}
@@ -889,18 +891,17 @@ these classes. Now, the user merely adds objects to the improved
 training set which the machine learning algorithm has put into a wrong
 class. That is, the user only corrects the ``misunderstandings'' of the
 algorithm. In this way we can concentrate on difficult examples of
-objects that are hard to classify or are for some reason easily missed
-by humans. Such objects may lie close to the decision boundaries or in
-the periphery in the multidimensional feature space. This iterative
-process is continued until the machine learning algorithm does not make
-any mistakes or the classification results do not improve anymore. It
-will improve our classification results and thus is likely to help make
-better predictions for unknown type.
+objects that are hard to classify. Such objects may lie close to the
+decision boundaries or in the periphery in the multidimensional feature
+space. This iterative process is continued until the machine learning
+algorithm does not make any mistakes or the classification results do
+not improve anymore. It will improve our classification results and thus
+is likely to help make better predictions for unknown type {[}12{]}.
 
 \subsection{Future Study}\label{future-study}
 
 \subsubsection{Interaction Between
-Channels}\label{interaction-between-channels-1}
+Channels}\label{interaction-between-channels}
 
 If more time is given, we could add factors that describe the
 interaction between channels into our SVM model in order to combine
@@ -1728,6 +1729,11 @@ manipulation {[}Internet{]}. 2017. Available:
 11. Chang W, Cheng J, Allaire J, Xie Y, McPherson J. Shiny: Web
 application framework for r {[}Internet{]}. 2017. Available:
 \url{https://CRAN.R-project.org/package=shiny}
+
+\hypertarget{ref-Pelkmanslab}{}
+12. P. Rämö BS R. Sacher. CellClassifier: Supervised learning of
+cellular phenotypes {[}Internet{]}. Bioinfomatics. 2009. Available:
+\url{http://dx.doi.org/10.1093/bioinformatics/btp524}
 
 \nolinenumbers
 
