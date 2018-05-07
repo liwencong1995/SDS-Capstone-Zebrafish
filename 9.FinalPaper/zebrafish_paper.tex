@@ -179,12 +179,12 @@ Ji Young Yun\textsuperscript{\getAff{Smith College}}\\
 Classification of biological creatures' phenotypes has long been a field
 that scientists study at. In this project, we utilize support vector
 machine to distinguish structures of Zebrafish's brains by using data
-generated from landmark analysis (cited Schwartz's paper). We create a
-tool for biologists to intuitively classify three-dimensional biological
-shapes into two groups, usually defined as wild type and mutant, and
-understand which part of the shapes have the most impact on the
-classification result. This project derives from Professor Barresi's
-biological image analysis research at Smith College.
+generated from landmark analysis {[}1{]}. We create a tool for
+biologists to intuitively classify three-dimensional biological shapes
+into two groups, usually defined as wild type and mutant, and understand
+which part of the shapes have the most impact on the classification
+result. This project derives from Professor Barresi's biological image
+analysis research at Smith College.
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLOS ONE authors please skip this step. 
@@ -208,15 +208,15 @@ each wedge. The image of signals in a Zebrafish brain is shown in Figure
 1. The shape is divided into 30 slices, and each slice is further
 divided into 8 wedges. The landmark in each wedge is calculated by
 taking the median distance of all points in each wedge, \(R\). We use
-number of points in each wedge and median R to run SVM models to do
+number of points in each wedge and median \(r\) to run SVM models to do
 classifications.
 
 \subsection{Programming Languages}\label{programming-languages}
 
-Two programming languages are used in this study, Python and R. Python
-is used to run our model and output the result in the correct format.
-\textbf{R} is used generally for data cleaning and creating interactive
-user interface.
+Two programming languages are used in this study, Python and \textbf{R}.
+Python is used to run our model and output the result in the correct
+format. \textbf{R} is used generally for data cleaning and creating
+interactive user interface.
 
 \subsection{\texorpdfstring{Git, \texttt{knitr}, and Reproducible
 Research}{Git, knitr, and Reproducible Research}}\label{git-knitr-and-reproducible-research}
@@ -227,7 +227,7 @@ reproducibility of research studies, it is essential for us to make our
 code publicly available for people to recreate both the model and the
 user interface.
 
-\texttt{knitr} {[}1{]} and Github are used in this project to make the
+\texttt{knitr} {[}2{]} and Github are used in this project to make the
 study reproducible, ranging from the initial data source to the
 \texttt{nyctaxi} package to the statistical data analysis. We used an
 \textbf{R} package called \texttt{rticles} to write this paper. This
@@ -235,7 +235,7 @@ tool allows authors to create reproducible and dynamic technical
 scientific paper in \textbf{R} Markdown. It also allows users to embed
 \textbf{R} code and interactive applicationis, and output into PDF.
 \texttt{rticles} helps users to efficiently put together scientific
-paper with similar format {[}2{]}. Github is used to store the scripts
+paper with similar format {[}3{]}. Github is used to store the scripts
 for our final paper, and the source code for our final production which
 contains the final model and user interface.
 
@@ -245,7 +245,7 @@ Research in developmental biology has relied on the analysis of
 morphological phenotypes through qualitative examination of maximum
 intensity projections that surrender the power of three dimensional
 data. Statistical methods to analyze visual data are needed,
-particularly to detect subtle phenotypes. {[}3{]}
+particularly to detect subtle phenotypes {[}1{]}.
 
 \paragraph{Landmark Analysis}\label{landmark-analysis}
 
@@ -266,15 +266,15 @@ landmarks distributed across the structure in order to avoid introducing
 bias due to expectations about where biological differences should
 emerge.
 
-Schwartz et al. (2018) have utilized the open source program, Ilastik,
+Schwartz et al. {[}1{]} have utilized the open source program, Ilastik,
 which employs a training based machine learning, to eliminate the image
-noise. Then they performed principal component analysis to align
+noise. Then they preformed principal component analysis to align
 commissures between samples, reducing misalignment artifacts, and
-implemented a cylindrical coordinate system. This preserves image
+implemented a cylindrical coordinate system which preserves image
 dimensionality normally lost in maximum intensity projection (MIP),
-which facilitates presentation of the data but sacrifices much of the
+which facilitates presentation of the data, but sacrifices much of the
 complexity and relational data contained in the image. Then they reduced
-the points identified by the program as belonged to the structure to a
+the points identified by the program as belonging to the structure to a
 set of landmark points that describe the shape and distribution of
 signal corresponding to the structure. Finally, using the landmark
 system, we are able to identify and quantify structural differences and
@@ -282,10 +282,10 @@ changes in signal distribution between wild type and mutant commissures.
 
 \paragraph{Support Vector Machine}\label{support-vector-machine}
 
-Schwartz et al. used Random Forest machine leaning method to classify
-the landmarks. Although the classification is quite accurate, it is
-difficult to interpret the result from biological aspects. Instead of
-doing classification on all of the landmarks at the same time, we
+Schwartz et al.{[}1{]} used Random Forest machine leaning method to
+classify the landmarks. Although the classification is quite accurate,
+it is difficult to interpret the result from biological aspects. Instead
+of doing classification on all of the landmarks at the same time, we
 decided to do classifacation on one landmark at a time via Support
 Vector Machine. The SVM algorithm is a classification algorithm that
 provides state-of-the-art performance in a wide variety of application
@@ -293,7 +293,7 @@ domains, image classification. During the past few years, SVM has been
 applied very broadly within the field of computational biology
 especially in pattern recognition problems, including protein remote
 homology detection, microarray gene expressions analysis, prediction of
-protein-protein interactions, etc. In 1999, Jaakkola et al{[}5{]}
+protein-protein interactions, etc. In 1999, Jaakkola et al {[}5{]}
 ushered the development of homology detection algorithms with a paper
 that garnered the ``Best paper'' award at the annual Intelligent Systems
 for Molecular Biology conference. Their primary insight was that
@@ -333,20 +333,21 @@ sample, with each of them containing the following variables:
   within each slice
 \end{itemize}
 
-We used the number of points and the median R to do classification via
-support vector machine. For missing `median \(r\)' values due to absence
-of points in particular landmarks, we filled them with the median value
-of all the points in that landmark.
+We used the number of points and the median \(r\) to do classification
+via support vector machine. For missing median \(r\) values due to
+absence of points in particular wedge, we filled them with the median
+value of all the points in that wedge.
 
 \subsection{Tidy Data}\label{tidy-data}
 
 The raw landmarks data is a wide table containing the sample index and
 all the columns holding information regarding the minimum and maximum
-values of \(\alpha\) and \(\theta\), number of points, median r value,
-and the type of sample for a particular sample in each landmark. and The
-value in each cell refers to the median r value or number of points.
-However, because all of such variables were joined by underscores in the
-variable names, such as \texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_pts} or
+values of \(\alpha\) and \(\theta\), number of points, median \(r\)
+value, and the type of sample for a particular sample in each landmark.
+and The value in each cell refers to the median \(r\) value or number of
+points. However, because all of such variables were joined by
+underscores in the variable names, such as
+\texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_pts} or
 \texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_r}, it was very difficult to see
 what each column actually represented. Thus, the data set was
 restructured to have the sample index, minimum and maximum \(\alpha\),
@@ -357,34 +358,31 @@ Hence, three key functions were used from the tidyr package {[}6{]}:
 gather(), separate(), and spread(). The gather() function separated the
 dataset into key and value pairs for each index. The key was the column
 name containing all essential information connected by underscores and
-the value included the number of points or median r value. Then, the
+the value included the number of points or median \(r\) value. Then, the
 separate() function separated the result from the gather function
 divided the column connected by underscore into 5 different columns,
 named as \texttt{min\_alpha}, \texttt{max\_alpha}, \texttt{min\_theta},
 \texttt{max\_theta}, and \texttt{ptsOrR}. This was added to the result
 of the gather function that contained the index and value of each cell,
-either median R or number of points. Afterwards, the spread() function
-widened the already wide table by expanding the \texttt{ptsOrR} column
-by creating two columns, each column representing median R and the
-number of points.
+either median \(r\) or number of points. Afterwards, the spread()
+function widened the already wide table by expanding the \texttt{ptsOrR}
+column by creating two columns, each column representing median \(r\)
+and the number of points.
 
 \subsection{Dealing with Missing
 Values}\label{dealing-with-missing-values}
 
 Support Vector Machine (SVM) cannot be fit to data with missing values.
-For wedges that do not have any points, \texttt{median\ r} cannot be
+For wedges that do not have any points, median \(r\) cannot be
 calculated, which means that these sample will be eliminated when
 running SVM. Wedges without points have biologically meanings, so we
 should not ignore these wedges in our model. In order to keep the wedges
-in our model, we need to artificially pick a \texttt{median\ r} value to
-replace the missing ones. From biological perspective, the reason that
-there is no point in a particular wedge might be that the data points
-are too far away from the scanned area to be captured. Therefore, we
-decided to calculate the mean of \texttt{median\ r} for the nth landmark
-of all 78 samples, and then we replace the missing \texttt{median\ r}
-values with the 2 \(\cdot\) median R value for each landmark of each
-channel to represent that the points in this wedge is far away from the
-scanned area.
+in our model, we need to artificially pick a median \(r\) value to
+replace the missing ones. SVM is sensitive to outliers, so we cannot
+pick an \(r\) value that could become outliers. We decided to calculate
+the mean of median \(r\) for the nth landmark of all 78 samples, and
+then we replace the missing median\(r\) values with the 2 * median \(r\)
+value for each landmark of each channel.
 
 \section{Support Vector Machine}\label{support-vector-machine-1}
 
@@ -541,9 +539,8 @@ taken from users when they run the python scripts.
 
 Input file must contain landmark data. Variables that are needed for
 classification are required to be included in the input file. In our
-analysis, we used number of points in each sub-section corresponding to
-each landmark of the 3D shape and the \texttt{median\ R} of points in
-each wedge.
+analysis, we used number of points in each wedge within the 3D shape and
+the median \(r\) of points in each wedge.
 
 \subsubsection{Sample input file}\label{sample-input-file}
 
@@ -557,7 +554,7 @@ each wedge.
 \end{figure}
 
 \textbf{Fig 6} shows a ramdom sample of an input file for the script
-\texttt{svm.py}. The columns \texttt{stype}(sample type),
+\texttt{svm.py}. The columns \texttt{stype} (sample type),
 \texttt{landmark\_index} and \texttt{sample\_index} are arequired and
 the other two columns (\texttt{pts} and \texttt{r} in this example) are
 the two parameters for building SVM.
@@ -582,56 +579,56 @@ model built. Here are the discriptions of all the columns:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{sample\_index}: sample index of the testing sample.
+  \texttt{sample\_index}: sample index of the testing sample
 \item
-  \texttt{landmark\_index}: the landmark that this row is representing.
+  \texttt{landmark\_index}: the index of the landmark
 \item
-  \texttt{type}: the actual type of the testing sample.
+  \texttt{type}: the actual type of the testing sample
 \item
-  \texttt{pred}: the prediction made by the model.
+  \texttt{pred}: the prediction made by the model
 \item
   \texttt{type0\_0}: number of type 0 samples that are classified as
-  type 0 in this landmark's model.
+  type 0 in the corresponding landmark's SVM
 \item
   \texttt{type0\_1}: number of type 0 samples that are classified as
-  type 1 in this landmark's model.
+  type 1 in the corresponding landmark's SVM
 \item
   \texttt{type1\_1}: number of type 1 samples that are classified as
-  type 1 in this landmark's model.
+  type 1 in the corresponding landmark's SVM
 \item
   \texttt{type1\_0}: number of type 1 samples that are classified as
-  type 0 in this landmark's model.
+  type 0 in the corresponding landmark's SVM
 \item
   \texttt{type0\_precision}: percentage of samples that are classified
-  by this landmark's model as type 0 are really of type 0.
+  by the corresponding landmark's SVM as type 0 are really of type 0
 \item
   \texttt{type0\_recall}: percentage of type 0 samples that are
-  classified by this landmark's model as type 0.
+  classified by the corresponding landmark's SVM as type 0.
 \item
   \texttt{type0\_f1}: hermonic mean of \texttt{type0\_precision} and
-  \texttt{type0\_recall}.
+  \texttt{type0\_recall}
 \item
-  \texttt{type0\_num}: number of type 0 samples in the training dataset.
+  \texttt{type0\_num}: number of type 0 samples in the training dataset
 \item
   \texttt{type1\_precision}: percentage of samples that are classified
-  by this landmark's model as type 1 are really of type 1.
+  by the corresponding landmark's SVM as type 1 are really of type 1
 \item
   \texttt{type1\_recall}: percentage of type 1 samples that are
-  classified by this landmark's model as type 1.
+  classified by the corresponding landmark's SVM as type 1
 \item
   \texttt{type1\_f1}: hermonic mean of \texttt{type1\_precision} and
-  \texttt{type1\_recall}.
+  \texttt{type1\_recall}
 \item
-  \texttt{type1\_num}: number of type 1 samples in the training dataset.
+  \texttt{type1\_num}: number of type 1 samples in the training dataset
 \item
   \texttt{overall\_precision}: weighted average of
-  \texttt{type0\_precision} and \texttt{type1\_precision}.
+  \texttt{type0\_precision} and \texttt{type1\_precision}
 \item
   \texttt{overall\_recall}: weighted average of \texttt{type0\_recall}
-  and \texttt{type1\_recall}.
+  and \texttt{type1\_recall}
 \item
   \texttt{overall\_f1}: weighted average of \texttt{type0\_f1} and
-  \texttt{type1\_f1}.
+  \texttt{type1\_f1}
 \end{itemize}
 
 \subsection{Step Two: Interactive Visualization
@@ -663,7 +660,7 @@ Input \texttt{CSV} data file must be stored in a folder called
 \texttt{data} under your working directory, and the \texttt{CSV} file
 must be named as \texttt{output\_data.csv}. If you do not know what your
 working directory is, you can check it by using the function
-\texttt{getwd()} in base R.
+\texttt{getwd()} in base \textbf{R}.
 
 All SVM models from step one produce the following 9 accuracy
 measurements:
@@ -1659,21 +1656,21 @@ Interface}\label{appendix-b-source-code-for-user-interface}
 \setlength{\parskip}{8pt}
 
 \hypertarget{refs}{}
+\hypertarget{ref-Sch2017}{}
+1. Morgan. The lorentz transformation and absolute time. Physica.
+1953;19: 888--896.
+doi:\href{https://doi.org/10.1016/S0031-8914(53)80099-6}{10.1016/S0031-8914(53)80099-6}
+
 \hypertarget{ref-pkgknitr}{}
-1. Xie Y. Knitr: A general-purpose package for dynamic report generation
+2. Xie Y. Knitr: A general-purpose package for dynamic report generation
 in r {[}Internet{]}. 2018. Available:
 \url{https://CRAN.R-project.org/package=knitr}
 
 \hypertarget{ref-pkgrticles}{}
-2. Allaire J, R Foundation, Wickham H, Journal of Statistical Software,
+3. Allaire J, R Foundation, Wickham H, Journal of Statistical Software,
 Xie Y, Vaidyanathan R, et al. Rticles: Article formats for r markdown
 {[}Internet{]}. 2017. Available:
 \url{https://CRAN.R-project.org/package=rticles}
-
-\hypertarget{ref-Sch2017}{}
-3. Morgan. The lorentz transformation and absolute time. Physica.
-1953;19: 888--896.
-doi:\href{https://doi.org/10.1016/S0031-8914(53)80099-6}{10.1016/S0031-8914(53)80099-6}
 
 \hypertarget{ref-Dryden2016}{}
 4. Ian L. Dryden KV. Statistical shape analysis with applications in r.
