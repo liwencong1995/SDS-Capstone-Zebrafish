@@ -501,10 +501,12 @@ if __name__ == "__main__":
                                                  class1 = class1,
                                                  C_values = [0.1, 1, 10])
         if (svc is None):
-            print("One of the classes have too few samples for this landmark, so skipping it.")
+            print("One of the classes have too few samples
+            	for this landmark, so skipping it.")
             continue
 
-        prediction = svc.predict(sample[sample.landmark_index==l][['pts', 'r']])[0]
+        prediction =
+        	svc.predict(sample[sample.landmark_index==l][['pts', 'r']])[0]
         result = ','.join(str(x) for x in [sample_id, stype, l, prediction,
         	type0_0, type0_1, type1_1, type1_0 ]) + '\n'
         print('result:', result)
