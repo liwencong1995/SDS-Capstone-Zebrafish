@@ -60,9 +60,10 @@ Morgan et al. used Random Forest machine leaning method to classify the landmark
 
 In 1999, Jaakkola et al. ushered in stage 4 of the development of homology detection algorithms with a paper that garnered the “Best paper” award at the annual Intelligent Systems for Molecular Biology conference. Their primary insight was that additional accuracy can be obtained by modeling the difference between positive and negative examples. Because the homology task required discriminating between related and unrelated sequences, explicitly modeling the difference between these two sets of sequences yields an extremely powerful method. 
 
- 
-
 # Data and Variables
+```{r landmark, fig.cap = "Landmark", fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/landmark.png", dpi = 260 )
+```
 We have 43 wildtypes samples ($n_1$) and 35 mutant samples ($n_2$) for training and testing. There are 152 landmarks ($N$) for each sample, with each of them containing the following variables:
 
 * number of points in each wedge
@@ -70,10 +71,10 @@ We have 43 wildtypes samples ($n_1$) and 35 mutant samples ($n_2$) for training 
 * $\alpha$ (micro-meter): distance from the center of the landmark to the midline
 * $\theta$ (radian): the degree the describes the location of a wedge within each slice
 
-We used the number of points and the median R to do classification via support vector machine. For missing ‘median R’ values due to absence of points in particular landmarks, we filled them with the median value of all the points in that landmark.
+We used the number of points and the median R to do classification via support vector machine. For missing ‘median $r$’ values due to absence of points in particular landmarks, we filled them with the median value of all the points in that landmark.
 
 ## Tidy Data
-The raw landmarks data is a wide table containing the sample index and all the columns holding information regarding the minimum and maximum values of $\alpha$ and $\theta$, number of points, median r value, and the type of sample for a particular sample in each landmark.  and The value in each cell refers to the median r value or number of points. However, because all of such variables were joined by underscores in the variable names, such as `-14.29_-4.76_-0.79_0.0_50_pts` or `-14.29_-4.76_-0.79_0.0_50_r`, it was very difficult to see what each column actually represented. Thus, the data set was restructured to have the sample index, minimum and maximum $\alpha$, minimum and maximum $\theta$, number of points, median r, and type of sample each be its own column. 
+The raw landmarks data is a wide table containing the sample index and all the columns holding information regarding the minimum and maximum values of $\alpha$ and $\theta$, number of points, median r value, and the type of sample for a particular sample in each landmark.  and The value in each cell refers to the median r value or number of points. However, because all of such variables were joined by underscores in the variable names, such as `-14.29_-4.76_-0.79_0.0_50_pts` or `-14.29_-4.76_-0.79_0.0_50_r`, it was very difficult to see what each column actually represented. Thus, the data set was restructured to have the sample index, minimum and maximum $\alpha$, minimum and maximum $\theta$, number of points, median $r$, and type of sample each be its own column. 
 
 Hence, three key functions were used from the tidyr package [@pkgtidyr]: gather(), separate(), and spread(). The gather() function separated the dataset into key and value pairs for each index. The key was the column name containing all essential information connected by underscores and the value included the number of points or median r value. Then, the separate() function separated the result from the gather function divided the column connected by underscore into 5 different columns, named as `min_alpha`, `max_alpha`, `min_theta`, `max_theta`, and `ptsOrR`. This was added to the result of the gather function that contained the index and value of each cell, either median R or number of points. Afterwards, the spread() function widened the already wide table by expanding the `ptsOrR` column by creating two columns, each column representing median R and the number of points. 
 
@@ -81,23 +82,17 @@ Hence, three key functions were used from the tidyr package [@pkgtidyr]: gather(
 Support Vector Machine (SVM) cannot be fit to data with missing values. For wedges that do not have any points, `median r` cannot be calculated, which means that these sample will be eliminated when running SVM. Wedges without points have biologically meanings, so we should not ignore these wedges in our model. In order to keep the wedges in our model, we need to artificially pick a `median r` value to replace the missing ones. SVM is sensitive to outliers, so we cannot pick an `r` value that could become outliers. We decided to calculate the mean of `median r` for the nth landmark of all 78 samples, and then we replace the missing `median r` values with the 2 * median R value for each landmark of each channel.
 
 # Support Vector Machine
-The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 * x_1 + \beta_2 * x_2)$ that separates the nearest data as clean as possible. The parameters $\beta$ are found by solving the optimization problem --to maximize M subject to some restrictions -- in 2 dimensions below. 
+The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the nearest data as cleanly as possible. The parameters $\beta$ are found by solving the optimization problem --to maximize M subject to some restrictions -- in 2 dimensions below. 
 
-
-```{r fig.width=4, fig.height=3,echo=FALSE}
-library(png)
-library(grid)
-img <- readPNG("./figures/svm_fig.png")
-grid.raster(img)
+```{r svmfig, fig.cap = "SVM model", fig.align='center', echo=FALSE}
+knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
 ```
-
-
 
 \begin{equation}
   \left.
   \begin{array}{l@{\,}l}
      \sum_{i=1}^n \beta_i^2 = 0 \\
-     \ y_i * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 ) \geq M(1-\varepsilon_i) \\
+     \ y_i * ( \beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 ) \geq M(1-\varepsilon_i) \\
      \ \varepsilon_i \geq 0 \\
      \ \sum_{i=1}^n \varepsilon_i \leq C \\
   \end{array}
@@ -117,7 +112,7 @@ The tuning parameter C bounds the sum of the $\varepsilon_i$, and so it determin
 
 The function of the separation line:
 
-$$f(x) = \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 $$
+$$f(x) = \beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 $$
 $y_i$ is the vector representing the coordinate of a data point. The dot product of $y_i$ and the function of the seperation line gives the perpendicular distance from the data point to the separation line:
 
 $$ y_i * ( \beta_0 + \beta_1 * x_1 + \beta_2 * x_2 )$$
@@ -133,7 +128,7 @@ For each SVM, we used 10-fold cross validation to select a tuning parameter C va
 We created a two-step interactive classification tool which allows users to simply input a data file and get an visualization of the modeling result. There are two main components in the tool:
 
 ## General Workflow
-```{r workflow, fig.cap = "Summary of Workflow", fig.width=5, fig.height=4,echo=FALSE}
+```{r workflow, fig.cap = "Summary of Workflow", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Figure1.png", dpi = 260 )
 ```
 Figure 1 displays the overall workflow leading to the final product of classification. It begins with the cleaning and restructuring of the raw landmarks data. The tidied landmarks data that has the NA values filled contains 152 distinct landmarks. Each landmark has its own representative SVM model that used the 77 samples out of 78 for training from applying the leave-one-out cross validation method. That one sample that is left out from each landmark is used for testing the model that was built from the 77 samples. Then, based on the training accuracy of each model, only those that consist of reliable landmarks are filtered out. The number of wildtypes and mutants predicted with each model are calculated and this leads to the final classification result of using SVMs. 
@@ -144,7 +139,7 @@ This step is implemented using **Python** (version 3) and packages including `pa
 The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a perticular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
 
 ### User Interaction
-```{r useri, fig.cap = "Example of User Interaction in Step One of the User Interface", fig.width=5, fig.height=3,echo=FALSE}
+```{r useri, fig.cap = "Example of User Interaction in Step One of the User Interface", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Figure2.png", dpi = 260 )
 ```
 As shown in Figure 2, several user inputs are taken from users when they run the python script.
@@ -154,12 +149,12 @@ Input file must contain landmark data. Variables that are needed for classificat
 In our analysis, we used number of points in each sub-section corresponding to each landmark of the 3D shape and the `median R` of points in each wedge.
 
 ### Sample input file
-```{r inputdata, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.width=5, fig.height=3,echo=FALSE}
+```{r inputdata, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Figure3.png", dpi = 260 )
 ```
 
 ### Output File
-```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.width=5, fig.height=3,echo=FALSE}
+```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/Figure4.png", dpi = 260 )
 ```
 
@@ -214,7 +209,7 @@ We visualize the 9 accuracy scores by using both histograms and the correspondin
 
 There are 10 tabs included in the user interface of the app: 1 Accuracy Threshold Summary tab and 9 accuracy score visualization tabs.
 
-```{r shiny1, fig.cap= "User Interface: Accuracy Threshold Summary Tab of AT Channel" ,fig.align='center', echo=FALSE}
+```{r shiny1, fig.cap= "User Interface: Accuracy Threshold Summary Tab of AT Channel", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny1.png", dpi = 260 )
 ```
 
@@ -222,19 +217,19 @@ Figure 5 displays the Accuracy Score Threshold Summary tab of the first sample o
 
 Other information, such as the true type of the sample and the number of wildetypes and mutants used in training the SVM models are also included in the summary table.
 
-```{r shiny2, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
+```{r shiny2, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny2.png", dpi = 260 )
 ```
 
 Figure 6 displays the Precision Score Visualization tab of the first sample of AT channel. In this case, all three thresholds are at default level, 0. Therefore, all landmarks' precision scores are shown in both the histogram and the heatmap.
 
-```{r shiny3, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75" ,fig.align='center', echo=FALSE}
+```{r shiny3, fig.cap= "User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny3.png", dpi = 260 )
 ```
 
 Figure 7 also displays the Precision Score Visualization tab of the first sample of AT channel. In this case, recall and f1 scores' thresholds are at default level and precision threshold is set to be 0.75. Therefore, only landmarks that have precision scores that are equal to or greater than 0.75 are shown in the visualizations. As shown in the histogram, all values less than 0.75 are removed from the histogram in figure 6. Some of the blocks in figure 6 are turned into blank blocks after the precision threshold is increased to 0.75.
 
-```{r shiny8, fig.cap= "User Interface: F1 Score Visualization Tab of ZRF Channel" ,fig.align='center', echo=FALSE}
+```{r shiny8, fig.cap= "User Interface: F1 Score Visualization Tab of ZRF Channel", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny8.png", dpi = 260 )
 ```
 
@@ -277,24 +272,24 @@ This project was completed in partial fulfillment of the requirements of SDS 410
 
 # Appendix A: Shiny App Accuracy Score Visualizations
 ## Recall Score Visualization tab of the first sample of AT channel
-```{r shiny4, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
+```{r shiny4, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel" , fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny4.png", dpi = 260 )
 ```
 
 ## Recall Score Visualization tab of the first sample of AT channel with recall threshold equals to 0.75
-```{r shiny5, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75" ,fig.align='center', echo=FALSE}
+```{r shiny5, fig.cap= "User Interface: Recall Score Visualization Tab of AT Channel, with recall threshold = 0.75", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny5.png", dpi = 260 )
 ```
 
 \newpage
 
 ## F1 Score Visualization tab of the first sample of AT channel
-```{r shiny6, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel" ,fig.align='center', echo=FALSE}
+```{r shiny6, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny6.png", dpi = 260 )
 ```
 
 ## F1 Score Visualization tab of the first sample of AT channel with f1 threshold equals to 0.75
-```{r shiny7, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75" ,fig.align='center', echo=FALSE}
+```{r shiny7, fig.cap= "User Interface: F1 Score Visualization Tab of AT Channel, with f1 threshold = 0.75" , fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/shiny7.png", dpi = 260 )
 ```
 
