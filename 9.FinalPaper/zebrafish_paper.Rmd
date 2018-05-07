@@ -160,26 +160,16 @@ In our analysis, we used number of points in each sub-section corresponding to e
 
 ### Sample input file
 
-<<<<<<< HEAD
-```{r inputdata, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center', out.width = "300px", echo=FALSE}
-knitr::include_graphics("figures/Figure3.png", dpi = 260)
-=======
 ```{r inputdata2, fig.cap ="Sample Data Input File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
-knitr::include_graphics("figures/Figure3.png", dpi = 260 )
->>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
+knitr::include_graphics("figures/Figure3.png")
 ```
 
 **Fig 6** shows a ramdom sample of an input file for the script `svm.py`. The columns `stype`(sample type), `landmark_index` and `sample_index` are arequired and the other two columns (`pts` and `r` in this example) are the two parameters for building SVM.
 
 ### Output File
 
-<<<<<<< HEAD
-```{r outputdata, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center', out.width = "300px", echo=FALSE}
-knitr::include_graphics("figures/Figure5.png", dpi = 260)
-=======
 ```{r outputdata2, fig.cap ="Sample Data Output File of First Step of the User Interface", fig.align='center',out.width = "300px", echo=FALSE}
-knitr::include_graphics("figures/Figure5.png", dpi = 260 )
->>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
+knitr::include_graphics("figures/Figure5.png")
 ```
 
 **Fig 7** shows the columns of the final result file produced by the `analyse_results.py` script. The first 4 columns are describing the testing sample's information while the rest of the columns are all precision statistics discribing the accuracy of the model built. Here are the discriptions of all the columns:
