@@ -397,12 +397,7 @@ separates the nearest data as cleanly as possible. The parameters
 Margin subject to some restrictions -- in 2 dimensions below {[}7{]}.
 
 \begin{figure}[h]
-
-{\centering \includegraphics[width=3.12in]{figures/svm_fig} 
-
-}
-
-\caption{SVM model}\label{fig:svmfig}
+\includegraphics[width=3.12in]{figures/svm_fig} \caption{SVM model}\label{fig:svmfig}
 \end{figure}
 
 \begin{equation}
@@ -480,13 +475,10 @@ result. There are two main components in the tool:
 
 \subsection{General Workflow}\label{general-workflow}
 
-\begin{figure}[h]
-
-{\centering \includegraphics{figures/Figure1} 
-
-}
-
-\caption{Summary of Workflow}\label{fig:workflow}
+\begin{figure}[htbp]
+\centering
+\includegraphics{figures/Figure1.jpg}
+\caption{Summary of Workflow}
 \end{figure}
 
 \textbf{Fig 3} displays the overall workflow leading to the final
@@ -503,7 +495,7 @@ calculated and this leads to the final classification result of using
 SVMs.
 
 \subsection{Step One: Data Processing and
-Modelling}\label{step-one-data-processing-and-modelling}
+Modeling}\label{step-one-data-processing-and-modeling}
 
 This step is implemented using \textbf{Python} (version 3) and packages
 including \texttt{pandas}, \texttt{numpy} and \texttt{sklearn} are
@@ -555,6 +547,20 @@ each wedge.
 \subsubsection{Sample input file}\label{sample-input-file}
 
 \begin{figure}[h]
+<<<<<<< HEAD
+=======
+
+{\centering \includegraphics[width=300px]{figures/Figure3} 
+
+}
+
+\caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata}
+\end{figure}
+
+<<<<<<< HEAD
+=======
+\begin{figure}[h]
+>>>>>>> 71dd1564d9e22ba72ca71c0f4f8f3a7c95383e4d
 
 {\centering \includegraphics[width=300px]{figures/Figure3} 
 
@@ -563,6 +569,7 @@ each wedge.
 \caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata2}
 \end{figure}
 
+>>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
 \textbf{Fig 6} shows a ramdom sample of an input file for the script
 \texttt{svm.py}. The columns \texttt{stype}(sample type),
 \texttt{landmark\_index} and \texttt{sample\_index} are arequired and
@@ -573,6 +580,30 @@ the two parameters for building SVM.
 
 \begin{figure}[h]
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+{\centering \includegraphics[width=300px]{figures/Figure5} 
+=======
+{\centering \includegraphics[width=5.03in]{figures/Figure4} 
+>>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
+
+}
+
+\caption{Sample Data Output File of First Step of the User Interface}\label{fig:outputdata}
+\end{figure}
+
+<<<<<<< HEAD
+\textbf{Fig 7} shows the columns of the final result file produced by
+the \texttt{analyse\_results.py} script. The first 4 columns are
+describing the testing sample's information while the rest of the
+columns are all precision statistics discribing the accuracy of the
+model built. Here are the discriptions of all the columns:
+
+=======
+\begin{figure}[h]
+
+>>>>>>> 71dd1564d9e22ba72ca71c0f4f8f3a7c95383e4d
 {\centering \includegraphics[width=300px]{figures/Figure5} 
 
 }
@@ -586,6 +617,7 @@ describing the testing sample's information while the rest of the
 columns are all precision statistics discribing the accuracy of the
 model built. Here are the discriptions of all the columns:
 
+>>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
 \begin{itemize}
 \tightlist
 \item
@@ -977,6 +1009,194 @@ Interface}\label{appendix-b-source-code-for-user-interface}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+<<<<<<< HEAD
+\NormalTok{import pandas as pd}
+\NormalTok{import numpy as np}
+\NormalTok{from sklearn.metrics import confusion_matrix, classification_report}
+\NormalTok{from sklearn.model_selection import GridSearchCV}
+\NormalTok{from sklearn.svm import SVC}
+\NormalTok{from sklearn.metrics import f1_score, precision_score, recall_score}
+
+\StringTok{'''}
+\StringTok{A function that builds a SVM model with linear kernel to classify points}
+\StringTok{to two classes.}
+
+\StringTok{Inputs:}
+\StringTok{training_landmarks - a pandas dataframe containing all training landmark}
+\StringTok{                     data.}
+\StringTok{index              - a perticular landmark id of interest. eg. '}\DecValTok{101}\StringTok{'}
+\StringTok{x_names            - a list of explanatory variable names.}
+\StringTok{                     eg. ['}\NormalTok{pts}\StringTok{', '}\NormalTok{r}\StringTok{']}
+\StringTok{y_name             - a string representing response variable name.}
+\StringTok{                     eg. '}\NormalTok{stype}\StringTok{'}
+\StringTok{class0             - name of the first class. eg. '}\NormalTok{wt-at}\StringTok{'}
+\StringTok{class1             - name of the second class. eg. '}\NormalTok{mt-at}\StringTok{'}
+\StringTok{C_values           - a list of tunning variable C (penalty parameter}
+\StringTok{                     of the error term) that the method would grid-search}
+\StringTok{                     on. Default value is [0.1, 1, 10].}
+
+\StringTok{Output:}
+\StringTok{svm                - the SVM model trained from the training dataset}
+\StringTok{type0_0            - among the training samples, the number of class0 type}
+\StringTok{                     samples with chosen landmark predicted as class0 type.}
+\StringTok{type0_1            - among the training samples, the number of class0 type}
+\StringTok{                     samples with chosen landmark predicted as class1 type.}
+\StringTok{type1_1            - among the training samples, the number of class1 type}
+\StringTok{                     samples with chosen landmark predicted as class1 type.}
+\StringTok{type1_0            - among the training samples, the number of class1 type}
+\StringTok{                     samples with chosen landmark predicted as class0 type.}
+\StringTok{'''}
+\NormalTok{def }\KeywordTok{svm_classification}\NormalTok{(training_landmarks, index, x_names, y_name, class0,}
+        \NormalTok{class1, }\DataTypeTok{C_values =} \NormalTok{[}\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{] ):}
+\StringTok{    }\CommentTok{# filter out the landmarks needed}
+\StringTok{    }\NormalTok{chosenLandmark =}\StringTok{ }\NormalTok{landmarks[landmarks.landmark_index==index]}
+    \NormalTok{chosenLandmark =}\StringTok{ }\NormalTok{chosenLandmark[}\KeywordTok{np.isfinite}\NormalTok{(chosenLandmark[}\StringTok{'r'}\NormalTok{])]}
+    
+    \CommentTok{# create training and testing data}
+    \NormalTok{X =}\StringTok{ }\NormalTok{chosenLandmark[x_names]}
+    \NormalTok{y =}\StringTok{ }\NormalTok{chosenLandmark[y_name]}
+
+    \CommentTok{# check whether both classes exist}
+    \NormalTok{count_1 =}\StringTok{ }\NormalTok{chosenLandmark[y_name]}\KeywordTok{.str.contains}\NormalTok{(class1)}\KeywordTok{.sum}\NormalTok{()}
+    \NormalTok{count_0 =}\StringTok{ }\NormalTok{chosenLandmark[y_name]}\KeywordTok{.str.contains}\NormalTok{(class0)}\KeywordTok{.sum}\NormalTok{()}
+
+    \NormalTok{if (count_1 <}\StringTok{ }\DecValTok{2} \NormalTok{or count_0 <}\StringTok{ }\DecValTok{2}\NormalTok{):}
+\StringTok{        }\NormalTok{return None, None, None, None, None}
+
+    \CommentTok{# find the best C value by cross-validation}
+    \NormalTok{tuned_parameters =}\StringTok{ }\NormalTok{[\{}\StringTok{'C'}\NormalTok{:}\StringTok{ }\NormalTok{C_values\}]}
+    \NormalTok{clf =}\StringTok{ }\KeywordTok{GridSearchCV}\NormalTok{(}
+        \KeywordTok{SVC}\NormalTok{(}\DataTypeTok{kernel=}\StringTok{'linear'}\NormalTok{), tuned_parameters, }\DataTypeTok{cv=}\DecValTok{10}\NormalTok{, }\DataTypeTok{scoring=}\StringTok{'accuracy'}\NormalTok{)}
+    \KeywordTok{clf.fit}\NormalTok{(X.values, y.values)}
+    \NormalTok{best_c =}\StringTok{ }\NormalTok{clf.best_params_[}\StringTok{'C'}\NormalTok{]}
+    
+    \NormalTok{svc =}\StringTok{ }\KeywordTok{SVC}\NormalTok{(}\DataTypeTok{C=}\NormalTok{best_c, }\DataTypeTok{kernel=}\StringTok{'linear'}\NormalTok{)}
+    \KeywordTok{svc.fit}\NormalTok{(X, y)}
+    
+    \NormalTok{prediction =}\StringTok{ }\KeywordTok{svc.predict}\NormalTok{(X)}
+
+    \CommentTok{# print confusion matrix}
+    \KeywordTok{print}\NormalTok{(}\StringTok{"confusion matrix: "}\NormalTok{)}
+    \NormalTok{cm =}\StringTok{ }\KeywordTok{confusion_matrix}\NormalTok{(y, prediction)}
+    \NormalTok{cm_df =}\StringTok{ }\KeywordTok{pd.DataFrame}\NormalTok{(cm.T, }\DataTypeTok{index=}\NormalTok{svc.classes_, }\DataTypeTok{columns=}\NormalTok{svc.classes_)}
+    \KeywordTok{print}\NormalTok{(cm_df)}
+
+    \CommentTok{# Statistics of training precision:}
+    \CommentTok{# number of wild type samples with this landmark predicted as wild type.}
+    \NormalTok{type0_0 =}\DecValTok{0}
+    \CommentTok{# number of wild type samples with this landmark predicted as mutant type.}
+    \NormalTok{type0_1 =}\StringTok{ }\DecValTok{0}
+    \CommentTok{# number of mutant type samples with this landmark predicted as mutant type.}
+    \NormalTok{type1_1 =}\StringTok{ }\DecValTok{0}
+    \CommentTok{# number of mutant type samples with this landmark predicted as wild type.}
+    \NormalTok{type1_0 =}\StringTok{ }\DecValTok{0}
+    
+    \NormalTok{for i in }\KeywordTok{range} \NormalTok{(}\KeywordTok{len}\NormalTok{(y)):}
+\StringTok{        }\NormalTok{_y =}\StringTok{ }\NormalTok{y.values[i]}
+        \NormalTok{_p =}\StringTok{ }\NormalTok{prediction[i]}
+
+        \NormalTok{if _y==class1 and _p==class1:}
+\StringTok{            }\NormalTok{type1_1 =}\StringTok{ }\NormalTok{type1_1 +}\StringTok{ }\DecValTok{1}
+        \NormalTok{elif _y==class1 and _p==class0:}
+\StringTok{            }\NormalTok{type1_0 =}\StringTok{ }\NormalTok{type1_0 +}\StringTok{ }\DecValTok{1}
+        \NormalTok{elif _y==class0 and _p==class0:}
+\StringTok{            }\NormalTok{type0_0 =}\StringTok{ }\NormalTok{type0_0 +}\StringTok{ }\DecValTok{1}
+        \NormalTok{elif _y==class0 and _p==class1:}
+\StringTok{            }\NormalTok{type0_1 =}\StringTok{ }\NormalTok{type0_1 +}\StringTok{ }\DecValTok{1}
+    
+    \NormalTok{return svc, type0_0, type0_1, type1_1, type1_0}
+
+
+\NormalTok{if __name__ ==}\StringTok{ "__main__"}\NormalTok{:}
+\StringTok{    }\CommentTok{# Get Datafile}
+\StringTok{    }\NormalTok{landmarks =}\StringTok{ }\KeywordTok{pd.DataFrame}\NormalTok{()}
+    \NormalTok{while(landmarks.shape[}\DecValTok{0}\NormalTok{]<}\DecValTok{2}\NormalTok{):}
+\StringTok{        }\NormalTok{filename =}\StringTok{ }\KeywordTok{str}\NormalTok{(}\KeywordTok{input}\NormalTok{(}\StringTok{"Please enter dataset's path: "}\NormalTok{))}
+        \NormalTok{try:}
+\StringTok{            }\NormalTok{landmarks =}\StringTok{ }\KeywordTok{pd.read_csv}\NormalTok{(filename)}
+        \NormalTok{except Exception:}
+\StringTok{            }\KeywordTok{print} \NormalTok{(}\StringTok{"Error in reading the file.}
+\StringTok{                Please check whether file exists."}\NormalTok{)}
+
+    \CommentTok{# Column names}
+    \NormalTok{columns =}\StringTok{ }\KeywordTok{list}\NormalTok{(landmarks)}
+    \CommentTok{# Check column names}
+    \NormalTok{if }\StringTok{'stype'} \NormalTok{not in columns:}
+\StringTok{        }\KeywordTok{print}\NormalTok{(}\StringTok{"Incorrect column names: Please}
+\StringTok{            name your sample type's column as 'stype' "}\NormalTok{)}
+        \KeywordTok{exit}\NormalTok{()}
+    \NormalTok{if }\StringTok{'sample_index'} \NormalTok{not in columns:}
+\StringTok{        }\KeywordTok{print}\NormalTok{(}\StringTok{"Incorrect column names: Please name your}
+\StringTok{            sample index's column as 'sample_index' "}\NormalTok{)}
+        \KeywordTok{exit}\NormalTok{()}
+    \NormalTok{if }\StringTok{'landmark_index'} \NormalTok{not in columns:}
+\StringTok{        }\KeywordTok{print}\NormalTok{(}\StringTok{"Incorrect column names: Please name your}
+\StringTok{            landmark index's column as 'landmark_index' "}\NormalTok{)}
+        \KeywordTok{exit}\NormalTok{()}
+
+    \CommentTok{# Get Parameters' column names}
+    \NormalTok{parameters =}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{set}\NormalTok{(columns) -}
+\StringTok{        }\KeywordTok{set}\NormalTok{([}\StringTok{'stype'}\NormalTok{, }\StringTok{'sample_index'}\NormalTok{, }\StringTok{'landmark_index'}\NormalTok{]))}
+
+    \CommentTok{# Get class names}
+    \NormalTok{class0 =}\StringTok{ ''}
+    \NormalTok{class1 =}\StringTok{ ''}
+    \NormalTok{classes =}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{set}\NormalTok{(landmarks[}\StringTok{'stype'}\NormalTok{].values))}
+    \NormalTok{while (class0 not in classes):}
+\StringTok{        }\NormalTok{class0 =}\StringTok{ }\KeywordTok{str}\NormalTok{(}\KeywordTok{input}\NormalTok{(}\StringTok{"Please enter name of type 0: "}\NormalTok{))}
+    \NormalTok{while (class1 not in classes):}
+\StringTok{        }\NormalTok{class1 =}\StringTok{ }\KeywordTok{str}\NormalTok{(}\KeywordTok{input}\NormalTok{(}\StringTok{"Please enter name of type 1: "}\NormalTok{))}
+
+    \CommentTok{# Remove rows with NaN values}
+    \NormalTok{for parameter in parameters:}
+\StringTok{        }\NormalTok{landmarks =}\StringTok{ }\NormalTok{landmarks[}\KeywordTok{np.isfinite}\NormalTok{(landmarks[parameter])]}
+
+    \CommentTok{# Get sample id}
+    \NormalTok{sample =}\StringTok{ }\KeywordTok{pd.DataFrame}\NormalTok{()}
+    \NormalTok{while(sample.shape[}\DecValTok{0}\NormalTok{]<}\DecValTok{2}\NormalTok{):}
+\StringTok{        }\NormalTok{sample_id =}\StringTok{ }\KeywordTok{str}\NormalTok{(}\KeywordTok{input}\NormalTok{(}\StringTok{"Please enter a VALID sample index: "}\NormalTok{))}
+        \NormalTok{sample =}\StringTok{ }\NormalTok{landmarks[landmarks.sample_index==sample_id]}
+
+    \CommentTok{# Get result file's name and create the file with column names}
+    \NormalTok{result_file_name =}\StringTok{ }\KeywordTok{str}\NormalTok{(}\KeywordTok{input}\NormalTok{(}\StringTok{"Please enter result file path: "}\NormalTok{))}
+    \NormalTok{result_file =}\StringTok{ }\KeywordTok{open}\NormalTok{(result_file_name, }\StringTok{'w'}\NormalTok{)}
+    \KeywordTok{result_file.write}\NormalTok{(}\StringTok{'sample_index,stype,}
+\StringTok{        landmark_index,pred,type0_0,type0_1,type1_1,type1_0}\CharTok{\textbackslash{}n}\StringTok{'}\NormalTok{)}
+    \KeywordTok{result_file.close}\NormalTok{()}
+
+    \CommentTok{# Get existing landmark ids}
+    \NormalTok{landmark_ids =}\StringTok{ }\NormalTok{sample[}\StringTok{'landmark_index'}\NormalTok{]}
+
+    \CommentTok{# Get Actual Type (the Label)}
+    \NormalTok{stype =}\StringTok{ }\NormalTok{sample.iloc[}\DecValTok{0}\NormalTok{][}\StringTok{'stype'}\NormalTok{]}
+
+    \NormalTok{leave_one_out =}\StringTok{ }\NormalTok{landmarks[landmarks.sample_index!=sample_id]}
+    \NormalTok{for l in landmark_ids.values:}
+\StringTok{        }\KeywordTok{print} \NormalTok{(}\StringTok{"======================================="}\NormalTok{)}
+        \KeywordTok{print} \NormalTok{(}\StringTok{"landmark: "}\NormalTok{, }\KeywordTok{str}\NormalTok{(l))}
+        \NormalTok{svc, type0_0, type0_1, type1_1, type1_0 =}
+\StringTok{            }\KeywordTok{svm_classification}\NormalTok{(}\DataTypeTok{training_landmarks =} \NormalTok{leave_one_out,}
+                                                 \DataTypeTok{index =} \NormalTok{l,}
+                                                 \DataTypeTok{x_names =} \NormalTok{[}\StringTok{'pts'}\NormalTok{, }\StringTok{'r'}\NormalTok{],}
+                                                 \DataTypeTok{y_name =} \StringTok{'stype'}\NormalTok{,}
+                                                 \DataTypeTok{class0 =} \NormalTok{class0,}
+                                                 \DataTypeTok{class1 =} \NormalTok{class1,}
+                                                 \DataTypeTok{C_values =} \NormalTok{[}\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{])}
+        \NormalTok{if (svc is None):}
+\StringTok{            }\KeywordTok{print}\NormalTok{(}\StringTok{"One of the classes have too few samples}
+\StringTok{                for this landmark, so skipping it."}\NormalTok{)}
+            \NormalTok{continue}
+
+        \NormalTok{prediction =}
+\StringTok{            }\KeywordTok{svc.predict}\NormalTok{(sample[sample.landmark_index==l][[}\StringTok{'pts'}\NormalTok{, }\StringTok{'r'}\NormalTok{]])[}\DecValTok{0}\NormalTok{]}
+        \NormalTok{result =}\StringTok{ ','}\KeywordTok{.join}\NormalTok{(}\KeywordTok{str}\NormalTok{(x) for x in [sample_id, stype, l, prediction,}
+            \NormalTok{type0_0, type0_1, type1_1, type1_0 ]) +}\StringTok{ '}\CharTok{\textbackslash{}n}\StringTok{'}
+        \KeywordTok{print}\NormalTok{(}\StringTok{'result:'}\NormalTok{, result)}
+
+        \NormalTok{result_file =}\StringTok{ }\KeywordTok{open}\NormalTok{(result_file_name, }\StringTok{'a'}\NormalTok{)}
+        \KeywordTok{result_file.write}\NormalTok{(result)}
+        \KeywordTok{result_file.close}\NormalTok{()}
+=======
 \ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ confusion_matrix, classification_report}
@@ -1163,6 +1383,7 @@ Interface}\label{appendix-b-source-code-for-user-interface}
 \NormalTok{        result_file }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(result_file_name, }\StringTok{'a'}\NormalTok{)}
 \NormalTok{        result_file.write(result)}
 \NormalTok{        result_file.close()}
+>>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
 \end{Highlighting}
 \end{Shaded}
 
