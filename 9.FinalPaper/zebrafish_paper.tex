@@ -377,11 +377,14 @@ calculated, which means that these sample will be eliminated when
 running SVM. Wedges without points have biologically meanings, so we
 should not ignore these wedges in our model. In order to keep the wedges
 in our model, we need to artificially pick a \texttt{median\ r} value to
-replace the missing ones. SVM is sensitive to outliers, so we cannot
-pick an \texttt{r} value that could become outliers. We decided to
-calculate the mean of \texttt{median\ r} for the nth landmark of all 78
-samples, and then we replace the missing \texttt{median\ r} values with
-the 2 * median R value for each landmark of each channel.
+replace the missing ones. From biological perspective, the reason that
+there is no point in a particular wedge might be that the data points
+are too far away from the scanned area to be captured. Therefore, we
+decided to calculate the mean of \texttt{median\ r} for the nth landmark
+of all 78 samples, and then we replace the missing \texttt{median\ r}
+values with the 2 * median R value for each landmark of each channel to
+represent that the points in this wedge is far away from the scanned
+area.
 
 \section{Support Vector Machine}\label{support-vector-machine-1}
 
@@ -545,11 +548,28 @@ each wedge.
 \subsubsection{Sample input file}\label{sample-input-file}
 
 \begin{figure}[h]
+<<<<<<< HEAD
+=======
 
 {\centering \includegraphics[width=300px]{figures/Figure3} 
 
 }
 
+<<<<<<< HEAD
+=======
+\caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata}
+\end{figure}
+
+<<<<<<< HEAD
+=======
+\begin{figure}[h]
+>>>>>>> 71dd1564d9e22ba72ca71c0f4f8f3a7c95383e4d
+
+{\centering \includegraphics[width=300px]{figures/Figure3} 
+
+}
+
+>>>>>>> 4d713c8706202cbca93f46495e210203e9c6b649
 \caption{Sample Data Input File of First Step of the User Interface}\label{fig:inputdata2}
 \end{figure}
 
@@ -563,6 +583,33 @@ the two parameters for building SVM.
 
 \begin{figure}[h]
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+{\centering \includegraphics[width=300px]{figures/Figure5} 
+=======
+{\centering \includegraphics[width=5.03in]{figures/Figure4} 
+>>>>>>> fb2af2af80a7bdbfcfe314d3d00635d3e20590d4
+
+}
+
+\caption{Sample Data Output File of First Step of the User Interface}\label{fig:outputdata}
+\end{figure}
+
+<<<<<<< HEAD
+\textbf{Fig 7} shows the columns of the final result file produced by
+the \texttt{analyse\_results.py} script. The first 4 columns are
+describing the testing sample's information while the rest of the
+columns are all precision statistics discribing the accuracy of the
+model built. Here are the discriptions of all the columns:
+
+=======
+\begin{figure}[h]
+
+>>>>>>> 71dd1564d9e22ba72ca71c0f4f8f3a7c95383e4d
+>>>>>>> 4d713c8706202cbca93f46495e210203e9c6b649
 {\centering \includegraphics[width=300px]{figures/Figure5} 
 
 }
@@ -832,10 +879,9 @@ linear combinations of the original landmarks. While the patterns of the
 first several projections still make sense, the minor projections are
 very random and thus difficult to interpret.
 
-The SVM model is generated based on landmark data gives insightful
-analysis of: * which landmark, or which part of the Zebrafish brain, has
-more predictive power * whether a new Zebrafish brain sample is a mutant
-or wild type
+The SVM model run on each landmark data gives insightful analysis of
+which landmark, or which part of the Zebrafish brain, has more
+predictive power.
 
 \subsubsection{Implementing User
 Feedback}\label{implementing-user-feedback}
