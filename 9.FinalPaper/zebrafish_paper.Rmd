@@ -281,9 +281,7 @@ Our final product has several strengths:
 ### Easy Interpretation
 In the previous method random forest, the number of predictors $p$ exceeds the number of samples. Schwartz applied Principle Componen Analysis to reduce the dimension of the predictors. The problem with dimension reduction is that the parameters gaining weights at last are linear combinations of the original landmarks. While the patterns of the first several projections still make sense, the minor projections are very random and thus difficult to interpret. 
 
-The SVM model is generated based on landmark data gives insightful analysis of:
-* which landmark, or which part of the Zebrafish brain, has more predictive power
-* whether a new Zebrafish brain sample is a mutant or wild type
+The SVM model run on each landmark data gives insightful analysis of which landmark, or which part of the Zebrafish brain, has more predictive power.
 
 ### Implementing User Feedback
 We have implemented feedbacks from users in our user interface. Originally, our shiny app only produces visualizations of one channel's data, but we added an additional variable, `channel`, for users to analyze three-dimentional data with more or multiple channels. Because of this improvement, it is more convenient for users to compare and contrast results from different channels.

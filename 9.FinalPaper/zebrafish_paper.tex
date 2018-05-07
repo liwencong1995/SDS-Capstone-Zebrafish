@@ -296,14 +296,14 @@ applied very broadly within the field of computational biology
 especially in pattern recognition problems, including protein remote
 homology detection, microarray gene expressions analysis, prediction of
 protein-protein interactions, etc. In 1999, Jaakkola et al{[}5{]}
-ushered in stage 4 of the development of homology detection algorithms
-with a paper that garnered the ``Best paper'' award at the annual
-Intelligent Systems for Molecular Biology conference. Their primary
-insight was that additional accuracy can be obtained by modeling the
-difference between positive and negative examples. Because the homology
-task required discriminating between related and unrelated sequences,
-explicitly modeling the difference between these two sets of sequences
-yields an extremely powerful method.
+ushered the development of homology detection algorithms with a paper
+that garnered the ``Best paper'' award at the annual Intelligent Systems
+for Molecular Biology conference. Their primary insight was that
+additional accuracy can be obtained by modeling the difference between
+positive and negative examples. Because the homology task required
+discriminating between related and unrelated sequences, explicitly
+modeling the difference between these two sets of sequences yields an
+extremely powerful method.
 
 \section{Data and Variables}\label{data-and-variables}
 
@@ -416,12 +416,12 @@ Margin subject to some restrictions -- in 2 dimensions below {[}7{]}.
 \begin{itemize}
 \tightlist
 \item
-  \(C\): Tuning parameter, toleration of total misclassification.
-\item
   \(M\): Margin is the sum of distance of the two closest points from
   each class to the separation line.
 \item
   \(\varepsilon_i\) : slack variable.
+\item
+  \(C\): Tuning parameter, toleration of total misclassification.
 \end{itemize}
 
 The slack variable \(\varepsilon_i\) tells us where the ith observation
@@ -852,10 +852,9 @@ linear combinations of the original landmarks. While the patterns of the
 first several projections still make sense, the minor projections are
 very random and thus difficult to interpret.
 
-The SVM model is generated based on landmark data gives insightful
-analysis of: * which landmark, or which part of the Zebrafish brain, has
-more predictive power * whether a new Zebrafish brain sample is a mutant
-or wild type
+The SVM model run on each landmark data gives insightful analysis of
+which landmark, or which part of the Zebrafish brain, has more
+predictive power.
 
 \subsubsection{Implementing User
 Feedback}\label{implementing-user-feedback}
