@@ -359,14 +359,14 @@ C_values           - a list of tunning variable C (penalty parameter
 
 Output:
 svm                - the SVM model trained from the training dataset
-type0_0            - among the training samples, the number of class0 type
-					 samples with chosen landmark predicted as class0 type.
-type0_1            - among the training samples, the number of class0 type
-					 samples with chosen landmark predicted as class1 type.
-type1_1            - among the training samples, the number of class1 type
-					 samples with chosen landmark predicted as class1 type.
-type1_0            - among the training samples, the number of class1 type
-			 		 samples with chosen landmark predicted as class0 type.
+type0_0            - among the training samples, the number of class0
+					 samples with chosen landmark predicted as class0
+type0_1            - among the training samples, the number of class0
+					 samples with chosen landmark predicted as class1
+type1_1            - among the training samples, the number of class1
+					 samples with chosen landmark predicted as class1
+type1_0            - among the training samples, the number of class1
+			 		 samples with chosen landmark predicted as class0
 '''
 def svm_classification(training_landmarks, index, x_names, y_name, class0,
 		class1, C_values = [0.1, 1, 10] ):
@@ -388,7 +388,8 @@ def svm_classification(training_landmarks, index, x_names, y_name, class0,
     # find the best C value by cross-validation
     tuned_parameters = [{'C': C_values}]
     clf = GridSearchCV(
-    	SVC(kernel='linear'), tuned_parameters, cv=10, scoring='accuracy')
+    	SVC(kernel='linear'),
+    	tuned_parameters, cv=10, scoring='accuracy')
     clf.fit(X.values, y.values)
     best_c = clf.best_params_['C']
     
@@ -404,13 +405,17 @@ def svm_classification(training_landmarks, index, x_names, y_name, class0,
     print(cm_df)
 
     # Statistics of training precision:
-    # number of wild type samples with this landmark predicted as wild type.
+    # number of wild type samples with this landmark
+    # predicted as wild type.
     type0_0 =0
-    # number of wild type samples with this landmark predicted as mutant type.
+    # number of wild type samples with this landmark
+    # predicted as mutant type.
     type0_1 = 0
-    # number of mutant type samples with this landmark predicted as mutant type.
+    # number of mutant type samples with this landmark
+    # predicted as mutant type.
     type1_1 = 0
-    # number of mutant type samples with this landmark predicted as wild type.
+    # number of mutant type samples with this landmark
+    # predicted as wild type.
     type1_0 = 0
     
     for i in range (len(y)):
@@ -509,9 +514,10 @@ if __name__ == "__main__":
             	for this landmark, so skipping it.")
             continue
 
-        prediction =
-        	svc.predict(sample[sample.landmark_index==l][['pts', 'r']])[0]
-        result = ','.join(str(x) for x in [sample_id, stype, l, prediction,
+        prediction = svc.predict(sample[
+          sample.landmark_index==l][['pts', 'r']])[0]
+        result = ','.join(str(x) for x in [
+          sample_id, stype, l, prediction,
         	type0_0, type0_1, type1_1, type1_0 ]) + '\n'
         print('result:', result)
 
