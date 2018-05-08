@@ -85,7 +85,7 @@ Hence, three key functions were used from the tidyr package [@pkgtidyr]: gather(
 Support Vector Machine (SVM) cannot be fit to data with missing values. For wedges that do not have any points, median $r$ cannot be calculated, which means that these sample will be eliminated when running SVM. Wedges without points have biologically meanings, so we should not ignore these wedges in our model. In order to keep the wedges in our model, we need to artificially pick a median $r$ value to replace the missing ones. From biological perspective, the reason that there is no point in a particular wedge might be that the data points are too far away from the scanned area to be captured. Therefore, we decided to calculate the mean of median $r$ for the nth landmark of all 78 samples, and then we replace the missing median $r$ values with the $2$ $\cdot$ median $r$ value for each landmark of each channel to represent that the points in this wedge is far away from the scanned area.
 
 # Support Vector Machine 
-The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the nearest data as cleanly as possible as shown in **Fig \ref{svmfig}** below. The parameters $\beta$ are found by solving the optimization problem --to maximize Margin subject to some restrictions -- in 2 dimensions [@James2013].
+The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the data points as cleanly as possible as shown in **Fig \ref{svmfig}** below. The optimal parameters $\beta$ are found by solving the optimization problem --to maximize margin subject to certain restrictions [@James2013].
 
 ```{r fig.cap = "\\label{svmfig} SVM model", echo=FALSE}
 knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
@@ -107,9 +107,9 @@ knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
 * $\varepsilon_i$ : slack variable.
 * $C$: Tuning parameter, toleration of total misclassification.
 
-The slack variable $\varepsilon_i$ tells us where the $i^{th}$ observation is located, relative to the separation line and relative to the margin. If $\varepsilon_i = 0$ then the $i^{th}$ observation is on the correct side of the margin. If $\varepsilon_i > 0$ then the $i^{th}$ observation is on the wrong side of the margin. If $\varepsilon_i > 1$ then it is on the wrong side of the separation line.
+The slack variable $\varepsilon_i$ tells us where the $i^{th}$ observation is located, relative to the separation line and the margin. If $\varepsilon_i = 0$ then the $i^{th}$ observation is on the correct side of the margin. If $\varepsilon_i > 0$ then the $i^{th}$ observation is on the wrong side of the margin. If $\varepsilon_i > 1$ then it is on the wrong side of the separation line.
 
-The tuning parameter C bounds the sum of the $\varepsilon_i$, and so it determines the number and severity of the violations to the margin and to the separation line that we will tolerate. We can think of C as a budget for the amount that the margin can be violated by the n observations. If $C = 0$ then there is no budget for violations to the margin, and it must be the case that $\varepsilon_1 = . . . = \varepsilon_n = 0$. For $C > 0$ no more than C observations can be on the wrong side of the separation line, because if an observation is on the wrong side of the separation line then $\varepsilon_i > 1$. As the budget C increases, we become more tolerant of violations to the margin, and so the margin will widen. Conversely, as C decreases, we become less tolerant of violations to the margin and so the margin narrows.
+The tuning parameter C bounds the sum of the $\varepsilon_i$, and therefore determines the number and severity of the violations to the separation line and margin that we will tolerate. We can think of C as a budget for the margin can be violated by the n observations. If $C = 0$ then there is no budget for violations to the margin, and it must be the case that $\varepsilon_1 = . . . = \varepsilon_n = 0$. For $C > 0$ no more than C observations can be on the wrong side of the separation line, because if an observation is on the wrong side of the separation line then $\varepsilon_i > 1$. As the budget C increases, we become more tolerant of violations to the margin, and so the margin will widen. Conversely, as C decreases, we become less tolerant of violations to the margin and so the margin narrows.
 
 $y_i$ is the vector representing the coordinate of a data point. The dot product of $y_i$ and the function of the separation line gives the perpendicular distance from the data point to the separation line:
 
@@ -120,7 +120,7 @@ If the dot product is greater than 0, the observation falls at the right side of
 In general, we want to find a classification that the distance from a data point to the separation line is larger than the margin, while we can tolerate some points being in the middle of the margins or misclassified. 
 
 ## Cross-Validation
-For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we decided to use a leave-one-out cross validation method to test our model. For each testing sample, we built 152 SVMs for each landmark.
+For our project, we have access to 43 wild-type samples and 35 mutant-type samples. Due to this limited sample size, we decided to use a leave-one-out cross validation method to test our model. For each testing sample, we built 152 SVMs: one for each landmark.
 For each SVM, we used 10-fold cross validation to select a tuning parameter C value among 0.1, 1 and 10.
 
 # Final Product: Two-Step Interactive Classification Tool
