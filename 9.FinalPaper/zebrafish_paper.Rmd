@@ -135,7 +135,7 @@ knitr::include_graphics("figures/Figure1.jpg", dpi = 260 )
 **Fig \ref{workflow}** displays the overall workflow leading to the final product of classification. It begins with the cleaning and restructuring of the raw landmarks data. The tidied landmarks data that has the NA values filled contains 152 distinct landmarks. Each landmark has its own representative SVM model that used the 77 samples out of 78 for training from applying the leave-one-out cross validation method. That one sample that is left out from each landmark is used for testing the model that was built from the 77 samples. Then, based on the training accuracy of each model, only those that consist of reliable landmarks are filtered out. The number of wild types and mutants predicted with each model are calculated and this leads to the final classification result of using SVMs. 
 
 ## Step One: Data Processing and Modeling
-This step is implemented using Python (version 3) and packages including `pandas`, `numpy` and `sklearn` are required. Users would need to run and interact with the Python script `svm.py` to preprocess the data and build the model. Then, they would need to run another script `analyse_results.py` to analyse the raw results and produce aggregated results.   
+This step is implemented using Python (version 3) and packages including `pandas`, `numpy` and `sklearn`. Users would need to run and interact with the Python script `svm.py` to preprocess the data and build the model. Then, they would need to run another script `analyse_results.py` to analyse the raw results and produce aggregated results.   
 
 The script `svm.py` contains two components: a general-purpose `svm_classification()` function that builds a SVM model to classify points for a particular landmark and a `main()` function that runs the `svm_classification()` function for each landmark.
 
@@ -195,7 +195,7 @@ knitr::include_graphics("figures/Figure5.png")
 ## Step Two: Interactive Visualization Tool
 After building SVM models in step one, we insert the output from the SVM models into step two to visualize the results. Steps two uses the accuracy scores output from step one to create a user-friendly app which generates visualizations to help users to understand the SVM results. 
 
-The repository containing the shiny app can be access by doing the following:
+The repository containing the shiny app can be accessed by doing the following:
 ```{r, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("liwencong1995/SDS-Capstone-Zebrafish")
@@ -229,7 +229,7 @@ In addition, users can set the threshold of the following variables:
 * Overall recall score
 * Overall F1 score
 
-The dataset used to create the visualizations is rendered every time users change one or multiple thresholds. Our app filters out the observations that do not fulfill the threshold requirements and uses the resulting dataset to update the histograms and heat maps. 
+The dataset used to create the visualizations is rendered every time users change one or multiple thresholds. Our app filters out the observations that do not fulfill the threshold requirements and uses the remaining dataset to update the histograms and heat maps. 
 
 ### Output: Interactive User Interface
 This interactive user interface was built upon several **R** packages:
