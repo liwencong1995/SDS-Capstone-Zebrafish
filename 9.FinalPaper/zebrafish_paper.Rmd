@@ -73,7 +73,7 @@ We have 43 wild types samples ($n_1$) and 35 mutant samples ($n_2$) for training
 * $\alpha$ (micro-meter): distance from the center of the landmark to the midline
 * $\theta$ (radian): the degree the describes the location of a wedge within each slice
 
-We used the number of points and the median $r$ to do classification via support vector machine. For missing median $r$ values due to absence of points in particular wedge, we filled them with the median value of all the points in that wedge.
+We used the number of points and the median $r$ to do classification via support vector machine. For missing median $r$ values due to absence of points in particular wedge, we filled them with two times the median value of all the points in that wedge across all samples.
 
 ### Tidy Data
 The raw landmark data is a wide table containing sample index and all columns holding information regarding to the minimum and maximum values of $\alpha$ and $\theta$, number of points, median $r$ value, and the true type of each sample. The value in each cell refers to either median $r$ value or number of points. Since all variables names in the raw dataset, such as `-14.29_-4.76_-0.79_0.0_50_pts` and `-14.29_-4.76_-0.79_0.0_50_r`, are long and hard to interpret, we decided to restructure the raw dataset so that the new dataset havs sample index, minimum and maximum $\alpha$, minimum and maximum $\theta$, number of points, median $r$, and type of sample each as its own columns. 
