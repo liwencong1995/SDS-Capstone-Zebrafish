@@ -88,7 +88,7 @@ Support Vector Machine (SVM) cannot be fit to data with missing values. For wedg
 The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the data points as cleanly as possible as shown in **Fig \ref{svmfig}** below. The optimal parameters $\beta$ are found by solving the optimization problem --to maximize margin subject to certain restrictions [@James2013].
 
 ```{r fig.cap = "\\label{svmfig} SVM model", echo=FALSE}
-knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
+knitr::include_graphics("figures/svm_fig.png", dpi = 260)
 ```
 
 \begin{equation}
