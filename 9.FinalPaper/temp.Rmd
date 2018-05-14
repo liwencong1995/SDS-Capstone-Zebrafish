@@ -22,6 +22,8 @@ abstract: Classification of biological creatures’ phenotype has long been a fi
 bibliography: mybibfile.bib
 space_between_paragraphs: true
 output: pdf_document
+fontsize: 11pt
+geometry: margin=1in
 csl: plos.csl
 ---
 
@@ -86,7 +88,7 @@ Support Vector Machine (SVM) cannot throws away observations with missing values
 # Support Vector Machine 
 The goal of SVM is to find a separation line $f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)$ that separates the data points as cleanly as possible as shown in **\autoref{fig:svmfig}** below. The optimal parameters $\beta$ are found by solving the optimization problem --to maximize margin subject to certain restrictions [@James2013].
 
-```{r fig.cap = "\\label{fig:svmfig} SVM model", echo=FALSE}
+```{r fig.cap = "\\label{fig:svmfig} SVM model", echo=FALSE, fig.align='center'}
 knitr::include_graphics("figures/svm_fig.png", dpi = 260 )
 ```
 
@@ -293,8 +295,6 @@ If more time is given, we could add factors that describe the interaction betwee
 
 ### Improving User Interface
 Since we have only received feedback from three users at Smith College, we would love to receive more feedback from other scientists and improve our model and user interface accordingly.
-
-### Improving Model Accuracy
 
 # Acknowledgements
 This project was completed in partial fulfillment of the requirements of SDS 410: SDS Capstone. This course is offered by the Statistical and Data Sciences Program at Smith College, and was taught by Professor Benjamin Baumer in Spring 2018.
