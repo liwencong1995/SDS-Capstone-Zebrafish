@@ -171,12 +171,13 @@ Wencong Li\textsuperscript{\getAff{Smith College}},
 Dejia Tang\textsuperscript{\getAff{Smith College}},
 Ji Young Yun\textsuperscript{\getAff{Smith College}}\\
 \bigskip
-\textbf{\getAff{Smith College}}Statistical and Data Sciences, Northampton, MA\\
+\textbf{\getAff{Smith College}}Smith College, Statistical and Data Sciences, Northampton, MA, USA\\
 \bigskip
 \end{flushleft}
 % Please keep the abstract below 300 words
 \section*{Abstract}
 Classification of biological creatures' phenotype has long been a field
+<<<<<<< HEAD
 that scientists study at. In this project, we utilize support vector
 machine to distinguish structures of Zebrafish's brains by using data
 generated from landmark analysis {[}1{]}. We create a tool for
@@ -185,6 +186,17 @@ into two groups, usually defined as wild type and mutant, and understand
 which part of the shapes have the most impact on the classification
 result. This project derives from Professor Barresi's biological image
 analysis research at Smith College.
+=======
+that scientists study at. In this study, we used support vector machine
+to classify neurons winthin Zebrafish's brains into two groups with
+respect to their structures by using data generated from landmark
+analysis {[}1{]}. We created a tool for scientists to classify
+three-dimensional biological shapes into two groups, usually defined as
+wild type and mutant, and to understand which parts of the shapes have
+the most impact on the classification result. This project derives from
+Professor Barresi's biological image analysis research at Smith College
+{[}1{]}.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLOS ONE authors please skip this step. 
@@ -197,6 +209,7 @@ analysis research at Smith College.
 
 \section{Introduction}\label{introduction}
 
+<<<<<<< HEAD
 This project derives from Professor Barresi's biological image analysis
 research at Smith College and provides a tool to classify the structures
 within Zebrafish brains via support vector machine. Our goal is to
@@ -238,16 +251,72 @@ scientific paper in \textbf{R} Markdown. It also allows users to embed
 paper with similar format {[}3{]}. Github is used to store the scripts
 for our final paper, and the source code for our final production which
 contains the final model and user interface.
+=======
+This study derives from Professor Barresi's biological image analysis
+research at Smith College and provides a tool to classify structures of
+neurons winthin Zebrafish's brains via support vector machine. Our goal
+is to classify three-dimensional biological shapes into two groups,
+wildetype and mutant.
+
+\begin{figure}[h]
+
+{\centering \includegraphics[width=5.55in]{figures/landmark} 
+
+}
+
+\caption{\label{fig:landmark} Landmark Data of A Zebrafish Sample}\label{fig:unnamed-chunk-2}
+\end{figure}
+
+We received the raw dataset from Schwartz, a student in Professor
+Barresi's Lab, who used optimization to divide the three-dimensional
+shape of Zebrafish's brain into small wedges and computed the landmark,
+the most representative point, of each wedge {[}1{]}. The data points
+representing signals in a Zebrafish's brain is shown in
+\textbf{\autoref{fig:landmark}}.
+
+\subsubsection{Programming Languages}\label{programming-languages}
+
+Two programming languages are used in the creation of the calssification
+tool: Python and \textbf{R}. Python is used to run support vector
+machine models and output the results in correct format. \textbf{R} is
+used generally for data cleaning and creating interactive user
+interface.
+
+\subsubsection{\texorpdfstring{Git, \texttt{knitr}, and Reproducible
+Research}{Git, knitr, and Reproducible Research}}\label{git-knitr-and-reproducible-research}
+
+Reproducible research and open source are important in this study. As
+scholars place more emphasis on the reproducibility of research studies,
+it is essential for us to make our code publicly available for people to
+recreate both the model and the user interface.
+
+Github and \texttt{knitr} {[}2{]} were used in this project to make the
+study reproducible. Github was used to store the scripts of our final
+paper and the source code of our final product which contains the final
+model and the user interface. We used an \textbf{R} package called
+\texttt{rticles} to write this paper. This tool allows authors to create
+reproducible and dynamic technical scientific paper in \textbf{R}
+Markdown. It also allows users to embed \textbf{R} code in a scientific
+paper and output it into a PDF. \texttt{rticles} helps users to
+efficiently put together scientific papers with similar formats {[}3{]}.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \section{Literature Review}\label{literature-review}
 
 Research in developmental biology has relied on the analysis of
+<<<<<<< HEAD
 morphological phenotype through qualitative examination of maximum
 intensity projections that surrender the power of three dimensional
 data. Statistical methods to analyze visual data are needed,
 particularly to detect subtle phenotype {[}1{]}.
+=======
+morphological phenotypes through qualitative examination of maximum
+intensity projections that surrender the power of three-dimensional
+data. Statistical methods to analyze three-dimensional visual data are
+needed to detect subtle biological phenotypes {[}1{]}.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
-\paragraph{Landmark Analysis}\label{landmark-analysis}
+\subsubsection{Landmark Analysis}\label{landmark-analysis}
 
 Landmarks describe a shape by locating a finite number of points on each
 specimen. There are three basic types of landmarks: scientific,
@@ -266,7 +335,7 @@ landmarks distributed across the structure in order to avoid introducing
 bias due to expectations about where biological differences should
 emerge.
 
-Schwartz et al. {[}1{]} have utilized the open source program, Ilastik,
+Schwartz et al. {[}1{]} have used the open source program, Ilastik,
 which employs a training based machine learning, to eliminate the image
 noise. Then they preformed principal component analysis to align
 commissures between samples, reducing misalignment artifacts, and
@@ -280,14 +349,23 @@ signal corresponding to the structure. Finally, using the landmark
 system, we are able to identify and quantify structural differences and
 changes in signal distribution between wild type and mutant commissures.
 
-\paragraph{Support Vector Machine}\label{support-vector-machine}
+\subsubsection{Support Vector Machine}\label{support-vector-machine}
 
+<<<<<<< HEAD
 Schwartz et al.{[}1{]} used Random Forest machine leaning method to
 classify the landmarks. Although the classification is quite accurate,
 it is difficult to interpret the result from biological aspects. Instead
 of doing classification on all of the landmarks at the same time, we
 decided to do classification on one landmark at a time via Support
 Vector Machine. The SVM algorithm is a classification algorithm that
+=======
+Schwartz {[}1{]} used random forest machine leaning method to classify
+the landmarks. Although the classification is quite accurate, it is
+difficult to interpret the result from biological perspectives. Instead
+of doing classification on a subset of the landmarks at the same time,
+we decided to do classification on one landmark at a time via support
+vector machine. The SVM algorithm is a classification algorithm that
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 provides state-of-the-art performance in a wide variety of application
 domains, image classification. During the past few years, SVM has been
 applied very broadly within the field of computational biology
@@ -305,8 +383,9 @@ extremely powerful method.
 
 \section{Data and Variables}\label{data-and-variables}
 
-\begin{figure}[h]
+\subsubsection{Landmark Data}\label{landmark-data}
 
+<<<<<<< HEAD
 {\centering \includegraphics[width=5.55in]{figures/landmark} 
 
 }
@@ -318,6 +397,20 @@ We have 43 wild types samples (\(n_1\)) and 35 mutant samples (\(n_2\))
 for training and testing. There are 152 landmarks (\(N\)) for each
 sample, which resemble \textbf{Fig \ref{landmark}}, with each of them
 containing the following variables:
+=======
+Schwartz used optimization to divide the three-dimensional shape of
+Zebrafish's brain into small wedges and computed the landmarks {[}1{]}.
+The shape in \textbf{\autoref{fig:landmark}} is divided into 30 circular
+slices, and each slice is further divided into 8 wedges. The landmark of
+each wedge is calculated by taking the median distance of all points in
+each wedge, \(r\). We use the number of points in each wedge and median
+\(r\) to run SVM models to run classifications.
+
+We have 43 wild types samples (\(n_1\)) and 35 mutant samples (\(n_2\))
+for training and testing. There are 152 landmarks (\(N\)) for each
+sample, which resemble \textbf{\autoref{fig:landmark}}, with each of
+them containing the following variables:
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \begin{itemize}
 \tightlist
@@ -336,62 +429,65 @@ containing the following variables:
 
 We used the number of points and the median \(r\) to do classification
 via support vector machine. For missing median \(r\) values due to
-absence of points in particular wedge, we filled them with the median
-value of all the points in that wedge.
+absence of points in particular wedge, we filled them with two times the
+median value of all the points in that wedge across all samples.
 
-\subsection{Tidy Data}\label{tidy-data}
+\subsubsection{Tidy Data}\label{tidy-data}
 
-The raw landmarks data is a wide table containing the sample index and
-all the columns holding information regarding the minimum and maximum
-values of \(\alpha\) and \(\theta\), number of points, median \(r\)
-value, and the type of sample for a particular sample in each landmark.
-and The value in each cell refers to the median \(r\) value or number of
-points. However, because all of such variables were joined by
-underscores in the variable names, such as
-\texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_pts} or
-\texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_r}, it was very difficult to see
-what each column actually represented. Thus, the data set was
-restructured to have the sample index, minimum and maximum \(\alpha\),
-minimum and maximum \(\theta\), number of points, median \(r\), and type
-of sample each be its own column.
+The raw landmark data is a wide table containing sample index and all
+columns holding information regarding to the minimum and maximum values
+of \(\alpha\) and \(\theta\), number of points, median \(r\) value, and
+the true type of each sample. The value in each cell refers to either
+median \(r\) value or number of points. Since all variables names in the
+raw dataset, such as \texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_pts} and
+\texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_r}, are long and hard to
+interpret, we decided to restructure the raw dataset so that the new
+dataset havs sample index, minimum and maximum \(\alpha\), minimum and
+maximum \(\theta\), number of points, median \(r\), and type of sample
+each as its own columns.
 
-Hence, three key functions were used from the tidyr package {[}6{]}:
-gather(), separate(), and spread(). The gather() function separated the
-dataset into key and value pairs for each index. The key was the column
-name containing all essential information connected by underscores and
-the value included the number of points or median \(r\) value. Then, the
-separate() function separated the result from the gather function
-divided the column connected by underscore into 5 different columns,
-named as \texttt{min\_alpha}, \texttt{max\_alpha}, \texttt{min\_theta},
-\texttt{max\_theta}, and \texttt{ptsOrR}. This was added to the result
-of the gather function that contained the index and value of each cell,
-either median \(r\) or number of points. Afterwards, the spread()
-function widened the already wide table by expanding the \texttt{ptsOrR}
-column by creating two columns, each column representing median \(r\)
-and the number of points.
+Three key functions in \texttt{tidyr} R package {[}6{]} were used:
+\texttt{gather()}, \texttt{separate()}, and \texttt{spread()}.
+\texttt{gather()} separated the dataset into key and value pairs for
+each sample index. The key was the column name that contain essential
+information that describes the position of each landmark wedge, such as
+\texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_r}, and the value is either the
+number of points or median \(r\) value of each landmark wedge.
+\texttt{separate()} divided the keys collected from \texttt{gather()},
+such as \texttt{-14.29\_-4.76\_-0.79\_0.0\_50\_r}, into 5 different
+columns, \texttt{min\_alpha}, \texttt{max\_alpha}, \texttt{min\_theta},
+\texttt{max\_theta}, and \texttt{ptsOrR}. The \texttt{ptsOrR} variable
+describes what type of information each cell contains. This was added to
+the result of \texttt{gather()} that contains the sample index and
+either median \(r\) or number of points of each cell. Afterwards,
+\texttt{spread()} widened the already wide table by expanding the
+\texttt{ptsOrR} column by creating two columns, one column representing
+median \(r\) and one column representing the number of points.
 
-\subsection{Dealing with Missing
+\subsubsection{Dealing with Missing
 Values}\label{dealing-with-missing-values}
 
-Support Vector Machine (SVM) cannot be fit to data with missing values.
-For wedges that do not have any points, median \(r\) cannot be
-calculated, which means that these sample will be eliminated when
-running SVM. Wedges without points have biologically meanings, so we
-should not ignore these wedges in our model. In order to keep the wedges
-in our model, we need to artificially pick a median \(r\) value to
-replace the missing ones. From biological perspective, the reason that
-there is no point in a particular wedge might be that the data points
-are too far away from the scanned area to be captured. Therefore, we
-decided to calculate the mean of median \(r\) for the nth landmark of
-all 78 samples, and then we replace the missing median \(r\) values with
-the \(2\) \(\cdot\) median \(r\) value for each landmark of each channel
-to represent that the points in this wedge is far away from the scanned
-area.
+Support Vector Machine (SVM) cannot throws away observations with
+missing values. For wedges that do not have any points, median \(r\)
+cannot be calculated, which means that information collected from these
+wedges are eliminated when running SVMs. Wedges without points have
+biologically meanings, so we should not ignore these wedges in the SVM
+model. In order to get rid of the missing values, we need to
+artificially pick a value to replace the missing median \(r\) values.
+From a biological perspective, the reason that there is no point in a
+particular wedge might be that the data points are too far away from the
+scanned area to be captured. Therefore, we decided to calculate the mean
+of median \(r\) of both wildetype and mutant samples, and then we
+replace the missing median \(r\) values with \(2\) \(\cdot\) median
+\(r\) for each landmark according to the true type of the samples to
+show that the points in this wedge are too far away from the scanned
+area to be captured.
 
 \section{Support Vector Machine}\label{support-vector-machine-1}
 
 The goal of SVM is to find a separation line
 \(f(x) = (\beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2)\) that
+<<<<<<< HEAD
 separates the data points as cleanly as possible as shown in \textbf{Fig
 \ref{svmfig}} below. The optimal parameters \(\beta\) are found by
 solving the optimization problem --to maximize margin subject to certain
@@ -399,6 +495,15 @@ restrictions {[}7{]}.
 
 \begin{figure}[h]
 \includegraphics[width=3.12in]{figures/svm_fig} \caption{\label{svmfig} SVM model}\label{fig:unnamed-chunk-3}
+=======
+separates the data points as cleanly as possible as shown in
+\textbf{\autoref{fig:svmfig}} below. The optimal parameters \(\beta\)
+are found by solving the optimization problem --to maximize margin
+subject to certain restrictions {[}7{]}.
+
+\begin{figure}[h]
+\includegraphics[width=3.12in]{figures/svm_fig} \caption{\label{fig:svmfig} SVM model}\label{fig:unnamed-chunk-3}
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 \end{figure}
 
 \begin{equation}
@@ -457,7 +562,7 @@ data point to the separation line is larger than the margin, while we
 can tolerate some points being in the middle of the margins or
 misclassified.
 
-\subsection{Cross-Validation}\label{cross-validation}
+\subsubsection{Cross-Validation}\label{cross-validation}
 
 For our project, we have access to 43 wild-type samples and 35
 mutant-type samples. Due to this limited sample size, we decided to use
@@ -473,19 +578,27 @@ We created a two-step interactive classification tool which allows users
 to simply input a data file and get an visualization of the modeling
 result. There are two main components in the tool:
 
-\subsection{General Workflow}\label{general-workflow}
+\subsubsection{General Workflow}\label{general-workflow}
 
 \begin{figure}[h]
 
-{\centering \includegraphics{figures/Figure1} 
+{\centering \includegraphics[width=5.55in]{figures/Figure1} 
 
 }
 
+<<<<<<< HEAD
 \caption{\label{workflow} Summary of Workflow}\label{fig:unnamed-chunk-4}
 \end{figure}
 
 \textbf{Fig \ref{workflow}} displays the overall workflow leading to the
 final product of classification. It begins with the cleaning and
+=======
+\caption{\label{fig:workflow} Summary of Workflow}\label{fig:unnamed-chunk-4}
+\end{figure}
+
+\textbf{\autoref{fig:workflow}} displays the overall workflow leading to
+the final product of classification. It begins with the cleaning and
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 restructuring of the raw landmarks data. The tidied landmarks data that
 has the NA values filled contains 152 distinct landmarks. Each landmark
 has its own representative SVM model that used the 77 samples out of 78
@@ -525,10 +638,11 @@ containing results from all samples.
 
 \begin{figure}[h]
 
-{\centering \includegraphics{figures/Figure2} 
+{\centering \includegraphics[width=4.49in]{figures/Figure2} 
 
 }
 
+<<<<<<< HEAD
 \caption{\label{useri} Example of User Interaction in Step One of the User Interface}\label{fig:unnamed-chunk-5}
 \end{figure}
 
@@ -539,6 +653,18 @@ containing results from all samples.
 As shown in \textbf{Fig \ref{useri}} and \textbf{Fig \ref{useri2}},
 several user inputs are taken from users when they run the python
 scripts.
+=======
+\caption{\label{fig:useri} Example of User Interaction in Step One of the User Interface}\label{fig:unnamed-chunk-5}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=5.03in]{figures/Figure4} \caption{\label{fig:useri2} Example of User Interaction for Running svm.py}\label{fig:unnamed-chunk-6}
+\end{figure}
+
+As shown in \textbf{\autoref{fig:useri}} and
+\textbf{\autoref{fig:useri2}}, several user inputs are taken from users
+when they run the python scripts.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \subsubsection{Input File}\label{input-file}
 
@@ -547,7 +673,7 @@ classification are required to be included in the input file. In our
 analysis, we used number of points in each wedge within the 3D shape and
 the median \(r\) of points in each wedge.
 
-\subsubsection{Sample input file}\label{sample-input-file}
+\paragraph{Sample input file}\label{sample-input-file}
 
 \begin{figure}[h]
 
@@ -555,6 +681,7 @@ the median \(r\) of points in each wedge.
 
 }
 
+<<<<<<< HEAD
 \caption{\label{inputdata} Sample Data Input File of First Step of the User Interface}\label{fig:unnamed-chunk-7}
 \end{figure}
 
@@ -563,6 +690,16 @@ the script \texttt{svm.py}. The columns \texttt{stype} (sample type),
 \texttt{landmark\_index} and \texttt{sample\_index} are required and the
 other two columns (\texttt{pts} and \texttt{r} in this example) are the
 two parameters used for building SVM.
+=======
+\caption{\label{fig:inputdata} Sample Data Input File of First Step of the User Interface}\label{fig:unnamed-chunk-7}
+\end{figure}
+
+\textbf{\autoref{fig:inputdata}} shows a random sample of an input file
+for the script \texttt{svm.py}. The columns \texttt{stype} (sample
+type), \texttt{landmark\_index} and \texttt{sample\_index} are required
+and the other two columns (\texttt{pts} and \texttt{r} in this example)
+are the two parameters used for building SVM.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \subsubsection{Output File}\label{output-file}
 
@@ -572,11 +709,19 @@ two parameters used for building SVM.
 
 }
 
+<<<<<<< HEAD
 \caption{\label{outputdata} Sample Data Output File of First Step of the User Interface}\label{fig:unnamed-chunk-8}
 \end{figure}
 
 \textbf{Fig \ref{outputdata}} shows the columns of the final result file
 produced by the \texttt{analyse\_results.py} script. The first four
+=======
+\caption{\label{fig:outputdata} Sample Data Output File of First Step of the User Interface}\label{fig:unnamed-chunk-8}
+\end{figure}
+
+\textbf{\autoref{fig:outputdata}} shows the columns of the final result
+file produced by the \texttt{analyse\_results.py} script. The first four
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 columns describe the testing sample's information while the rest of the
 columns are all precision statistics describing the accuracy of the
 built model. The descriptions of all of the columns are displayed as
@@ -756,12 +901,21 @@ Threshold Summary tab and 9 accuracy score visualization tabs.
 
 }
 
+<<<<<<< HEAD
 \caption{\label{shiny1} User Interface: Accuracy Threshold Summary Tab of AT Channel}\label{fig:unnamed-chunk-10}
 \end{figure}
 
 \textbf{Fig \ref{shiny1}} displays the Accuracy Score Threshold Summary
 tab of the first sample of AT channel. Users can drag the dot on the
 slidebar to set the thresholds of overall precision, recall, and f1
+=======
+\caption{\label{fig:shiny1} User Interface: Accuracy Threshold Summary Tab of AT Channel}\label{fig:unnamed-chunk-10}
+\end{figure}
+
+\textbf{\autoref{fig:shiny1}} displays the Accuracy Score Threshold
+Summary tab of the first sample of AT channel. Users can drag the dot on
+the slidebar to set the thresholds of overall precision, recall, and f1
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 scores. The threshold of the three scores are updated in the summary
 table. Default thresholds are 0 for all three accuracy measurements. We
 then use the landmark observations that fulfill the threshold
@@ -782,6 +936,7 @@ in the summary table.
 
 }
 
+<<<<<<< HEAD
 \caption{\label{shiny2} User Interface: Precision Score Visualization Tab of AT Channel}\label{fig:unnamed-chunk-11}
 \end{figure}
 
@@ -789,6 +944,15 @@ in the summary table.
 of the first sample of AT channel. In this case, all three thresholds
 are at default level, 0. All landmarks' precision scores are shown in
 both the histogram and the heat map.
+=======
+\caption{\label{fig:shiny2} User Interface: Precision Score Visualization Tab of AT Channel}\label{fig:unnamed-chunk-11}
+\end{figure}
+
+\textbf{\autoref{fig:shiny2}} displays the Precision Score Visualization
+tab of the first sample of AT channel. In this case, all three
+thresholds are at default level, 0. All landmarks' precision scores are
+shown in both the histogram and the heat map.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \begin{figure}[h]
 
@@ -796,18 +960,31 @@ both the histogram and the heat map.
 
 }
 
+<<<<<<< HEAD
 \caption{\label{shiny3} User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75}\label{fig:unnamed-chunk-12}
 \end{figure}
 
 \textbf{Fig \ref{shiny3}} also displays the Precision Score
+=======
+\caption{\label{fig:shiny3} User Interface: Precision Score Visualization Tab of AT Channel, with precision threshold = 0.75}\label{fig:unnamed-chunk-12}
+\end{figure}
+
+\textbf{\autoref{fig:shiny3}} also displays the Precision Score
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 Visualization tab of the first sample of AT channel. In this case,
 recall and f1 scores' thresholds are at default level and precision
 threshold is set to be 0.75. Therefore, only landmarks that have
 precision scores that are equal to or greater than 0.75 are shown in the
 visualizations. As shown in the histogram, all values less than 0.75 are
+<<<<<<< HEAD
 removed from the histogram in figure 6. Some of the blocks in figure 6
 are turned into blank blocks after the precision threshold is increased
 to 0.75.
+=======
+removed from the histogram in \textbf{\autoref{fig:shiny2}}. Some of the
+blocks in \textbf{\autoref{fig:shiny2}} are turned into blank blocks
+after the precision threshold is increased to 0.75.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \begin{figure}[h]
 
@@ -815,6 +992,7 @@ to 0.75.
 
 }
 
+<<<<<<< HEAD
 \caption{\label{shiny4} User Interface: F1 Score Visualization Tab of ZRF Channel}\label{fig:unnamed-chunk-13}
 \end{figure}
 
@@ -823,6 +1001,16 @@ Users can also choose to observe the SVM results of ZRF channel.
 of the first sample of ZRF channel with all thresholds equal to 0. More
 sample visualizations of other accuracy scores can be found in Appendix
 A.
+=======
+\caption{\label{fig:shiny8} User Interface: F1 Score Visualization Tab of ZRF Channel}\label{fig:unnamed-chunk-13}
+\end{figure}
+
+Users can also choose to observe the SVM results of ZRF channel.
+\textbf{\autoref{fig:shiny8}} displays the Precision Score Visualization
+tab of the first sample of ZRF channel with all thresholds equal to 0.
+More sample visualizations of other accuracy scores can be found in
+Appendix A.
+>>>>>>> ce26a34d45eedd96038adc498d46b64e3500e5df
 
 \section{Conclusion and Discussion}\label{conclusion-and-discussion}
 
