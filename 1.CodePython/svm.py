@@ -131,7 +131,7 @@ if __name__ == "__main__":
     # Get result file's name and create the file with column names
     result_file_name = str(input("Please enter result file path: "))
     result_file = open(result_file_name, 'w')
-    result_file.write('sample_index,stype,landmark_index,pred,type0_0,type0_1,type1_1,type1_0\n')
+    result_file.write('sample_index,type,landmark_index,pred,type0_0,type0_1,type1_1,type1_0\n')
     result_file.close()
 
     # Get existing landmark ids
